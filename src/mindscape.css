@@ -1,0 +1,1707 @@
+/* Mindscape: one landscape stage with a card that changes beneath it */
+
+.ms {
+  --accent: var(--turq-500);
+  --tint: var(--turq-50);
+}
+
+.ms__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The stage: the landscape fills it, and the camera moves inside it */
+.ms__stage {
+  position: relative;
+  width: 100%;
+  height: min(58svh, 138vw);
+  overflow: hidden;
+}
+.ms--landing .ms__stage {
+  height: min(64svh, 144vw);
+}
+/* Questions need the room; the room itself gets the stage back */
+.ms--thought .ms__stage,
+.ms--voices .ms__stage,
+.ms--mooca .ms__stage,
+.ms--hin .ms__stage,
+.ms--bua .ms__stage,
+.ms--ending .ms__stage {
+  height: min(48svh, 120vw);
+}
+.ms__stage {
+  transition: height 0.6s var(--ease);
+}
+.ms__stage .landscape {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The top row: who you're with (in a room), then dots for the steps of this part */
+.ms-journey__label {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--turq-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ms-journey__dots {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+.ms-journey__dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--gray-200);
+  transition: background 0.3s, width 0.3s var(--ease);
+}
+.ms-journey__dots span.is-on {
+  background: var(--turq-500);
+}
+/* the step you're on stretches into a short pill */
+.ms-journey__dots span.is-now {
+  width: 20px;
+}
+
+/* The card slides up over the bottom of the stage */
+.ms__card {
+  position: relative;
+  z-index: 2;
+  margin-top: -28px;
+  flex: 1;
+  background: var(--white);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  box-shadow: 0 -12px 32px -16px rgba(0, 150, 136, 0.25);
+  padding: 20px 20px 0;
+  display: flex;
+  flex-direction: column;
+  scroll-margin-top: 72px;
+}
+.ms__body {
+  animation: slide-in 0.45s var(--ease) both;
+}
+.ms--landing .ms__card {
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+
+/* Notes and moves inside the landscape */
+.landscape__note {
+  transition: transform 1.1s var(--ease), opacity 1.1s var(--ease);
+}
+.landscape__note-paper {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pop 0.5s var(--ease) both;
+}
+.landscape__note-text {
+  font-family: var(--font-en);
+}
+html:lang(th) .landscape__note-text {
+  font-family: var(--font-th);
+  font-weight: 500;
+}
+
+/* ---------- Landing ---------- */
+
+.ms-land {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+.ms-kicker {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--turq-text);
+}
+.ms-title--lg {
+  font-size: clamp(26px, 7vw, 36px);
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--turq-gray-1);
+  text-wrap: balance;
+}
+html:lang(th) .ms-title--lg {
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+.ms-body {
+  color: var(--ink-soft);
+  font-size: 16px;
+  max-width: 34em;
+}
+.ms-trio {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  max-width: 420px;
+}
+.ms-trio li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.ms-trio b {
+  display: block;
+  font-size: 15px;
+  color: var(--ink);
+}
+.ms-cta {
+  width: 100%;
+}
+/* On phones the button stays in reach while the rest of the card scrolls */
+.ms-land__foot {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 0 max(4px, env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 30%);
+}
+
+/* ---------- Thought ---------- */
+
+/* An even list, not a cloud of tags: equal cells read as calm, scannable options */
+.ms-thoughts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.ms-thought {
+  min-height: 48px;
+  justify-content: flex-start;
+  text-align: left;
+  font-weight: 500;
+  border-radius: 14px;
+  padding: 10px 14px;
+}
+/* The way out of the presets spans the row, so it never reads as a ninth option */
+.ms-thought--own {
+  grid-column: 1 / -1;
+  justify-content: center;
+  border-color: var(--turq-100);
+  background: var(--turq-50);
+  color: var(--turq-text);
+  font-weight: 600;
+}
+.ms-thought--own:hover {
+  border-color: var(--turq-200);
+}
+.ms-write {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ms-textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 17px;
+  color: var(--ink);
+  background: #fffdf7;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  resize: vertical;
+  min-height: 96px;
+}
+.ms-textarea:focus-visible {
+  outline: none;
+  border-color: var(--turq-500);
+  box-shadow: 0 0 0 4px var(--turq-50);
+}
+.ms-hint {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.ms-switch {
+  align-self: flex-start;
+}
+
+.ms-care {
+  margin-bottom: 16px;
+  padding: 14px 16px;
+  background: var(--flamingo-100);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+}
+.ms-care .btn {
+  align-self: flex-start;
+  min-height: 40px;
+  border-color: var(--flamingo-500);
+  color: #b4443f;
+}
+
+/* ---------- Voices ---------- */
+
+.ms-voices {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ms-voices li {
+  animation: rise 0.5s var(--ease) both;
+}
+.ms-voice--mooca {
+  --accent: var(--turq-500);
+  --tint: var(--turq-50);
+}
+.ms-voice--hin {
+  --accent: var(--marigo-500);
+  --tint: #fdf3dc;
+}
+.ms-voice--bua {
+  --accent: var(--flamingo-500);
+  --tint: #fdeceb;
+}
+.ms-voice {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  text-align: left;
+  padding: 12px 14px;
+  background: var(--white);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s var(--ease);
+}
+.ms-voice:hover,
+.ms-voice:focus-visible {
+  border-color: var(--accent);
+}
+.ms-voice.is-selected {
+  background: var(--tint);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+.ms-voice.is-selected .ms-voice__avatar {
+  background: var(--white);
+}
+.ms-voice:active {
+  transform: scale(0.98);
+}
+.ms-voice__avatar {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: var(--tint);
+}
+.ms-voice__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ms-voice__who {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.ms-voice__who b {
+  color: var(--ink);
+}
+.ms-voice__line {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--turq-gray-1);
+}
+html:lang(th) .ms-voice__line {
+  font-weight: 500;
+}
+.ms-notsure {
+  align-self: center;
+  margin: 10px auto 0;
+  display: flex;
+}
+.ms-safety {
+  display: block;
+  width: 100%;
+  border: 0;
+  text-align: left;
+  font: inherit;
+  margin: 12px 0 20px;
+  padding: 12px 14px;
+  background: var(--gray-100);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* The ending's safety line, when nothing about the check-in was heavy */
+.ms-safety--quiet {
+  margin: 0 0 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* ---------- mooca's room ---------- */
+
+.ms-reading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 0 48px;
+  text-align: center;
+}
+
+/* ---------- mooca's room: the silver lining and softening the forecast ---------- */
+
+/* The silver lining: light rises behind mooca, a bright rim traces the cloud's edge, and a few
+   glints catch the light. It reads on every sky, including a dark storm cloud. */
+.landscape__mooca.is-glowing {
+  filter: drop-shadow(0 0 10px rgba(255, 236, 170, 0.9));
+}
+.landscape__lining {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: lining-rise 1.2s var(--ease) both, lining-breathe 4s ease-in-out 1.2s infinite;
+}
+.mooca-lining {
+  animation: fade-in 0.9s var(--ease) both, lining-shimmer 3s ease-in-out 0.9s infinite;
+}
+.landscape__glints path {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: glint 2.6s ease-in-out infinite both;
+}
+@keyframes lining-rise {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+@keyframes lining-breathe {
+  50% {
+    opacity: 0.75;
+  }
+}
+@keyframes lining-shimmer {
+  50% {
+    opacity: 0.8;
+  }
+}
+@keyframes glint {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.3) rotate(0deg);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1) rotate(45deg);
+  }
+}
+.ms-lining__lead {
+  margin: -4px 0 10px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--turq-gray-1);
+}
+
+/* The whole edit lives on one note card: the sentence, its progress, the open word's swaps, the starts */
+.soften {
+  padding: 18px 18px 14px;
+  border-radius: var(--radius);
+  background: #fffdf7;
+  box-shadow: 0 2px 0 #f1e9d6, var(--shadow-1);
+}
+.soften__thought {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.75;
+  color: var(--turq-gray-1);
+}
+html:lang(th) .soften__thought {
+  font-weight: 600;
+}
+.soften__lead {
+  color: var(--turq-text);
+}
+/* A heavy word: dashed underline and a small swap mark, so it reads as tappable until it's softened */
+.soften__word {
+  display: inline;
+  font: inherit;
+  color: inherit;
+  padding: 0 3px;
+  margin: 0 1px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  text-decoration: underline dashed #9fb1c3 2px;
+  text-underline-offset: 6px;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+.soften__icon {
+  display: inline-block;
+  width: 0.62em;
+  height: 0.62em;
+  margin-left: 3px;
+  vertical-align: 0.1em;
+  color: #8a9db0;
+}
+.soften__word:hover,
+.soften__word.is-open {
+  background: #eef2f6;
+}
+.soften__word.is-open {
+  text-decoration-style: solid;
+  text-decoration-color: var(--turq-gray-2);
+}
+.soften__word.is-soft {
+  color: var(--turq-text);
+  background: var(--turq-50);
+  text-decoration: underline solid var(--turq-200) 2px;
+  animation: pop 0.4s var(--ease);
+}
+.soften__word.is-soft .soften__icon {
+  color: var(--turq-500);
+}
+.soften__progress {
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.soften__progress.is-done {
+  color: var(--turq-text);
+}
+.soften__progress.is-done::before {
+  content: '✓ ';
+}
+.soften__swaps {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1.5px solid var(--line);
+  background: var(--white);
+  animation: slide-in 0.3s var(--ease) both;
+}
+.soften__swaps-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.soften__ask {
+  font-weight: 700;
+  color: var(--ink);
+}
+.soften__x {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin: -6px -6px -6px 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.soften__x:hover {
+  background: var(--gray-100);
+}
+.soften__trap {
+  display: block;
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.soften__back {
+  margin-top: 8px;
+}
+.soften__starts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1.5px dashed #efe5cf;
+}
+.soften__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.soften__starts .chips {
+  gap: 6px;
+}
+.soften__starts .chip {
+  min-height: 32px;
+  padding: 4px 12px;
+  font-size: 14px;
+}
+.ms-card__old s {
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: var(--turq-gray-2);
+}
+
+/* ---------- Bua's room: the note drifts off, and kindness ripples out ---------- */
+
+.landscape__kind-ring {
+  transform-box: view-box;
+  transform-origin: 300px 430px;
+  animation: kind-out 2.2s var(--ease) both;
+}
+/* one soft wave that rolls out and fades away, so nothing stays drawn across the scene */
+@keyframes kind-out {
+  from {
+    transform: scale(0.15);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+/* the heart that stays: pops in as the wave arrives, then bobs gently */
+.landscape__heart {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation:
+    heart-pop 0.6s 0.5s var(--ease) both,
+    bob 3s 1.1s ease-in-out infinite;
+}
+@keyframes heart-pop {
+  from {
+    transform: scale(0);
+  }
+  60% {
+    transform: scale(1.3);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .landscape__kind-ring {
+    display: none;
+  }
+  .landscape__heart {
+    animation: none;
+  }
+}
+
+.ms-wishes .ms-option.is-locked {
+  opacity: 0.45;
+  cursor: default;
+}
+.kind {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+/* Three equal columns, so every label sits on one line however wide its ring is */
+.kind__circles {
+  list-style: none;
+  margin: 0 0 4px;
+  padding: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.kind__circles li {
+  display: grid;
+  grid-template-rows: 46px auto;
+  justify-items: center;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+/* Three hearts, each bigger than the last, filling from the bottom as the kindness reaches them */
+.kind__heart {
+  display: block;
+}
+.kind__heart svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.kind__heart-line {
+  fill: none;
+  stroke: #f6c3c1;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  transition: stroke 0.4s;
+}
+.kind__heart-fill {
+  fill: #f28c9b;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.4s var(--ease);
+}
+.kind__circles li:nth-child(1) .kind__heart {
+  width: 22px;
+  height: 22px;
+}
+.kind__circles li:nth-child(2) .kind__heart {
+  width: 32px;
+  height: 32px;
+}
+.kind__circles li:nth-child(3) .kind__heart {
+  width: 44px;
+  height: 44px;
+}
+.kind__circles li.is-next {
+  color: var(--ink);
+  font-weight: 700;
+}
+.kind__circles li.is-next .kind__heart-line,
+.kind__circles li.is-sent .kind__heart-line {
+  stroke: var(--flamingo-500);
+}
+/* while the hold reaches this one, it fills up like a cup */
+.kind__circles li.is-reaching .kind__heart-fill {
+  clip-path: inset(calc((1 - var(--p, 0)) * 100%) 0 0 0);
+  transition: none;
+}
+.kind__circles li.is-sent .kind__heart-fill {
+  clip-path: inset(0 0 0 0);
+}
+.kind__circles li.is-sent .kind__heart {
+  animation: heart-pop 0.5s var(--ease);
+}
+.kind__phrase {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--turq-gray-1);
+  animation: slide-in 0.4s var(--ease) both;
+}
+html:lang(th) .kind__phrase {
+  font-weight: 600;
+}
+.kind__how,
+.kind__early {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+/* Holding fills the button from the left, like the lamp's ring */
+.btn.kind__hold {
+  position: relative;
+  overflow: hidden;
+  min-width: 240px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  border-color: var(--flamingo-500);
+  color: #b4443f;
+}
+.kind__hold::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #fdeceb;
+  transform: scaleX(var(--p, 0));
+  transform-origin: left;
+  z-index: -1;
+}
+.kind__hold {
+  isolation: isolate;
+}
+.kind__reached {
+  font-weight: 700;
+  color: #b4443f;
+  animation: slide-in 0.4s var(--ease) both;
+}
+
+/* ---------- Hin's room: stepping stones, and rising above it ---------- */
+
+/* While rising, the camera follows the hand closely rather than gliding */
+.landscape__camera.is-lifting {
+  transition-duration: 0.35s;
+}
+.landscape__step {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: step-in 0.5s var(--ease) both;
+}
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.6);
+  }
+}
+.ms-steps-for {
+  margin: -6px 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #6b4c0f;
+}
+
+.rise {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+  margin: 4px 0 16px;
+}
+.rise__track {
+  position: relative;
+  width: 56px;
+  height: 210px;
+  border-radius: 999px;
+  background: linear-gradient(to top, #f8e4b3, #dbf0ee 60%, #d6f4f1);
+  box-shadow: inset 0 0 0 1.5px var(--line);
+  touch-action: none;
+  cursor: grab;
+}
+.rise__fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--marigo-500) 22%, transparent);
+}
+.rise__knob {
+  position: absolute;
+  left: 50%;
+  width: 52px;
+  height: 52px;
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2.5px solid var(--marigo-500);
+  color: #6b4c0f;
+  box-shadow: var(--shadow-2);
+}
+.rise__knob:focus-visible {
+  outline: 3px solid var(--blue-500);
+  outline-offset: 3px;
+}
+.rise__line {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--turq-gray-1);
+  animation: slide-in 0.4s var(--ease) both;
+}
+.ms-year {
+  margin-bottom: 4px;
+  animation: slide-in 0.4s var(--ease) both;
+}
+
+/* ---------- Companions speaking ---------- */
+
+.ms-says {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 10px;
+  align-items: end;
+  margin: 0 0 16px;
+  animation: slide-in 0.4s var(--ease) both;
+}
+.ms-says p {
+  padding: 10px 14px;
+  border-radius: 18px 18px 18px 6px;
+  font-weight: 600;
+  color: var(--turq-gray-1);
+}
+.ms-says--mooca p {
+  background: var(--turq-50);
+}
+.ms-says--hin p {
+  background: #fdf3dc;
+}
+.ms-says--bua p {
+  background: #fdeceb;
+}
+.ms-says__who {
+  display: grid;
+  place-items: center;
+}
+/* mooca's cloud carries a lot of sky around it, so it's drawn bigger to read at the same size */
+.ms-says--mooca .ms-says__who {
+  margin: -10px -8px -6px;
+}
+.flow__body > .ms-says:last-child {
+  margin: 16px 0 0;
+}
+
+.ms-options {
+  display: grid;
+  gap: 10px;
+}
+.ms-option {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  padding: 14px 16px;
+  background: var(--white);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.ms-option b {
+  font-size: 16px;
+  color: var(--ink);
+}
+.ms-option span {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.ms-option:hover {
+  border-color: var(--turq-200);
+}
+.ms-option.is-selected {
+  background: var(--turq-50);
+  border-color: var(--turq-500);
+}
+
+/* Pebbles: parts of the thought, sorted by what's in your control */
+.pebbles {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.pebbles__tray {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  min-height: 64px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: #f8e4b3;
+}
+.pebbles__done {
+  align-self: center;
+  font-weight: 700;
+  color: #6b4c0f;
+}
+.pebbles__bins {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.pebbles__bin {
+  display: flex;
+  flex-direction: column;
+  min-height: 150px;
+  border-radius: var(--radius);
+  border: 2px dashed var(--line);
+  background: var(--white);
+  transition: border-color 0.2s, background 0.2s;
+}
+.pebbles__bin--mine {
+  border-color: #f3c96a;
+}
+.has-picked .pebbles__bin {
+  border-style: solid;
+  cursor: pointer;
+}
+.has-picked .pebbles__bin--mine {
+  background: #fdf3dc;
+}
+.has-picked .pebbles__bin--let {
+  background: var(--gray-100);
+  border-color: var(--turq-gray-4);
+}
+.pebbles__bin-head {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 10px 12px 6px;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: inherit;
+}
+.pebbles__bin-head:disabled {
+  color: inherit;
+}
+.pebbles__bin-head b {
+  font-size: 15px;
+  color: var(--ink);
+}
+.pebbles__bin-head span {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.has-picked .pebbles__bin-head span {
+  color: var(--blue-500);
+  font-weight: 700;
+}
+.pebbles__bin-body {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 8px;
+  padding: 6px 10px 12px;
+}
+.pebble {
+  position: relative;
+  z-index: 1;
+  padding: 10px 14px;
+  border: 0;
+  background: #e3dfd8;
+  box-shadow: inset -3px -4px 0 #c2bbb0, 0 2px 4px rgba(38, 49, 60, 0.12);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.25;
+  cursor: grab;
+  touch-action: none;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s;
+}
+html:lang(th) .pebble {
+  font-weight: 500;
+}
+.pebble:hover {
+  transform: translateY(-2px);
+}
+.pebble.is-picked {
+  transform: translateY(-4px) rotate(-2deg);
+  box-shadow: inset -3px -4px 0 #c2bbb0, 0 0 0 3px var(--blue-300), 0 8px 16px -6px rgba(38, 49, 60, 0.3);
+}
+.pebble.is-dragging {
+  z-index: 5;
+  cursor: grabbing;
+  transition: none;
+  box-shadow: inset -3px -4px 0 #c2bbb0, 0 14px 24px -8px rgba(38, 49, 60, 0.35);
+}
+.pebbles__bin--mine .pebble {
+  background: #f8e4b3;
+  box-shadow: inset -3px -4px 0 #ecc977, 0 2px 4px rgba(38, 49, 60, 0.12);
+}
+.pebble--static {
+  display: inline-block;
+  cursor: default;
+  border-radius: 46% 54% 52% 48% / 58% 50% 50% 42%;
+  padding: 6px 12px;
+  font-size: 13px;
+  background: #f8e4b3;
+  box-shadow: inset -2px -3px 0 #ecc977;
+}
+.pebble--static:hover {
+  transform: none;
+}
+.pebble--static.pebble--let {
+  background: #e3dfd8;
+  box-shadow: inset -2px -3px 0 #c2bbb0;
+}
+
+/* Each room is its companion's place: answers picked in Hin's room turn Marigo, in Bua's Flamingo
+   (mooca's stay turquoise, the default) */
+.ms-room-hin,
+.ms-tone-hin {
+  --pick: var(--marigo-500);
+  --pick-tint: #fdf3dc;
+  --pick-soft: #f3d999;
+  --pick-text: #6b4c0f;
+}
+.ms-room-bua,
+.ms-tone-bua {
+  --pick: var(--flamingo-500);
+  --pick-tint: #fdeceb;
+  --pick-soft: #f6c3c1;
+  --pick-text: #b4443f;
+}
+:is(.ms-room-hin, .ms-room-bua, .ms-tone-hin, .ms-tone-bua) :is(.ms-option, .chip, .choice):hover {
+  border-color: var(--pick-soft);
+}
+:is(.ms-room-hin, .ms-room-bua, .ms-tone-hin, .ms-tone-bua) :is(.ms-option, .chip, .choice).is-selected {
+  background: var(--pick-tint);
+  border-color: var(--pick);
+}
+:is(.ms-room-hin, .ms-room-bua, .ms-tone-hin, .ms-tone-bua) .chip.is-selected {
+  color: var(--pick-text);
+}
+
+/* Pebbles shown on the card */
+.ms-stone__pebbles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ms-write--below {
+  margin-top: 10px;
+}
+
+/* ---------- Bua's room ---------- */
+
+.landscape__mud {
+  transition: opacity 1.4s var(--ease);
+}
+/* Where you feel it: the figure, its places' chips lined up beside it, then the two non-places */
+.body-pick__map {
+  position: relative;
+  display: flex;
+  height: 236px;
+}
+.body-map {
+  flex: none;
+}
+.body-map__spot {
+  cursor: pointer;
+}
+.body-map__glow {
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+/* a picked place glows, and the glow breathes slowly, like noticing warmth */
+.body-map__glow.is-on {
+  opacity: 1;
+  animation: spot 2.6s ease-in-out infinite;
+}
+@keyframes spot {
+  50% {
+    opacity: 0.55;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .body-map__glow.is-on {
+    animation: none;
+  }
+}
+/* the places' chips, top to bottom in body order, spread down the figure's height */
+.body-pick__places {
+  display: grid;
+  grid-template-rows: repeat(5, 46px);
+  align-items: center;
+  justify-items: start;
+  padding: 3px 0 0 20px;
+}
+.body-pick__places .chip,
+.body-pick__other .chip {
+  min-height: 36px;
+  padding: 4px 14px;
+}
+.body-pick__other {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1.5px dashed var(--line);
+}
+/* With room to spare, the two non-places move up beside the places, past a dashed divider */
+@media (min-width: 560px) {
+  .body-pick {
+    display: flex;
+    align-items: center;
+  }
+  .body-pick__other {
+    flex-direction: column;
+    align-items: flex-start;
+    flex: none;
+    margin: 0 0 0 auto;
+    padding: 16px 0 16px 14px;
+    border-top: 0;
+    border-left: 1.5px dashed var(--line);
+  }
+  .body-pick__other .chip {
+    white-space: nowrap;
+    padding: 4px 12px;
+  }
+  .body-pick__places {
+    padding-left: 12px;
+  }
+}
+.ms-tone {
+  margin-top: 20px;
+  animation: slide-in 0.4s var(--ease) both;
+}
+/* With "All over" picked, every place is in: a soft fill that matches the glow, without the picked border */
+.body-pick .chip.is-included {
+  background: var(--pick-tint, var(--turq-50));
+  color: var(--pick-text, var(--turq-text));
+}
+.ms-tone__options {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.ms-option--center {
+  align-items: center;
+  text-align: center;
+  padding: 12px 8px;
+}
+.ms-option--center span {
+  font-size: 12px;
+  font-style: italic;
+}
+
+/* The lamp: five slow breaths */
+.lamp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+/* The lamp itself is the button: tap to begin or pause */
+.lamp__art {
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+}
+.lamp__art:disabled {
+  cursor: default;
+}
+.lamp__art svg {
+  display: block;
+}
+/* The breath's light: drawn every frame while breathing, so it moves smoothly with no transition */
+.lamp__breath {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.lamp--idle .lamp__breath,
+.lamp--paused .lamp__breath,
+.lamp--done .lamp__breath {
+  transition: transform 0.8s var(--ease);
+}
+/* the flame's size comes in as --s, so its gentle flicker can sway it without overriding the size */
+.lamp__flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: scale(var(--s, 1));
+  animation: flicker 2.6s ease-in-out infinite;
+}
+@keyframes flicker {
+  0%,
+  100% {
+    transform: scale(var(--s, 1)) rotate(-2deg);
+  }
+  50% {
+    transform: scale(var(--s, 1)) rotate(2deg);
+  }
+}
+.lamp__cue {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--turq-gray-1);
+  min-height: 1.5em;
+}
+.lamp__dots {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.lamp__dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--flamingo-100);
+  transition: background 0.4s, width 0.3s var(--ease);
+}
+.lamp__dots span.is-on {
+  background: var(--flamingo-500);
+}
+/* the breath you're on stretches into a short pill */
+.lamp__dots span.is-now {
+  width: 20px;
+  background: var(--flamingo-200, #f6c3c1);
+}
+.lamp__go {
+  min-width: 180px;
+  border-color: var(--flamingo-500);
+  color: #b4443f;
+}
+.ms-skip {
+  display: block;
+  margin: 4px auto 0;
+}
+
+/* Metta */
+.ms-wishes {
+  margin-top: 12px;
+}
+.ms-metta {
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: var(--radius);
+  background: linear-gradient(170deg, #fdeceb 0%, #ffffff 80%);
+  text-align: center;
+  animation: slide-in 0.4s var(--ease) both;
+}
+.ms-metta__phrase {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--turq-gray-1);
+  text-wrap: balance;
+}
+html:lang(th) .ms-metta__phrase {
+  font-weight: 600;
+}
+.ms-metta__how {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+/* The lotus card at the end of Bua's room */
+
+/* ---------- The shared ending ---------- */
+
+.ms-card {
+  --accent: var(--turq-500);
+  --tint: var(--turq-50);
+  --accent-text: var(--turq-text);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(170deg, var(--tint) 0%, #ffffff 65%);
+  border: 1.5px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  margin-bottom: 16px;
+}
+.ms-card--hin {
+  --accent: var(--marigo-500);
+  --tint: #fdf3dc;
+  --accent-text: #6b4c0f;
+}
+.ms-card--bua {
+  --accent: var(--flamingo-500);
+  --tint: #fdeceb;
+  --accent-text: #b4443f;
+}
+.ms-card__top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--turq-gray-2);
+}
+.ms-card__who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.ms-card__thought {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--turq-gray-1);
+}
+html:lang(th) .ms-card__thought {
+  font-weight: 600;
+}
+.ms-card__rows {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ms-card__rows div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.ms-card__rows dt {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.ms-card__rows dd {
+  margin: 0;
+  color: var(--ink);
+}
+.ms-card__old {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-soft);
+}
+.ms-card__old svg {
+  flex: none;
+}
+.ms-card__keep {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  border: 1.5px solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.ms-card__keep p {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--turq-gray-1);
+}
+.ms-card__keep cite {
+  font-style: normal;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.ms-card__source {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: right;
+}
+.ms-card__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--turq-gray-2);
+}
+.ms-card__brand .logo-word {
+  font-size: 18px;
+}
+/* Save and share sit right under the card they act on */
+.ms-save {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.ms-save + .inline-error {
+  margin: -8px 0 16px;
+}
+
+/* One tap: did it help? */
+.ms-felt {
+  margin: 4px 0 16px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: var(--gray-100);
+}
+.ms-felt__q {
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.ms-felt__thanks {
+  color: var(--ink-soft);
+}
+
+.btn.btn--danger {
+  background: var(--white);
+  border: 1.5px solid var(--flamingo-500);
+  color: #b4443f;
+}
+.btn.btn--danger:hover {
+  background: #fdeceb;
+}
+
+.ms-ending .panel {
+  box-shadow: none;
+  border: 1.5px solid var(--line);
+  margin-bottom: 12px;
+}
+.ms-ending .safety-note {
+  width: 100%;
+}
+.ms-again {
+  margin: 8px 0 max(24px, env(safe-area-inset-bottom));
+}
+.landscape__stamp {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pop 0.5s var(--ease) 0.8s both;
+}
+
+/* ---------- The card's own page ---------- */
+
+/* First a moment in the whole landscape: the note stamped, the companion glowing */
+.ms--final-moment .ms__card {
+  display: none;
+}
+.ms--final-moment .ms__stage {
+  height: min(78svh, 150vw);
+}
+/* Then, on phones, the landscape steps aside and the card is the page (the ooca Garden banner
+   sits under it); on a computer the two panels stay, with the poster in the landscape's place */
+.ms--final-page .ms__stage {
+  display: none;
+}
+.ms-final__poster {
+  animation: rise 0.6s var(--ease) 0.2s both;
+}
+.ms--final-page .ms__card {
+  margin-top: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 12px 16px 0;
+}
+.ms--final-page .ms-final {
+  animation: rise 0.6s var(--ease) both;
+}
+.ms--final-page .ms-final__next {
+  animation: rise 0.6s var(--ease) 0.15s both;
+}
+
+/* ---------- Wide screens: stage on the left, card on the right ---------- */
+
+@media (min-width: 860px) {
+  /* Like Inner Weather: two cards side by side, tops aligned on every screen. The stage keeps
+     one size and stays put while the card scrolls; the card hugs its content (the landing keeps the stage's height). */
+  .ms__main {
+    --stage-h: min(calc(100dvh - 120px), 720px);
+    /* the gap under the stage once it sticks; the card ends at the same line */
+    --below: calc(100dvh - 88px - var(--stage-h));
+    display: grid;
+    grid-template-columns: auto minmax(0, 520px);
+    justify-content: center;
+    align-items: start;
+    gap: 40px;
+    padding: 24px 32px var(--below);
+  }
+  .ms .ms__stage {
+    position: sticky;
+    top: 88px; /* header 64 + the main's 24 top padding, so it never jumps when it sticks */
+    height: var(--stage-h);
+    width: auto;
+    aspect-ratio: 390 / 560;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-3);
+    transition: none;
+  }
+  .ms__card {
+    margin-top: 0;
+    flex: none;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-3);
+    padding: 28px 32px 8px;
+  }
+  /* The step's Next sits at the bottom of the card; on a card taller than the screen it sticks to the
+     screen's bottom edge, so nothing scrolling behind it can show underneath */
+  .ms__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .ms__body > .ms-step,
+  .ms__body > .ms-land {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .ms__body .step-foot {
+    margin-top: auto;
+  }
+  /* The landing is an invitation, not a step: like Inner Weather's intro, its words sit straight on
+     the page beside the landscape, with no card around them */
+  .ms--landing .ms__card {
+    min-height: var(--stage-h);
+    padding: 36px 8px;
+    background: none;
+    box-shadow: none;
+  }
+  /* With no card, the landing gets its lift from scale and a few solid shapes instead */
+  .ms-land {
+    gap: 18px;
+  }
+  .ms-land .ms-kicker {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--white);
+    box-shadow: var(--shadow-1);
+  }
+  .ms-land .ms-title--lg {
+    font-size: 48px;
+  }
+  html:lang(th) .ms-land .ms-title--lg {
+    font-size: 44px;
+  }
+  .ms-land .ms-body {
+    font-size: 18px;
+  }
+  .ms-land .ms-trio {
+    gap: 12px;
+    max-width: 460px;
+  }
+  /* Who's here, not something to tap: avatar on a soft disc, words beside it, no card or shadow */
+  .ms-land .ms-trio li {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+  }
+  .ms-land .ms-trio svg {
+    flex: none;
+    width: 64px;
+    height: 64px;
+    padding: 4px;
+    border-radius: 50%;
+    background: var(--disc);
+    box-shadow: inset 0 0 0 2px var(--disc-ring);
+  }
+  /* Each friend gets their own colour, from where they live in the landscape */
+  .ms-land .ms-trio li:nth-child(1) {
+    --disc: #e4effb;
+    --disc-ring: #cfe0f6;
+  }
+  .ms-land .ms-trio li:nth-child(2) {
+    --disc: #f6eedc;
+    --disc-ring: #ecdfc2;
+  }
+  .ms-land .ms-trio li:nth-child(3) {
+    --disc: #fde6e8;
+    --disc-ring: #f8d0d5;
+  }
+  .ms-land .ms-trio b {
+    font-size: 16px;
+  }
+  .ms-land {
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+  }
+  .ms-land .intro__meta {
+    justify-content: flex-start;
+  }
+  .ms-land__foot {
+    position: static;
+    align-items: stretch;
+    width: 100%;
+    max-width: 460px;
+    padding: 8px 0 0;
+    background: none;
+  }
+}
+
+/* mooca's weather question sits under its speech bubble, so the five skies go compact: two columns of
+   icon-beside-words rows instead of tall tiles, keeping the whole question above the sticky Next */
+@media (min-width: 560px) {
+  .ms-room-mooca .weather-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .ms-room-mooca .weather-card,
+  .ms-room-mooca .weather-card:nth-child(4),
+  .ms-room-mooca .weather-card:nth-child(5) {
+    grid-column: auto;
+    grid-template-columns: 36px 1fr;
+    justify-items: start;
+    text-align: left;
+    column-gap: 12px;
+    row-gap: 0;
+    min-height: 60px;
+    padding: 8px 12px;
+  }
+  .ms-room-mooca .weather-card svg {
+    grid-row: span 2;
+    width: 36px;
+    height: 36px;
+  }
+  .ms-room-mooca .weather-card__label {
+    font-size: 16px;
+  }
+  .ms-room-mooca .weather-card__hint {
+    font-size: 13px;
+    line-height: 1.35;
+  }
+}
+
+/* The word follow-up tightens to match: less padding, title and hint closer, smaller chips */
+.ms-room-mooca .word-pick {
+  margin-top: 12px;
+  padding: 12px 14px;
+}
+.ms-room-mooca .word-pick__sub {
+  margin: 0 0 8px;
+}
+.ms-room-mooca .word-pick .chips {
+  gap: 6px;
+}
+.ms-room-mooca .word-pick .chip {
+  min-height: 34px;
+  padding: 4px 14px;
+  font-size: 14px;
+}
+
+@media (min-width: 860px) {
+  /* The moment: the landscape alone, centred */
+  .ms--final-moment .ms__main {
+    grid-template-columns: auto;
+  }
+  /* The page: back to two panels, the ooca Garden poster where the landscape was, the card and
+     what to do now on the right */
+  .ms--final-page .ms__stage {
+    display: block;
+  }
+  .ms--poster .ms__stage > .landscape {
+    visibility: hidden;
+  }
+  .ms--final-page .ms__card {
+    margin-top: 0;
+    background: var(--white);
+    box-shadow: var(--shadow-3);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px 8px;
+  }
+  .ms-final__poster {
+    display: none;
+  }
+}
+
+/* ---------- Each path's own wash ---------- */
+/* Stepping into a friend's place tints the page with two neighbouring hues from where they live;
+   the colours glide over, and the ending keeps the wash of the friend you chose */
+.ms[data-friend='mooca'] {
+  --sky-a: #dcecfb;
+  --sky-b: #f3f8fd;
+}
+.ms[data-friend='hin'] {
+  --sky-a: #f8ecd4;
+  --sky-b: #f6f8f0;
+}
+.ms[data-friend='bua'] {
+  --sky-a: #fbe4e4;
+  --sky-b: #eef4fb;
+}

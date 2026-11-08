@@ -1,0 +1,212 @@
+/* The promo page: Mindscape announced inside ooca's world. Built from the same tokens, cards and
+   characters as the experience, so the page and the product feel like one thing. */
+
+.promo__main {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 8px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+.promo__top-cta {
+  min-height: 40px;
+  padding: 0 18px;
+}
+
+/* What it is */
+.promo__hero {
+  display: grid;
+  gap: 28px;
+  align-items: center;
+}
+.promo__hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+.promo__new {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--white);
+  box-shadow: var(--shadow-1);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--turq-text);
+}
+.promo__title {
+  font-size: clamp(32px, 8vw, 52px);
+  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--turq-gray-1);
+  text-wrap: balance;
+}
+html:lang(th) .promo__title {
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+.promo__lead {
+  font-size: 18px;
+  color: var(--ink-soft);
+  max-width: 34em;
+}
+.promo__cta {
+  min-width: 240px;
+}
+.promo__meta {
+  justify-content: flex-start;
+}
+.promo__hero-art {
+  width: 100%;
+  aspect-ratio: 390 / 420;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-3);
+}
+.promo__hero-art .landscape {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Sections */
+.promo__h2 {
+  font-size: clamp(24px, 6vw, 32px);
+  line-height: 1.25;
+  font-weight: 800;
+  color: var(--turq-gray-1);
+  text-wrap: balance;
+}
+html:lang(th) .promo__h2 {
+  font-weight: 600;
+}
+.promo__sub {
+  margin-top: 6px;
+  font-size: 17px;
+  color: var(--ink-soft);
+}
+
+/* The three friends, each in its own colour */
+.promo__friends {
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+.promo__friend {
+  --accent: var(--turq-500);
+  --tint: var(--turq-50);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: 22px 20px 24px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(170deg, var(--tint) 0%, var(--white) 60%);
+  border: 1.5px solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.promo__friend--hin {
+  --accent: var(--marigo-500);
+  --tint: #fdf3dc;
+}
+.promo__friend--bua {
+  --accent: var(--flamingo-500);
+  --tint: #fdeceb;
+}
+.promo__friend b {
+  margin-top: 6px;
+  font-size: 20px;
+  color: var(--ink);
+}
+.promo__lens {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.promo__friend p {
+  margin-top: 8px;
+  color: var(--ink);
+}
+
+/* What you leave with, beside a sample card */
+.promo__leave {
+  display: grid;
+  gap: 24px;
+  align-items: center;
+}
+.promo__points {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.promo__points li {
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow-1);
+  color: var(--ink-soft);
+}
+.promo__points b {
+  color: var(--ink);
+}
+.promo__sample {
+  margin: 0;
+  transform: rotate(-1.5deg);
+  box-shadow: var(--shadow-3);
+}
+
+/* Try it */
+.promo__end {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding: 36px 20px;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-2);
+}
+.promo__help {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+@media (min-width: 860px) {
+  .promo__main {
+    padding: 16px 32px 64px;
+    gap: 72px;
+  }
+  .promo__hero {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+  }
+  .promo__friends {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .promo__leave {
+    grid-template-columns: 1fr minmax(0, 420px);
+    gap: 56px;
+  }
+}
+
+@media (max-width: 420px) {
+  .promo__top-cta {
+    display: none;
+  }
+}
+
+.promo .brand {
+  text-decoration: none;
+}
