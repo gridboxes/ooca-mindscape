@@ -19,6 +19,7 @@ import type { Expression, Mood, NewMood } from './components/companions/Face'
 import CrisisSheet from './components/CrisisSheet'
 import StepTop, { JourneyBar, JourneyProvider, useJourney } from './rooms/StepTop'
 import MoocaRoom, { type MoocaResult } from './rooms/MoocaRoom'
+import { UNSURE } from './rooms/mooca-content'
 import HinRoom, { type HinResult, type HinStage } from './rooms/HinRoom'
 import BuaRoom, { type BuaResult, type BuaStage } from './rooms/BuaRoom'
 import Ending from './rooms/Ending'
@@ -144,7 +145,7 @@ export default function Mindscape() {
   const noteText = thought ? (thought.chip !== null ? t(thoughts[thought.chip].text, lang) : thought.text) : null
   // In mooca's room the note rewrites itself as words soften, and leaves softened
   const shownNote =
-    phase === 'mooca' && moocaNote ? moocaNote : phase === 'ending' && chosen === 'mooca' && moocaResult ? moocaResult.reframe : noteText
+    phase === 'mooca' && moocaNote ? moocaNote : phase === 'ending' && chosen === 'mooca' && moocaResult ? moocaResult.reframe[lang] ?? '' : noteText
 
   // How the three react: soften when you share a thought, listen, and brighten when you pick one of them
   function moodOf(c: Companion): Expression {
@@ -525,7 +526,7 @@ export default function Mindscape() {
                   : 0
             }
             note={phase === 'landing' || phase === 'thought' ? null : shownNote}
-            moocaGlow={(phase === 'mooca' && moocaGlow) || (phase === 'ending' && chosen === 'mooca' && !!moocaResult?.value)}
+            moocaGlow={(phase === 'mooca' && moocaGlow) || (phase === 'ending' && chosen === 'mooca' && moocaResult?.answers.value != null && moocaResult.answers.value !== UNSURE)}
             noteAt={focus}
             noteStamp={phase === 'ending' ? chosen : null}
           />

@@ -33,10 +33,8 @@ export interface MoocaAnswers extends Answers {
 export interface MoocaResult {
   answers: MoocaAnswers
   report: Report
-  /** the thought, softened */
-  reframe: string
-  /** what the worry hangs over, in the user's language */
-  value: string | null
+  /** the thought, softened, in each language, so the card follows the language it is read in */
+  reframe: Record<Lang, string>
   /** the thinking traps the user softened */
   traps: Trap[]
   /** a heavy sky: worth asking how long it's been */
@@ -84,7 +82,6 @@ export default function MoocaRoom({ lang, thought, theme, chip, resume, onSky, o
   useStepChange(`${step}-${reading}`)
 
   const report = useMemo(() => buildReport(a), [a])
-  const value = a.value !== null && a.value !== UNSURE ? T(values[theme][a.value]) : null
 
   const canNext = step === 0 ? !!a.weather : step === 1 ? a.value !== null : changes > 0
 
@@ -98,11 +95,13 @@ export default function MoocaRoom({ lang, thought, theme, chip, resume, onSky, o
         const p = parts[Number(i)]
         return typeof p === 'string' ? [] : [p.trap]
       })
+      // A preset thought has both languages' wording; a typed thought stays as the user wrote it in the other language
+      const other: Lang = lang === 'en' ? 'th' : 'en'
+      const otherReframe = chip !== null ? compose(presetParts[chip][other], a.soft, other) : thought
       onDone({
         answers: a,
         report,
-        reframe: now,
-        value,
+        reframe: { [lang]: now, [other]: otherReframe } as Record<Lang, string>,
         traps: [...new Set(traps)],
         heavy: report.weather === 'rainy' || report.weather === 'stormy' || report.weather === 'foggy',
       })

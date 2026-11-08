@@ -5,7 +5,7 @@ import WeatherIcon from '../components/WeatherIcon'
 import type { MoocaResult } from './MoocaRoom'
 import type { HinResult } from './HinRoom'
 import type { BuaResult } from './BuaRoom'
-import { CLEARER, mooca, traps } from './mooca-content'
+import { CLEARER, UNSURE, mooca, traps, values } from './mooca-content'
 import { softened } from './Soften'
 import { JUST_A_FEELING, facts, hin, pebbles, virtues, years } from './hin-content'
 import { CIRCLES, bua, circles, regions, tones, wishes } from './bua-content'
@@ -50,7 +50,10 @@ export function endCard(who: 'mooca' | 'hin' | 'bua', r: Results, lang: Lang, th
   const T = (s: Record<Lang, string>) => s[lang]
 
   if (who === 'mooca' && r.mooca) {
-    const { answers: a, report, reframe, value, traps: softenedTraps } = r.mooca
+    const { answers: a, report, traps: softenedTraps } = r.mooca
+    const reframe = r.mooca.reframe[lang] ?? ''
+    // the value is kept as its index, so it reads in the language the card is shown in
+    const value = a.value !== null && a.value !== UNSURE ? T(values[theme][a.value]) : null
     const w = report.weather
     const wordIndex = a.word ? weathers[w].words.en.indexOf(a.word) : -1
     const word = wordIndex >= 0 ? weathers[w].words[lang][wordIndex] : null
