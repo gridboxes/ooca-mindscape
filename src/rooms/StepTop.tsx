@@ -49,6 +49,8 @@ interface BarProps {
   onBack: () => void
   /** who you're with, on a room's first step */
   intro?: string
+  /** the label is the screen's title (the card's page), so it's the heading */
+  heading?: boolean
 }
 
 /**
@@ -56,7 +58,7 @@ interface BarProps {
  * part has more than one step, dots show how many are left in it. No whole-journey bar: the question
  * people actually have is "how much more of this?", not how far through the check-in they are.
  */
-export function JourneyBar({ lang, place, onBack, intro }: BarProps) {
+export function JourneyBar({ lang, place, onBack, intro, heading = false }: BarProps) {
   return (
     <div className="ms-journey">
       <div className="flow__top">
@@ -65,7 +67,8 @@ export function JourneyBar({ lang, place, onBack, intro }: BarProps) {
             <path d="M15 5 l-7 7 l7 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
-        {intro && <p className="ms-journey__label">{intro}</p>}
+        {intro && heading && <h1 className="ms-journey__label ms-journey__label--title">{intro}</h1>}
+        {intro && !heading && <p className="ms-journey__label">{intro}</p>}
         {place.total > 1 && (
           <div
             className="ms-journey__dots"

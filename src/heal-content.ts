@@ -174,7 +174,7 @@ export const heal = {
   bookNote: { en: 'Hin thought this might help', th: 'หินคิดว่าน่าจะช่วยได้' },
 
   // the hand-off on Mindscape's ending
-  carryTitle: { en: 'Carry on with {name} in your garden', th: 'ไปต่อกับ{name}ในสวนพักใจ' },
+  carryTitle: { en: 'Carry on with {name} in ooca Garden', th: 'ไปต่อกับ{name}ในสวนพักใจ' },
   carryCta: { en: 'Open your garden', th: 'เปิดสวนพักใจ' },
   cardComes: { en: 'Get the ooca app', th: 'ดาวน์โหลดแอป ooca' },
   carryNote: { en: 'Your card comes with you · 7 days free', th: 'การ์ดของคุณไปด้วย · ใช้ฟรี 7 วัน' },

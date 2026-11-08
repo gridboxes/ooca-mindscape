@@ -226,4 +226,6 @@ export const hin = {
     th: 'บางสิ่งอยู่ในอำนาจของเรา บางสิ่งไม่ได้อยู่',
   },
   quoteBy: { en: 'Epictetus, Enchiridion 1', th: 'เอพิคทิตัส, เอนคิริเดียน 1' },
+  quoteShort: { en: '— Epictetus', th: '— เอพิคทิตัส' },
+  stepWith: { en: 'I’ll step on it with {virtue}.', th: 'ฉันจะก้าวข้ามมันไปด้วย{virtue}' },
 }

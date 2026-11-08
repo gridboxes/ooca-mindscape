@@ -4,6 +4,7 @@ import { companions, fill, type Companion, type Theme } from '../mindscape-conte
 import { heal, lessonFor } from '../heal-content'
 import Avatar from './companions/Avatar'
 import Stores from './Stores'
+import { storeUrl } from './store-links'
 import { BookScreen, ChatScreen, GardenHome, Phone, PlayerScreen } from './HealPhones'
 import '../heal.css'
 
@@ -31,7 +32,7 @@ export default function HealPoster({ lang, who, theme, compact = false }: { lang
   const [fit, setFit] = useState(1)
   const name = T(companions[who].name)
   const lesson = lessonFor(who, theme)
-  const heal_ = `${location.pathname}?heal`
+  const store = storeUrl()
 
   useEffect(() => setStill(window.matchMedia('(prefers-reduced-motion: reduce)').matches), [])
   useEffect(() => {
@@ -57,7 +58,7 @@ export default function HealPoster({ lang, who, theme, compact = false }: { lang
   }, [compact])
 
   const lessonChip = (
-    <a className="poster__lesson" href={heal_}>
+    <a className="poster__lesson" href={store} target="_blank" rel="noopener noreferrer">
       <i className="poster__play" aria-hidden="true" />
       <span>
         <b>{T(lesson.title)}</b>
@@ -79,7 +80,7 @@ export default function HealPoster({ lang, who, theme, compact = false }: { lang
           </div>
         </div>
         {lessonChip}
-        <a className="btn btn--primary btn--block" href={heal_}>
+        <a className="btn btn--primary btn--block" href={store} target="_blank" rel="noopener noreferrer">
           {T(heal.carryCta)}
         </a>
         <span className="poster__note">{T(heal.carryNote)}</span>
@@ -151,7 +152,7 @@ export default function HealPoster({ lang, who, theme, compact = false }: { lang
       {/* Get the app: the store buttons, as on ooca Garden's page */}
       <div className="poster__ask">
         <span className="poster__ask-line">{T(heal.cardComes)}</span>
-        <Stores lang={lang} href={heal_} />
+        <Stores lang={lang} />
         <span className="poster__note">{T(heal.trial)}</span>
       </div>
     </aside>

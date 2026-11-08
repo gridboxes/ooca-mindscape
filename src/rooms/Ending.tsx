@@ -5,7 +5,8 @@ import { ChipStep, Footer } from '../components/Steps'
 import Breathing from '../components/Breathing'
 import StepTop, { useStepChange } from './StepTop'
 import Avatar from '../components/companions/Avatar'
-import { companions, fill, ms, nextSteps, safetyLine, type Companion, type Theme } from '../mindscape-content'
+import Postcard from './Postcard'
+import { companions, ms, nextSteps, safetyLine, type Companion, type Theme } from '../mindscape-content'
 import HealPoster from '../components/HealPoster'
 import type { EndCard } from './end-card'
 
@@ -138,39 +139,8 @@ export default function Ending({ lang, who, theme, card, heavy, tierFor, onBack,
       <div className="flow__body ms-final" key="closing">
         {/* The keepsake: the card, and saving it */}
         <div className="ms-final__keep">
-          <header className="step-head">
-            <h1 className="step-title">{t(ms.closingTitle, lang)}</h1>
-            <p className="step-sub">{t(ms.closingSub, lang)}</p>
-          </header>
-
-          <div ref={cardRef} className={`ms-card ms-card--${who}`}>
-            <div className="ms-card__top">
-              <span>{t(ms.cardKicker, lang)}</span>
-              <span>{date}</span>
-            </div>
-            <div className="ms-card__who">
-              <Avatar who={who} mood="happy" size={72} />
-              <span>{fill(t(ms.withLabel, lang), { name })}</span>
-            </div>
-            <p className="ms-card__thought">“{card.title}”</p>
-            <dl className="ms-card__rows">
-              {card.rows.map((r) => (
-                <div key={r.label}>
-                  <dt>{r.label}</dt>
-                  <dd>{r.value}</dd>
-                </div>
-              ))}
-            </dl>
-            <blockquote className="ms-card__keep">
-              <p>{card.quote.text}</p>
-              <cite>{card.quote.by}</cite>
-            </blockquote>
-            <div className="ms-card__brand">
-              <span className="logo-word">ooca</span>
-              <span>{t(ms.brand, lang)}</span>
-              <span className="ms-card__source">{card.source}</span>
-            </div>
-          </div>
+          {/* the title sits in the top row, beside the back button (see JourneyBar) */}
+          <Postcard ref={cardRef} lang={lang} who={who} name={name} date={date} postcard={card.postcard} />
 
           <div className="ms-save">
             <button type="button" className="btn btn--secondary btn--grow" onClick={saveCard} disabled={save === 'saving'}>

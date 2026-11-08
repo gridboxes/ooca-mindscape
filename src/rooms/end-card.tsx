@@ -5,7 +5,8 @@ import WeatherIcon from '../components/WeatherIcon'
 import type { MoocaResult } from './MoocaRoom'
 import type { HinResult } from './HinRoom'
 import type { BuaResult } from './BuaRoom'
-import { mooca, traps } from './mooca-content'
+import { CLEARER, mooca, traps } from './mooca-content'
+import { softened } from './Soften'
 import { JUST_A_FEELING, facts, hin, pebbles, virtues, years } from './hin-content'
 import { CIRCLES, bua, circles, regions, tones, wishes } from './bua-content'
 
@@ -22,6 +23,25 @@ export interface EndCard {
   source: string
   /** one small thing to do now; breathing is done right here */
   practice: { title: string; body?: string; breathe?: Weather } | null
+  /**
+   * The card as a postcard: the friend's place on top, the change in one big line with the
+   * thought small above it, at most one detail, and a single footer line
+   */
+  postcard: {
+    /** the thought as it came in: crossed out where it changed (mooca, Hin), just let drift (Bua) */
+    before: string
+    beforeStyle: 'crossed' | 'drift'
+    after: string
+    detail?: { label: string; value: string }
+    line: string
+    /** mooca: the sky before and after the softening */
+    from?: Weather
+    to?: Weather
+    /** Hin: what's yours to move, laid as stepping stones */
+    stones?: string[]
+    /** Bua: how far the kindness reached */
+    rings?: number
+  }
 }
 
 type Results = { mooca: MoocaResult | null; hin: HinResult | null; bua: BuaResult | null }
@@ -51,9 +71,21 @@ export function endCard(who: 'mooca' | 'hin' | 'bua', r: Results, lang: Lang, th
     ]
     if (value) rows.push({ label: T(mooca.careLabel), value })
     if (softenedTraps.length) rows.push({ label: T(mooca.softenedLabel), value: softenedTraps.map((x) => T(traps[x])).join(' · ') })
+    // the sky clears a notch for each change, up to two, as it did in the room
+    let to = w
+    for (let i = 0; i < Math.min(softened(a.soft), 2); i++) to = CLEARER[to]
     return {
       title: reframe,
       rows,
+      postcard: {
+        before: thought,
+        beforeStyle: 'crossed',
+        after: reframe,
+        from: w,
+        to,
+        detail: value ? { label: T(mooca.careLabel), value } : undefined,
+        line: T(keepLines.mooca),
+      },
       quote: { text: T(keepLines.mooca), by: T(companions.mooca.name) },
       source: T(ms.sourceMooca),
       practice: {
@@ -76,9 +108,22 @@ export function endCard(who: 'mooca' | 'hin' | 'bua', r: Results, lang: Lang, th
     if (letBe.length) rows.push({ label: T(hin.letLabel), value: <Pebbles items={letBe} let /> })
     if (a.virtue) rows.push({ label: T(hin.virtueLabel), value: T(virtues[a.virtue].label) })
     if (a.year) rows.push({ label: T(hin.yearLabel), value: T(years[a.year].label) })
+    // the change Hin's sitting makes is in what you'll do, so that's the big line
+    const virtue = a.virtue ? T(virtues[a.virtue].label) : null
+    const after = virtue
+      ? fill(T(hin.stepWith), { virtue: lang === 'en' ? virtue.toLowerCase() : virtue })
+      : T(hin.nothingMine)
     return {
       title: thought,
       rows,
+      postcard: {
+        before: thought,
+        beforeStyle: 'crossed',
+        after,
+        detail: letBe.length ? { label: T(hin.letLabel), value: letBe.join(', ') } : undefined,
+        line: `“${T(hin.quote)}” ${T(hin.quoteShort)}`,
+        stones: mine.slice(0, 3),
+      },
       quote: { text: `“${T(hin.quote)}”`, by: T(hin.quoteBy) },
       source: T(ms.sourceHin),
       practice: a.virtue ? { title: T(virtues[a.virtue].label), body: T(virtues[a.virtue].step) } : null,
@@ -99,6 +144,16 @@ export function endCard(who: 'mooca' | 'hin' | 'bua', r: Results, lang: Lang, th
     return {
       title: thought,
       rows,
+      // nothing gets fixed in Bua's room: the thought isn't crossed out, just let drift, and the
+      // big line is the kindness passed on
+      postcard: {
+        before: thought,
+        beforeStyle: 'drift',
+        after: a.wish ? T(wishes[a.wish].me) : T(bua.quote),
+        detail: a.sent ? { label: T(bua.reachLabel), value: CIRCLES.slice(0, a.sent).map((c) => T(circles[c])).join(' → ') } : undefined,
+        line: T(bua.quote),
+        rings: a.sent,
+      },
       quote: { text: T(bua.quote), by: T(companions.bua.name) },
       source: T(ms.sourceBua),
       practice: { title: T(bua.practiceTitle), body: T(bua.practiceBody) },

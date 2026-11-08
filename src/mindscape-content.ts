@@ -334,7 +334,6 @@ export const ms = {
     th: 'ก่อนไป ความรู้สึกนี้อยู่กับคุณมานานแค่ไหนแล้ว?',
   },
   closingTitle: { en: 'What you’re taking with you', th: 'สิ่งที่คุณนำติดตัวไป' },
-  closingSub: { en: 'Same thought, a few minutes later, seen a little differently.', th: 'ความคิดเดิม ผ่านไปไม่กี่นาที แต่มองต่างไปนิดหนึ่ง' },
   // where each room's idea comes from
   sourceMooca: { en: 'Psychology · CBT and ACT', th: 'จิตวิทยา · CBT และ ACT' },
   sourceHin: { en: 'Stoic philosophy · the roots of CBT', th: 'ปรัชญาสโตอิก · รากของ CBT' },

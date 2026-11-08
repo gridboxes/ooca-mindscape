@@ -50,6 +50,14 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.ms-journey__label--title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--turq-gray-1);
+}
+html:lang(th) .ms-journey__label--title {
+  font-weight: 600;
+}
 .ms-journey__dots {
   display: flex;
   gap: 6px;
@@ -1704,4 +1712,306 @@ html:lang(th) .ms-card__thought {
 .ms[data-friend='bua'] {
   --sky-a: #fbe4e4;
   --sky-b: #eef4fb;
+}
+
+/* ---------- The card as a postcard (mooca's, for now) ---------- */
+/* A 4:5 keepsake: the place on top, the change in one big line, one detail, one footer line */
+
+.pc {
+  --sky-top: #cfeef0;
+  --sky-bottom: #f2fbfa;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 4 / 5;
+  margin-bottom: 16px;
+  overflow: hidden;
+  border-radius: 26px;
+  background: #ffffff;
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--turq-500) 30%, transparent), var(--shadow-2);
+}
+.pc--sky-sunny {
+  --sky-top: #fdeec4;
+  --sky-bottom: #eaf8f6;
+}
+.pc--sky-partly {
+  --sky-top: #d6f1f3;
+  --sky-bottom: #f4fbfa;
+}
+.pc--sky-rainy,
+.pc--sky-foggy {
+  --sky-top: #dfe5ee;
+  --sky-bottom: #f3f6fa;
+}
+.pc--sky-stormy {
+  --sky-top: #c9cfdd;
+  --sky-bottom: #eef1f6;
+}
+
+/* the place: mooca's sky, the weather going from the old forecast to the new */
+.pc__band {
+  position: relative;
+  flex: 0 0 46%;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom));
+}
+.pc__sun {
+  position: absolute;
+  top: 18px;
+  left: 22px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fbe36a;
+  box-shadow: 0 0 0 9px rgba(251, 227, 106, 0.28);
+  opacity: 0;
+}
+.pc--sky-sunny .pc__sun,
+.pc--sky-partly .pc__sun {
+  opacity: 1;
+}
+.pc__cloud {
+  position: absolute;
+  height: 18px;
+  border-radius: 999px;
+  background: #ffffff;
+  opacity: 0.9;
+}
+.pc__cloud::before {
+  content: '';
+  position: absolute;
+  left: 24%;
+  top: -10px;
+  width: 44%;
+  height: 22px;
+  border-radius: 50%;
+  background: inherit;
+}
+.pc__cloud--a {
+  top: 72px;
+  left: 14%;
+  width: 70px;
+}
+.pc__cloud--b {
+  top: 30px;
+  right: 30%;
+  width: 52px;
+  opacity: 0.7;
+}
+.pc__hill {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -70px;
+  height: 120px;
+  border-radius: 50%;
+  background: #dbf0ee;
+}
+.pc__friend {
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  transform: translateX(-50%);
+}
+.pc__sky {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  font-weight: 800;
+  color: var(--turq-text);
+}
+.pc__sky i {
+  font-style: normal;
+}
+/* a postmark: the date, round and slightly tilted */
+.pc__stamp {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 2px dashed color-mix(in srgb, var(--turq-text) 55%, transparent);
+  transform: rotate(-10deg);
+  color: var(--turq-text);
+  text-align: center;
+  line-height: 1.15;
+}
+.pc__stamp b {
+  font-size: 11px;
+  font-weight: 800;
+}
+.pc__stamp small {
+  font-size: 9px;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+/* the change, in one big line */
+.pc__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 24px 10px;
+}
+.pc__with {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--turq-text);
+}
+.pc__before {
+  font-size: 15px;
+  color: var(--ink-soft);
+  text-decoration-thickness: 1.5px;
+}
+.pc__after {
+  font-size: 26px;
+  line-height: 1.22;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--turq-gray-1);
+  text-wrap: balance;
+}
+html:lang(th) .pc__after {
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+.pc__detail {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--turq-50);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.pc__detail b {
+  color: var(--ink);
+}
+
+/* one footer line: ooca, and mooca's line to keep */
+.pc__foot {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 12px 24px 18px;
+  border-top: 1px dashed var(--line);
+}
+.pc__foot .logo-word {
+  font-size: 17px;
+}
+.pc__line {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+/* Each friend's postcard in its own colour: Hin warm Marigo, Bua soft Flamingo */
+.pc {
+  --pc-accent: var(--turq-500);
+  --pc-text: var(--turq-text);
+  --pc-tint: var(--turq-50);
+}
+.pc--hin {
+  --pc-accent: var(--marigo-500);
+  --pc-text: #6b4c0f;
+  --pc-tint: #fdf3dc;
+  --sky-top: #fbe9c4;
+  --sky-bottom: #fff8ea;
+}
+.pc--bua {
+  --pc-accent: var(--flamingo-500);
+  --pc-text: #b4443f;
+  --pc-tint: #fdeceb;
+  --sky-top: #fde3e1;
+  --sky-bottom: #f3fbfa;
+}
+.pc {
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--pc-accent) 30%, transparent), var(--shadow-2);
+}
+.pc__with,
+.pc__sky,
+.pc__stamp {
+  color: var(--pc-text);
+}
+.pc__stamp {
+  border-color: color-mix(in srgb, var(--pc-text) 55%, transparent);
+}
+.pc__detail {
+  background: var(--pc-tint);
+}
+.pc--hin .pc__sun,
+.pc--bua .pc__sun {
+  opacity: 1;
+}
+/* Bua doesn't cross the thought out: it's just let drift */
+.pc__before--drift {
+  font-style: italic;
+  opacity: 0.75;
+}
+
+/* Hin's place: a warm hill, Hin on it, and your stepping stones leading away */
+.pc__hill--earth {
+  background: linear-gradient(180deg, #f8e4b3, #f1d58f);
+}
+.pc__friend--hin {
+  left: 30%;
+  bottom: -8px;
+}
+.pc__stones {
+  position: absolute;
+  right: 6%;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 6px;
+}
+.pc__stone {
+  padding: 5px 12px;
+  border-radius: 46% 54% 52% 48% / 58% 50% 50% 42%;
+  background: #f5e6c2;
+  box-shadow: inset -2px -3px 0 #e1c787;
+  font-size: 12px;
+  font-weight: 800;
+  color: #4d3a14;
+  white-space: nowrap;
+  transform: translateX(calc(var(--i) * -14px)) scale(calc(1 - var(--i) * 0.08));
+}
+
+/* Bua's place: the pond, the kindness rings, and Bua in full bloom */
+.pc__pond {
+  position: absolute;
+  left: -6%;
+  right: -6%;
+  bottom: -46px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, #e4effb 0%, #c7ddf7 100%);
+}
+.pc__ring {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  width: calc(110px + var(--i) * 90px);
+  height: calc(34px + var(--i) * 26px);
+  border-radius: 50%;
+  border: 2.5px solid color-mix(in srgb, var(--flamingo-500) calc(70% - var(--i) * 20%), transparent);
+  transform: translateX(-50%);
+}
+.pc__friend--bua {
+  bottom: -2px;
 }

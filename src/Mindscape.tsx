@@ -196,6 +196,14 @@ export default function Mindscape() {
     setFinal((f) => (f === 'off' ? (still ? 'page' : 'moment') : f))
   }, [])
 
+  // Once the card's page is showing, its title takes focus (it was hidden during the moment)
+  useEffect(() => {
+    if (final !== 'page') return
+    const h = document.querySelector<HTMLElement>('.ms__card h1')
+    h?.setAttribute('tabindex', '-1')
+    h?.focus({ preventScroll: true })
+  }, [final])
+
   useEffect(() => {
     if (final !== 'moment') return
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -261,6 +269,8 @@ export default function Mindscape() {
     chosen && part === 2
       ? fill(t(ms.roomKicker, lang), { name: t(companions[chosen].name, lang), method: t(companions[chosen].method, lang) })
       : undefined
+  // On the card's page the top row carries its title, beside the back button like the room labels
+  const finalTitle = phase === 'ending' && final !== 'off' ? t(ms.closingTitle, lang) : undefined
 
   let card: ReactNode
   if (phase === 'landing') {
@@ -523,7 +533,7 @@ export default function Mindscape() {
 
         <section ref={cardRef} className="ms__card">
           {phase !== 'landing' && (
-            <JourneyBar lang={lang} place={journey.place} onBack={() => journey.back.current()} intro={intro} />
+            <JourneyBar lang={lang} place={journey.place} onBack={() => journey.back.current()} intro={finalTitle ?? intro} heading={!!finalTitle} />
           )}
           <JourneyProvider value={journey.value}>
             {(phase === 'thought' || phase === 'voices') && <StepTop onBack={back} />}
