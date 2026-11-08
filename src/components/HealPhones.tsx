@@ -313,7 +313,7 @@ export function GardenHome({
     <div className="hs hs--garden">
       <div className="gh">
         <span className="gh__brand">
-          <span className="logo-word">ooca</span> {lang === 'th' ? 'สวนใจ' : 'Garden'}
+          <span className="logo-word">ooca</span> {lang === 'th' ? 'สวนพักใจ' : 'Garden'}
         </span>
       </div>
 

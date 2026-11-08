@@ -3,7 +3,7 @@ import type { Companion, Theme } from './mindscape-content'
 
 type T = Record<Lang, string>
 
-// ooca Garden (สวนใจ): a concept for the ooca app, where mooca, Hin and Bua live after Mindscape. Talk to
+// ooca Garden (สวนพักใจ): a concept for the ooca app, where mooca, Hin and Bua live after Mindscape. Talk to
 // them any time, and listen to short lessons and practices. It's the paid step up from the free
 // web check-in, and the bridge to an ooca psychologist. Lesson ideas follow the opportunity brief:
 // 3–5 minute lessons (Waking Up), courses named by real problems (Ten Percent Happier), sleep
@@ -55,14 +55,14 @@ export const courses: T[] = [
 ]
 
 export const heal = {
-  name: { en: 'ooca Garden', th: 'สวนใจ' },
-  pageTitle: { en: 'ooca Garden', th: 'สวนใจ · ooca' },
+  name: { en: 'ooca Garden', th: 'สวนพักใจ' },
+  pageTitle: { en: 'ooca Garden', th: 'สวนพักใจ · ooca' },
   newIn: { en: 'New in the ooca app', th: 'ใหม่ในแอป ooca' },
 
   heroTitle: { en: 'Your friends from Mindscape, any time you need them', th: 'เพื่อนจากที่พักใจ อยู่กับคุณได้ทุกเวลา' },
   heroLead: {
     en: 'Your garden is where mooca, Hin and Bua live. Come back any day to talk things through, listen to short lessons, and talk to a real psychologist when you need one.',
-    th: 'สวนใจคือบ้านของมูก้า หิน และบัว กลับมาได้ทุกวัน คุยได้ทุกเรื่อง ฟังบทเรียนสั้นๆ และคุยกับนักจิตวิทยาตัวจริงเมื่อต้องการ',
+    th: 'สวนพักใจคือบ้านของมูก้า หิน และบัว กลับมาได้ทุกวัน คุยได้ทุกเรื่อง ฟังบทเรียนสั้นๆ และคุยกับนักจิตวิทยาตัวจริงเมื่อต้องการ',
   },
   trial: { en: '7 days free, then a small monthly plan', th: 'ใช้ฟรี 7 วัน จากนั้นเป็นแพ็กเกจรายเดือนราคาเบาๆ' },
   appStore: { en: 'App Store', th: 'App Store' },
@@ -119,7 +119,7 @@ export const heal = {
   },
   step1: { en: 'Mindscape', th: 'ที่พักใจ' },
   step1Note: { en: 'Free · 3 minutes', th: 'ฟรี · 3 นาที' },
-  step2: { en: 'ooca Garden', th: 'สวนใจ' },
+  step2: { en: 'ooca Garden', th: 'สวนพักใจ' },
   step2Note: { en: '7 days free', th: 'ฟรี 7 วัน' },
   step3: { en: 'ooca psychologist', th: 'นักจิตวิทยา ooca' },
   step3Note: { en: 'Members’ price', th: 'ราคาสมาชิก' },
@@ -174,8 +174,8 @@ export const heal = {
   bookNote: { en: 'Hin thought this might help', th: 'หินคิดว่าน่าจะช่วยได้' },
 
   // the hand-off on Mindscape's ending
-  carryTitle: { en: 'Carry on with {name} in your garden', th: 'ไปต่อกับ{name}ในสวนใจ' },
-  carryCta: { en: 'Open your garden', th: 'เปิดสวนใจ' },
+  carryTitle: { en: 'Carry on with {name} in your garden', th: 'ไปต่อกับ{name}ในสวนพักใจ' },
+  carryCta: { en: 'Open your garden', th: 'เปิดสวนพักใจ' },
   cardComes: { en: 'Get the ooca app', th: 'ดาวน์โหลดแอป ooca' },
   carryNote: { en: 'Your card comes with you · 7 days free', th: 'การ์ดของคุณไปด้วย · ใช้ฟรี 7 วัน' },
   scan: { en: 'Scan with your phone', th: 'สแกนด้วยมือถือ' },
