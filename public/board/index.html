@@ -74,7 +74,7 @@ a{color:var(--blue-500);text-decoration:none;font-weight:700}
 /* timeline */
 .tl{display:grid;grid-template-columns:repeat(6,1fr);gap:28px;margin-top:56px}
 .tl .t{display:flex;flex-direction:column;align-items:center}
-.tl .phone{width:236px;border-radius:32px}
+.tl .phone{width:100%;max-width:236px;border-radius:28px}
 .tl .when{font-weight:900;font-size:22px;color:var(--turq-text);margin-bottom:22px;display:flex;align-items:center;gap:10px}
 .tl .when em{font-style:normal;background:var(--turq-500);color:#fff;border-radius:999px;padding:4px 14px;font-size:17px}
 .bar{display:grid;grid-template-columns:20fr 15fr 15fr 75fr 15fr 10fr;margin-top:46px;height:16px;border-radius:999px;overflow:hidden;gap:4px}
@@ -181,7 +181,7 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
         <li><b style="color:var(--ink)">Understanding:</b> their worry seen from a new angle, in their own words</li>
         <li><b style="color:var(--ink)">A feeling:</b> a little lighter, and less alone with it</li>
         <li><b style="color:var(--ink)">Something to keep:</b> one card to save or share</li>
-        <li><b style="color:var(--ink)">A next step:</b> one small thing to do now, and an ooca psychologist only when the signals say so</li>
+        <li><b style="color:var(--ink)">A next step:</b> carry on with the same friend in ooca Garden, or an ooca psychologist when the signals say so</li>
       </ul>
     </div>
     <div class="card"><span class="k">How we'd know it worked</span>
@@ -224,7 +224,7 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
     <div>Hears one line from each companion, picks one (or lets mooca pick)</div>
     <div>Names it, looks closer, practises, steps back: four short steps</div>
     <div>Sees their own words on a card; saves or shares it</div>
-    <div>Gets one small thing to do now, and one honest next step</div>
+    <div>Gets one honest next step: the app to carry on, or a psychologist if it's heavy</div>
     <div class="h">Feels</div>
     <div>Curious, safe: anonymous, nothing to sign up for</div>
     <div>Recognised: "that's exactly my thought"</div>
@@ -312,9 +312,9 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
       <h3>"Heavy" means one room's signal said so</h3>
       <p style="margin-top:10px">A stormy or foggy sky (mooca) · "a lot" a year from now (Hin) · discomfort across much of the body (Bua) · or a written thought that tripped the crisis check.</p>
       <div class="branch" style="grid-template-columns:1fr;gap:18px">
-        <div class="tier tier--keep"><span class="when">Nothing heavy</span><h3>Keep this card</h3><p>One small step to do now. The ooca Garden poster offers more, gently.</p></div>
-        <div class="tier tier--watch"><span class="when">Heavy, but recent</span><h3>Check in again tomorrow</h3><p>A reminder that feelings move. Garden is still offered.</p></div>
+        <div class="tier tier--keep"><span class="when">Nothing heavy, or heavy but recent</span><h3>Keep this card</h3><p>Save or share it. The ooca Garden poster offers a way to carry on with the same friend, gently.</p></div>
         <div class="tier tier--care"><span class="when">Heavy for two weeks or more, or crisis words</span><h3>Talk to someone at ooca</h3><p>The only next step shown is an ooca psychologist, plus a 1323 button. No Garden poster, no upsell.</p></div>
+        <p style="font-size:18px;margin-top:4px">Designed but switched off for now: a small practice to do right away, and a "check in again tomorrow" nudge for heavy-but-recent.</p>
       </div>
     </div>
     <div class="row" style="gap:36px">
@@ -329,15 +329,16 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
 <section class="frame frame--tint" id="ending">
   <span class="tag"><b>5</b>What they walk away with</span>
   <h2>One card in their own words, then a door into ooca.</h2>
-  <p class="lede">The card is built from the user's own choices: the thought, what the room found, the room's quote and where the idea comes from ("Stoic philosophy · the roots of CBT"). On desktop the landscape gives way to an <b>ooca Garden</b> poster with a lesson matched to the thought.</p>
+  <p class="lede">The card is built from the user's own choices: the thought, what the room found, the room's quote and where the idea comes from ("Stoic philosophy · the roots of CBT"). Then an <b>ooca Garden</b> poster: carry on with the same friend in the app. On a phone it sits under the card; on a computer it takes the landscape's place.</p>
   <div class="row" style="margin-top:60px;gap:40px;align-items:flex-start">
-    <div><div class="phone"><img src="screens/hin-ending-full.png" alt=""></div><p class="cap"><b>The full ending (mobile)</b>Card · save/share · one small step · next step · "did it help?"</p></div>
+    <div><div class="phone"><img src="screens/hin-ending.png" alt=""></div><p class="cap"><b>The card (phone)</b>Their thought crossed out, what the room found, the room's quote</p></div>
+    <div><div class="shot" style="width:300px;border-radius:32px"><img src="screens/m-poster.png" alt=""></div><p class="cap"><b>Then, under it</b>The same Garden poster as on desktop: Chat · Listen · Talk, the app on a phone, the store</p></div>
     <div style="flex:1">
       <div class="shot"><img src="screens/desk-ending.png" alt=""></div>
-      <p class="cap" style="max-width:none"><b>Desktop</b>Card and next step on the right; the Garden poster takes the landscape's place, with a QR code to the app</p>
+      <p class="cap" style="max-width:none"><b>Desktop</b>Card and next step on the right; the Garden poster takes the landscape's place, its phone touring Chat, Listen and Talk</p>
       <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:36px;gap:24px">
         <div class="card"><span class="k">Card</span><p>Save as an image or share from a phone. A toggle hides the original thought before sharing.</p></div>
-        <div class="card"><span class="k">Small step</span><p>mooca's small step, Hin's virtue, or Bua's step on the path. Something to do right now.</p></div>
+        <div class="card"><span class="k">Care tier</span><p>When it's been heavy for weeks, the poster is replaced by an ooca psychologist and 1323. Nothing to sell.</p></div>
         <div class="card"><span class="k">Did it help?</span><p>"Do you understand yourself a little better?" Yes, a little / Not really. One tap, no score.</p></div>
       </div>
     </div>
@@ -431,6 +432,7 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
         <li>Lamp and kindness: hold Space or Enter</li>
         <li>Focus moves to each step's heading; one h1 per screen</li>
         <li>AA contrast; reduced motion turns off decorative movement</li>
+        <li>Checked at four phone sizes (360–430px): each step's answers show without scrolling, and follow-ups scroll into view</li>
       </ul></div>
     <div class="card"><span class="k">Stakeholders</span><h3>Who I'd bring in before launch</h3>
       <ul class="clean" style="margin-top:14px">
