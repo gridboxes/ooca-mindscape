@@ -24,7 +24,7 @@ One illustrated landscape holds everything: mooca in the sky, Hin on the earth, 
 | A room (~2 min) | One companion, full depth (below) |
 | Before you go | "How long has this been with you?" Asked only when something was heavy |
 | Closing card | One card, in the room's colour: what the room found (in the user's own choices and words), the room's quote and where the idea comes from (e.g. "Stoic philosophy · the roots of CBT"). Save as an image, or share it from a phone |
-| Next step | One small thing to do right now (mooca's small step, Hin's virtue, Bua's step on the path), then keep the card, check in again tomorrow, or talk to an ooca psychologist (with a 1323 button) |
+| Next step | One small thing to do right now (mooca's small step, Hin's virtue, Bua's step on the path), then keep the card, check in again tomorrow, or talk to an ooca psychologist (with the 1323 line below it) |
 | Did it help? | "Do you understand yourself a little better?" Yes, a little / Not really. One tap, no score |
 
 ### The three rooms

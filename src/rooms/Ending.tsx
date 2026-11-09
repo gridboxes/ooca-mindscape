@@ -225,9 +225,6 @@ export default function Ending({ lang, who, theme, card, heavy, tierFor, onBack,
                 <a className="btn btn--primary" href="https://www.ooca.co/" target="_blank" rel="noreferrer">
                   {t(steps.care.cta, lang)}
                 </a>
-                <a className="btn btn--danger" href="tel:1323">
-                  ☎ {t(ms.call1323, lang)}
-                </a>
               </div>
             )}
           </section>
