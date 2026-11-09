@@ -133,6 +133,15 @@ ul.clean li{padding-left:30px;position:relative}
 ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;height:10px;border-radius:50%;background:var(--turq-500)}
 .shot{border-radius:24px;overflow:hidden;box-shadow:0 20px 50px -20px rgba(0,80,72,.3);background:#fff}
 .shot img{display:block;width:100%}
+.sys{grid-template-columns:1fr 1fr 1fr;gap:48px;align-items:start}
+.sys__sub{font-size:19px;margin:6px 0 22px}
+.sys .sw{grid-template-columns:repeat(3,1fr);gap:14px;margin-top:0}
+.sys .sw div{height:128px}
+.sys__note{margin-top:18px;font-size:18px}
+.sys .type{grid-template-columns:1fr;gap:18px;margin-top:0}
+.type__aa{font-weight:900;font-size:64px;color:var(--turq-gray-1);line-height:1.05;margin:4px 0 8px}
+.sys__phones{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.sys__phones .phone{width:100%;border-radius:30px}
 </style>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 </head>
@@ -379,29 +388,34 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
   <h2>Built on the ooca CI, extended with two new friends.</h2>
   <div class="shot" style="margin-top:40px"><img src="screens/x-sheet-crop.png" alt=""></div>
 
-  <div class="grid" style="grid-template-columns:1.25fr 1fr;gap:48px;margin-top:56px">
+  <div class="grid sys" style="margin-top:64px">
     <div>
-      <h3>Colour: one accent per companion, one colour for action</h3>
+      <h3>Colour</h3>
+      <p class="sys__sub">One accent per companion, one colour for action</p>
       <div class="sw">
         <div style="background:#00c4b3;color:#fff">Turquoise 500<small>mooca · brand</small></div>
         <div style="background:#f9a000;color:#3d2600">Marigo 500<small>Hin</small></div>
         <div style="background:#ef7773;color:#fff">Flamingo 500<small>Bua</small></div>
         <div style="background:#1f77df;color:#fff">Blue 500<small>every button</small></div>
-        <div style="background:#00796b;color:#fff">#00796b<small>turquoise text, AA</small></div>
+        <div style="background:#00796b;color:#fff">#00796b<small>turquoise text</small></div>
         <div style="background:#355956;color:#fff">Turq gray 1<small>headings</small></div>
       </div>
-      <p style="margin-top:18px;font-size:19px">The CI's turquoise text colour (#009688) is 3.7:1 on white. I use a deeper shade of the same hue (#00796b, 5.3:1) to meet WCAG AA. Blue 500 with white text is 4.4:1, just under AA at 16px: flagged for the brand team.</p>
+      <p class="sys__note">The CI's turquoise text (#009688) is 3.7:1 on white, so text uses a deeper shade of the same hue (#00796b, 5.3:1) to meet WCAG AA. Blue 500 with white text is 4.4:1, just under AA at 16px: flagged for the brand team.</p>
     </div>
     <div>
       <h3>Type</h3>
+      <p class="sys__sub">The CI's two families, one per language</p>
       <div class="type">
-        <div class="card"><span class="k">English</span><div style="font-weight:900;font-size:56px;color:var(--turq-gray-1);line-height:1">Aa</div><p>Gotham Rounded per CI; Nunito as the web fallback</p></div>
-        <div class="card"><span class="k">Thai</span><div style="font-family:Prompt;font-weight:600;font-size:56px;color:var(--turq-gray-1);line-height:1">กข</div><p>Prompt, per CI</p></div>
+        <div class="card"><span class="k">English</span><div class="type__aa">Aa</div><p>Gotham Rounded per CI; Nunito as the web fallback</p></div>
+        <div class="card"><span class="k">Thai</span><div class="type__aa" style="font-family:Prompt;font-weight:600">กข</div><p>Prompt, per CI</p></div>
       </div>
-      <h3 style="margin-top:34px">Bilingual from the start</h3>
-      <div class="row" style="gap:24px;margin-top:20px">
-        <div class="phone phone--sm" style="width:200px;border-radius:28px"><img src="screens/th-landing.png" alt=""></div>
-        <div class="phone phone--sm" style="width:200px;border-radius:28px"><img src="screens/th-voices.png" alt=""></div>
+    </div>
+    <div>
+      <h3>Bilingual from the start</h3>
+      <p class="sys__sub">Every line in Thai and English; detected, and switchable</p>
+      <div class="sys__phones">
+        <div class="phone"><img src="screens/th-landing.png" alt=""></div>
+        <div class="phone"><img src="screens/th-voices.png" alt=""></div>
       </div>
     </div>
   </div>
