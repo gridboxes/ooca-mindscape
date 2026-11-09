@@ -148,6 +148,20 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
 .dec--four .vs div{font-size:21px;padding:20px 22px}
 .dec--four .vs small{font-size:14px}
 .dec--four .why{font-size:22px}
+.tens{margin-top:48px}
+.tens__head,.tens__row{display:grid;grid-template-columns:230px 1.25fr 150px 1fr 1fr;gap:36px;align-items:center}
+.tens__head{padding:0 0 14px;border-bottom:2px solid var(--line)}
+.tens__head span{font-size:15px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--turq-text)}
+.tens__row{padding:30px 0;border-bottom:2px solid var(--line)}
+.tens__pull{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.tens__pull b{font-size:22px;font-weight:900;color:var(--turq-gray-1);background:var(--turq-50);padding:6px 14px;border-radius:999px}
+.tens__pull i{width:2px;height:18px;margin-left:22px;background:repeating-linear-gradient(var(--turq-500) 0 4px,transparent 4px 7px)}
+.tens__dec h3{font-size:30px;margin-bottom:8px}
+.tens__dec p{font-size:20px}
+.tens__img .phone{width:150px;border-radius:24px;box-shadow:0 0 0 5px #fff,0 0 0 6px #dfe7ea,0 18px 36px -18px rgba(0,80,72,.35)}
+.tens__img .phone img{height:250px;object-fit:cover;object-position:top}
+.tens__cost p{font-size:20px;color:#7a4a12;background:#fdf3dc;border-radius:18px;padding:18px 20px}
+.tens__sig p{font-size:20px;color:var(--ink)}
 </style>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 </head>
@@ -358,20 +372,37 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
 <!-- 07 DECISIONS -->
 <section class="frame" id="decisions">
   <span class="tag"><b>7</b>Decisions &amp; trade-offs</span>
-  <h2>What I chose, what I tried and dropped, and why.</h2>
-  <div class="dec dec--four">
-    <div class="card"><h3>Taste three, go deep in one</h3>
-      <div class="vs"><div class="yes"><small>Chose</small>One line from each companion, then one full room</div><div class="no"><small>Instead of</small>Three rooms in a row</div></div>
-      <p class="why">Comparison is the idea, but three rooms back to back would be long and repetitive, and blow the two-minute budget.</p></div>
-    <div class="card"><h3>No scores</h3>
-      <div class="vs"><div class="yes"><small>Chose</small>Weather, pebbles, breaths: no numbers in or out</div><div class="no"><small>Tried &amp; dropped</small>Rating the thought 0–100% before and after</div></div>
-      <p class="why">The rating read like a test. A score on something this personal can feel like a grade.</p></div>
-    <div class="card"><h3>One card, not two</h3>
-      <div class="vs"><div class="yes"><small>Chose</small>The room's findings become the one closing card</div><div class="no"><small>Tried &amp; dropped</small>A card per room, plus a "finish this sentence" step</div></div>
-      <p class="why">Every room already puts the user's own words on the card. The extra step only delayed the payoff.</p></div>
-    <div class="card"><h3>Never sell on the care tier</h3>
-      <div class="vs"><div class="yes"><small>Chose</small>Psychologist + 1323 only, when it's heavy and lasting</div><div class="no"><small>Instead of</small>The app promo shown to everyone</div></div>
-      <p class="why">Trust is the product. Someone struggling for weeks should see help, not a feature.</p></div>
+  <h2>The brief pulls four ways at once. Here is where I landed, and what it cost.</h2>
+  <div class="tens">
+    <div class="tens__head"><span>The tension</span><span>The decision</span><span></span><span>What it cost</span><span>How I'd know it's wrong</span></div>
+    <div class="tens__row">
+      <div class="tens__pull"><b>Two minutes</b><i></i><b>Something meaningful</b></div>
+      <div class="tens__dec"><h3>Taste three, go deep in one</h3><p>One line from each companion, then one full room. The comparison is the idea; doing three rooms back to back would blow the budget.</p></div>
+      <div class="tens__img"><div class="phone"><img src="screens/m-voices.png" alt=""></div></div>
+      <div class="tens__cost"><p>Nobody gets every lens in depth. Someone who picks the "wrong" friend never sees the others work.</p></div>
+      <div class="tens__sig"><p>Most people drop off at the three voices, or never come back to try a second friend.</p></div>
+    </div>
+    <div class="tens__row">
+      <div class="tens__pull"><b>Approachable</b><i></i><b>A sensitive topic</b></div>
+      <div class="tens__dec"><h3>No scores, ever</h3><p>Weather, pebbles and breaths stand in for measures. Tried and dropped: rating the thought 0–100% before and after. It read like a test.</p></div>
+      <div class="tens__img"><div class="phone"><img src="screens/mooca-weather.png" alt=""></div></div>
+      <div class="tens__cost"><p>No before/after number to show that it worked, for the user or for ooca.</p></div>
+      <div class="tens__sig"><p>Most people tap "Not really" to "Do you understand yourself a little better?"</p></div>
+    </div>
+    <div class="tens__row">
+      <div class="tens__pull"><b>Engaging</b><i></i><b>Actually useful</b></div>
+      <div class="tens__dec"><h3>The interaction is the exercise</h3><p>Each room's gesture is the real technique: sorting pebbles is the dichotomy of control, holding still is what settles the pond.</p></div>
+      <div class="tens__img"><div class="phone"><img src="screens/hin-sort.png" alt=""></div></div>
+      <div class="tens__cost"><p>Slower than a quiz, and harder to build: every gesture needs a tap and keyboard alternative.</p></div>
+      <div class="tens__sig"><p>People abandon a room at its gesture step. Bua's five breaths is the one to watch.</p></div>
+    </div>
+    <div class="tens__row">
+      <div class="tens__pull"><b>Care</b><i></i><b>Business</b></div>
+      <div class="tens__dec"><h3>Size the next step to the signal</h3><p>Light: keep the card, and ooca Garden is offered. Heavy for weeks, or crisis words: only a psychologist and 1323. Never sell to someone struggling.</p></div>
+      <div class="tens__img"><div class="phone"><img src="screens/hin-duration.png" alt=""></div></div>
+      <div class="tens__cost"><p>Fewer app installs from the people who are hurting most.</p></div>
+      <div class="tens__sig"><p>On the care tier, almost nobody taps "Talk to an ooca psychologist" or 1323.</p></div>
+    </div>
   </div>
   <div class="foot"><span>Mindscape · ooca</span><span>07 / 09</span></div>
 </section>
