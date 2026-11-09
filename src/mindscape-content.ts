@@ -294,7 +294,7 @@ export const ms = {
     en: 'mooca, Hin and Bua each see it differently: through psychology, philosophy and Buddhism. Pick the one that speaks to you.',
     th: 'มูก้า หิน และบัว มองมันต่างกัน ผ่านจิตวิทยา ปรัชญา และธรรมะ เลือกเพื่อนที่พูดตรงใจคุณที่สุด',
   },
-  meta1: { en: '~3 minutes', th: 'ประมาณ 3 นาที' },
+  meta1: { en: '~2 minutes', th: 'ประมาณ 2 นาที' },
   meta2: { en: 'Anonymous', th: 'ไม่ระบุตัวตน' },
   meta3: { en: 'Stays on your device', th: 'ข้อมูลอยู่ในเครื่องคุณ' },
   start: { en: 'Bring a thought', th: 'นำความคิดมาวาง' },
@@ -340,6 +340,7 @@ export const ms = {
   sourceBua: { en: 'Mindfulness · self-compassion', th: 'การฝึกสติ · ความใจดีต่อตัวเอง' },
 
   // saving and sharing the card
+  hideThought: { en: 'Hide my original thought', th: 'ซ่อนความคิดเดิมของฉัน' },
   saveImage: { en: 'Save image', th: 'บันทึกรูป' },
   share: { en: 'Share', th: 'แชร์' },
   saved: { en: 'Saved', th: 'บันทึกแล้ว' },

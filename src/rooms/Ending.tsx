@@ -41,6 +41,8 @@ export default function Ending({ lang, who, theme, card, heavy, tierFor, onBack,
   const [sub, setSub] = useState<Sub>(subs[0])
   const [duration, setDuration] = useState<Duration | null>(null)
   const [save, setSave] = useState<Save>('idle')
+  // leave the original thought off the card, for saving or sharing without showing what you wrote
+  const [hideThought, setHideThought] = useState(false)
   const [practiceDone, setPracticeDone] = useState(false)
   const [breathing, setBreathing] = useState(false)
   const [felt, setFelt] = useState<'yes' | 'no' | null>(null)
@@ -140,8 +142,13 @@ export default function Ending({ lang, who, theme, card, heavy, tierFor, onBack,
         {/* The keepsake: the card, and saving it */}
         <div className="ms-final__keep">
           {/* the title sits in the top row, beside the back button (see JourneyBar) */}
-          <Postcard ref={cardRef} lang={lang} who={who} name={name} date={date} postcard={card.postcard} />
+          <Postcard ref={cardRef} lang={lang} who={who} name={name} date={date} postcard={card.postcard} hideBefore={hideThought} />
 
+          <label className="ms-hide">
+            <input type="checkbox" checked={hideThought} onChange={(e) => setHideThought(e.target.checked)} />
+            <span className="ms-hide__switch" aria-hidden="true" />
+            <span>{t(ms.hideThought, lang)}</span>
+          </label>
           <div className="ms-save">
             <button type="button" className="btn btn--secondary btn--grow" onClick={saveCard} disabled={save === 'saving'}>
               {save === 'saving' && <span className="spinner" aria-hidden="true" />}

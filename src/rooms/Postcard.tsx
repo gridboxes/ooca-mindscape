@@ -13,6 +13,8 @@ interface Props {
   name: string
   date: string
   postcard: EndCard['postcard']
+  /** leave the original thought off, for saving or sharing without showing what was written */
+  hideBefore?: boolean
 }
 
 /**
@@ -20,7 +22,7 @@ interface Props {
  * Hin's hill with your stepping stones, Bua's pond with the kindness rings), then the change in
  * one big line, at most one detail, and a single footer line. It's also what Save makes an image of.
  */
-const Postcard = forwardRef<HTMLDivElement, Props>(function Postcard({ lang, who, name, date, postcard: p }, ref) {
+const Postcard = forwardRef<HTMLDivElement, Props>(function Postcard({ lang, who, name, date, postcard: p, hideBefore = false }, ref) {
   const sky = who === 'mooca' && p.to ? ` pc--sky-${p.to}` : ''
   return (
     <div ref={ref} className={`pc pc--${who}${sky}`}>
@@ -83,7 +85,7 @@ const Postcard = forwardRef<HTMLDivElement, Props>(function Postcard({ lang, who
 
       <div className="pc__body">
         <span className="pc__with">{fill(lang === 'th' ? ms.withLabel.th : ms.withLabel.en, { name })}</span>
-        {p.beforeStyle === 'crossed' ? (
+        {hideBefore ? null : p.beforeStyle === 'crossed' ? (
           <s className="pc__before">“{p.before}”</s>
         ) : (
           <span className="pc__before pc__before--drift">〜 “{p.before}”</span>
