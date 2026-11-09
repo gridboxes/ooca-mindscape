@@ -142,6 +142,12 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
 .type__aa{font-weight:900;font-size:64px;color:var(--turq-gray-1);line-height:1.05;margin:4px 0 8px}
 .sys__phones{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .sys__phones .phone{width:100%;border-radius:30px}
+.dec--four{gap:36px;margin-top:56px}
+.dec--four .card{padding:44px 46px;gap:16px}
+.dec--four h3{font-size:34px}
+.dec--four .vs div{font-size:21px;padding:20px 22px}
+.dec--four .vs small{font-size:14px}
+.dec--four .why{font-size:22px}
 </style>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 </head>
@@ -174,7 +180,7 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
 
 <!-- 02 OPPORTUNITY -->
 <section class="frame frame--tint" id="opportunity">
-  <span class="tag"><b>1</b>The opportunity</span>
+  <span class="tag"><b>2</b>The opportunity</span>
   <h2>People feel "off" long before they'd ever book a psychologist.</h2>
   <p class="lede">Booking therapy feels like too much, and mental-health quizzes feel clinical. Many Thais already cope through the temple or through philosophy first. The gap isn't information. It's a <b>small, low-stakes first step</b> that feels like theirs.</p>
 
@@ -214,7 +220,7 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
 
 <!-- 03 JOURNEY -->
 <section class="frame" id="journey">
-  <span class="tag"><b>2</b>The two minutes</span>
+  <span class="tag"><b>3</b>The two minutes</span>
   <h2>One question per screen, one landscape the whole way.</h2>
   <p class="lede">The user's thought becomes a paper note that travels through the scene. Choosing a companion moves the camera, never the user. The core of the experience, the room, takes about two minutes.</p>
   <div class="tl">
@@ -254,7 +260,7 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
 
 <!-- 04 ROOMS -->
 <section class="frame frame--tint" id="rooms">
-  <span class="tag"><b>3</b>Three rooms, one shape</span>
+  <span class="tag"><b>4</b>Three rooms, one shape</span>
   <h2>Each room has the same four beats, and one physical act that is its practice.</h2>
   <p class="lede">Name it → look closer → practise → step back. mooca changes the <b>thought</b>, Hin changes what you <b>do</b> about it, Bua changes <b>nothing</b>: you notice it, let it drift and pass some kindness on.</p>
 
@@ -304,7 +310,7 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
 
 <!-- 05 FLOW + NEXT STEP -->
 <section class="frame" id="flow">
-  <span class="tag"><b>4</b>Flow &amp; the next step</span>
+  <span class="tag"><b>5</b>Flow &amp; the next step</span>
   <h2>The offer of a psychologist is sized to the signal, so it reads as care, not a funnel.</h2>
   <div class="flow">
     <div class="node"><b>Landing</b><span>one line, one button</span></div><div class="arrow"></div>
@@ -336,7 +342,7 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
 
 <!-- 06 ENDING + HANDOFF -->
 <section class="frame frame--tint" id="ending">
-  <span class="tag"><b>5</b>What they walk away with</span>
+  <span class="tag"><b>6</b>What they walk away with</span>
   <h2>One card in their own words, then a door into ooca.</h2>
   <p class="lede">The card is built from the user's own choices: the thought, what the room found, the room's quote and where the idea comes from ("Stoic philosophy · the roots of CBT"). Then an <b>ooca Garden</b> poster: carry on with the same friend in the app. It takes the landscape's place beside the card.</p>
   <div class="shot" style="margin-top:56px"><img src="screens/desk-ending.png" alt=""></div>
@@ -351,9 +357,9 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
 
 <!-- 07 DECISIONS -->
 <section class="frame" id="decisions">
-  <span class="tag"><b>6</b>Decisions &amp; trade-offs</span>
+  <span class="tag"><b>7</b>Decisions &amp; trade-offs</span>
   <h2>What I chose, what I tried and dropped, and why.</h2>
-  <div class="dec">
+  <div class="dec dec--four">
     <div class="card"><h3>Taste three, go deep in one</h3>
       <div class="vs"><div class="yes"><small>Chose</small>One line from each companion, then one full room</div><div class="no"><small>Instead of</small>Three rooms in a row</div></div>
       <p class="why">Comparison is the idea, but three rooms back to back would be long and repetitive, and blow the two-minute budget.</p></div>
@@ -363,18 +369,6 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
     <div class="card"><h3>One card, not two</h3>
       <div class="vs"><div class="yes"><small>Chose</small>The room's findings become the one closing card</div><div class="no"><small>Tried &amp; dropped</small>A card per room, plus a "finish this sentence" step</div></div>
       <p class="why">Every room already puts the user's own words on the card. The extra step only delayed the payoff.</p></div>
-    <div class="card"><h3>The interaction is the exercise</h3>
-      <div class="vs"><div class="yes"><small>Chose</small>Tap to soften, drag to sort, hold to breathe</div><div class="no"><small>Instead of</small>Reading about a technique</div></div>
-      <p class="why">Sorting pebbles is the dichotomy of control. Holding still is what settles the water. You learn it by doing it.</p></div>
-    <div class="card"><h3>Modern words, no religious imagery</h3>
-      <div class="vs"><div class="yes"><small>Chose</small>A lotus, a lamp, a pond and everyday Thai</div><div class="no"><small>Avoided</small>Pali terms, scripture, monks or Buddha images</div></div>
-      <p class="why">Keeps Bua welcoming to everyone, and respectful of the practice it comes from. Flagged for a Dhamma advisor to review.</p></div>
-    <div class="card"><h3>One landscape, one travelling note</h3>
-      <div class="vs"><div class="yes"><small>Chose</small>The camera moves; the thought travels as a paper note</div><div class="no"><small>Instead of</small>Separate screens per companion</div></div>
-      <p class="why">Continuity comes from place and object, not copy. It also keeps one progress bar for the whole journey.</p></div>
-    <div class="card"><h3>A family, not a pile of mascots</h3>
-      <div class="vs"><div class="yes"><small>Chose</small>Hin and Bua drawn by mooca's rules</div><div class="no"><small>Instead of</small>mooca alone, or new unrelated characters</div></div>
-      <p class="why">Flat fills, one offset shade, navy faces, pink cheeks. Each owns one ooca accent: Turquoise, Marigo, Flamingo.</p></div>
     <div class="card"><h3>Never sell on the care tier</h3>
       <div class="vs"><div class="yes"><small>Chose</small>Psychologist + 1323 only, when it's heavy and lasting</div><div class="no"><small>Instead of</small>The app promo shown to everyone</div></div>
       <p class="why">Trust is the product. Someone struggling for weeks should see help, not a feature.</p></div>
@@ -384,7 +378,7 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
 
 <!-- 08 VISUAL SYSTEM -->
 <section class="frame frame--tint" id="system">
-  <span class="tag"><b>7</b>Visual system</span>
+  <span class="tag"><b>8</b>Visual system</span>
   <h2>Built on the ooca CI, extended with two new friends.</h2>
   <div class="shot" style="margin-top:40px"><img src="screens/x-sheet-crop.png" alt=""></div>
 
@@ -424,7 +418,7 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
 
 <!-- 09 SAFETY / A11Y / NEXT -->
 <section class="frame" id="next">
-  <span class="tag"><b>8</b>Safety, access &amp; what's next</span>
+  <span class="tag"><b>9</b>Safety, access &amp; what's next</span>
   <h2>Approachable on the surface, careful underneath.</h2>
   <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:40px">
     <div class="card"><span class="k">Safety</span><h3>Help is never more than one tap away</h3>
