@@ -103,7 +103,7 @@ export default function IdentitySheet() {
         <span className="logo-word">ooca</span>
         <span className="brand__divider" aria-hidden="true" />
         <span className="idsheet__product">Mindscape · ที่พักใจ</span>
-        <span className="idsheet__tag">Identity sheet · draft</span>
+        <span className="idsheet__tag">Identity sheet</span>
       </header>
 
       <main className="idsheet__main">
