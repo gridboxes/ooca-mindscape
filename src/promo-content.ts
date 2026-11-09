@@ -14,12 +14,12 @@ export const promo = {
 
   heroTitle: { en: 'Not ready to talk to someone? Start with one thought.', th: 'ยังไม่พร้อมคุยกับใคร? เริ่มจากความคิดเดียว' },
   heroLead: {
-    en: 'Mindscape is a free three-minute check-in. Bring what’s on your mind, see it three ways, and leave a little lighter.',
-    th: 'ที่พักใจคือการเช็กอินใจฟรี 3 นาที นำสิ่งที่อยู่ในใจมาวาง มองมันในสามมุม แล้วกลับไปด้วยใจที่เบาลง',
+    en: 'Mindscape is a free two-minute check-in. Bring what’s on your mind, see it three ways, and leave a little lighter.',
+    th: 'ที่พักใจคือการเช็กอินใจฟรี 2 นาที นำสิ่งที่อยู่ในใจมาวาง มองมันในสามมุม แล้วกลับไปด้วยใจที่เบาลง',
   },
   tryFree: { en: 'Try Mindscape, free', th: 'ลองที่พักใจ ฟรี' },
   tryShort: { en: 'Try it', th: 'ลองเลย' },
-  meta1: { en: '~3 minutes', th: 'ประมาณ 3 นาที' },
+  meta1: { en: '~2 minutes', th: 'ประมาณ 2 นาที' },
   meta2: { en: 'Anonymous', th: 'ไม่ระบุตัวตน' },
   meta3: { en: 'Stays on your device', th: 'ข้อมูลอยู่ในเครื่องคุณ' },
 

@@ -1,6 +1,6 @@
 # Mindscape · ooca (ที่พักใจ)
 
-Bring one thought. See it three ways. A check-in of about three minutes where three companions each look at the same thought through a different lens: mooca (psychology), Hin the rock (Stoic philosophy) and Bua the lotus (Buddhism, in everyday words). You choose the one that speaks to you, go deeper with it, and leave with a card and a next step sized to how heavy things are.
+Bring one thought. See it three ways. A check-in of about two minutes where three companions each look at the same thought through a different lens: mooca (psychology), Hin the rock (Stoic philosophy) and Bua the lotus (Buddhism, in everyday words). You choose the one that speaks to you, go deeper with it, and leave with a card and a next step sized to how heavy things are.
 
 > Hypothetical design assignment for ooca. Not related to ooca's product plans. Brand assets are used only for this assignment.
 
@@ -18,7 +18,7 @@ One illustrated landscape holds everything: mooca in the sky, Hin on the earth, 
 
 | Step | What happens |
 |---|---|
-| Landing | The landscape, one line, one button. ~3 minutes, anonymous, stays on the device |
+| Landing | The landscape, one line, one button. ~2 minutes, anonymous, stays on the device |
 | Thought | Pick one of eight common thoughts (in Thai or English) or write your own. Written thoughts are checked for crisis language |
 | Three voices | Each companion says one line about the thought, in its own voice. Pick one, or have one chosen for you |
 | A room (~2 min) | One companion, full depth (below) |
