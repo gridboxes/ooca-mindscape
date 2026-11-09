@@ -123,7 +123,6 @@
   background: var(--white);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-2);
-  border-top: 6px solid var(--accent);
 }
 .companion__hero {
   display: grid;
