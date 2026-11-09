@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import type { Lang } from '../content'
 import { CIRCLES, bua, circles, wishes, type Wish } from './bua-content'
+import { useReveal } from '../components/reveal'
 
 // The same heart that stays with each friend on the landscape
 const HEART = 'M0 9 C-15 -3 -12 -18 0 -10.5 C12 -18 15 -3 0 9 Z'
@@ -98,10 +99,11 @@ export default function KindSend({ lang, wish, sent, onSent }: Props) {
 
   // the button fills across the whole journey, not just the current circle
   const total = (Math.min(sent, CIRCLES.length) + (holding ? p : 0)) / CIRCLES.length
+  const reveal = useReveal<HTMLDivElement>()
   const reached = sent === 0 ? null : sent === 1 ? bua.reachedMe : sent === 2 ? bua.reachedThem : bua.reachedAll
 
   return (
-    <div className="kind">
+    <div className="kind" ref={reveal}>
       <ol className="kind__circles" aria-label={T(bua.qKind)}>
         {CIRCLES.map((c, i) => (
           <li

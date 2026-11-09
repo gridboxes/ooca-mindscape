@@ -1550,39 +1550,41 @@ html:lang(th) .poster__title {
   color: var(--ink-soft);
 }
 
-/* On phones: a compact banner under the card */
+/* On phones: the same poster, under the card. The phone shows its top two-thirds and fades
+   into the store panel, so the whole poster stays about one screen tall */
 .poster--compact {
   position: relative;
   inset: auto;
-  gap: 12px;
+  gap: 14px;
   margin: 4px 0 16px;
-  padding: 18px;
+  padding: 22px 18px 18px;
   border-radius: var(--radius-lg);
   border: 1.5px solid color-mix(in srgb, var(--accent) 35%, transparent);
 }
-.poster__row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.poster__row div {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-}
 .poster--compact .poster__title {
-  font-size: 18px;
+  font-size: 22px;
 }
-.poster--compact .poster__lesson {
-  position: static;
-  max-width: none;
-  box-shadow: var(--shadow-1);
+.poster--compact .poster__show {
+  flex: none;
+  height: 290px;
+  overflow: hidden;
+  margin-bottom: -40px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent);
 }
-.poster--compact .poster__note {
-  text-align: center;
+.poster--compact .poster__phone {
+  transform: none !important;
 }
-
+.poster--compact .poster__ask {
+  position: relative;
+}
+/* the cloud floats beside the badge, not behind the chips */
+.poster--compact .poster__cloud {
+  top: 22px;
+  left: -36px;
+  width: 84px;
+  height: 22px;
+}
 
 /* ---------- ooca Garden's home, on the poster ---------- */
 

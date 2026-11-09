@@ -8,6 +8,7 @@ import { fill, ms } from '../mindscape-content'
 import BodyMap from './BodyMap'
 import Lamp from './Lamp'
 import KindSend from './KindSend'
+import { Reveal } from '../components/reveal'
 import { bua, regions, tones, wishes, type Region, type Tone, type Wish } from './bua-content'
 
 const STEPS = 3 // notice, let it drift, pass kindness on; the card is the shared ending's
@@ -137,7 +138,7 @@ export default function BuaRoom({ lang, thought, resume, onStage, onExit, onDone
           groupLabel={T(bua.qBody)}
         />
         {a.regions.length > 0 && (
-          <section className="ms-tone" aria-live="polite">
+          <Reveal className="ms-tone" aria-live="polite">
             <h3 className="word-pick__title">{T(bua.qTone)}</h3>
             <p className="word-pick__sub">{T(bua.toneSub)}</p>
             <div className="chips" role="radiogroup" aria-label={T(bua.qTone)}>
@@ -154,7 +155,7 @@ export default function BuaRoom({ lang, thought, resume, onStage, onExit, onDone
                 </button>
               ))}
             </div>
-          </section>
+          </Reveal>
         )}
         {a.tone && (
           <BuaSays key={a.tone} mood={a.tone === 'unpleasant' ? 'tender' : 'calm'}>

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { Lang } from '../content'
 import { fill } from '../mindscape-content'
 import { mooca, prefixes, traps, type Part } from './mooca-content'
+import { Reveal } from '../components/reveal'
 
 /** Which swap each heavy word took (by part index), and the gentler start, if any */
 export interface Softening {
@@ -107,7 +108,7 @@ export default function Soften({
       )}
 
       {opened && typeof opened !== 'string' && open !== null && (
-        <div id="soften-swaps" className="soften__swaps" key={open}>
+        <Reveal as="div" id="soften-swaps" className="soften__swaps" key={open}>
           <div className="soften__swaps-head">
             <p className="soften__ask">{fill(T(mooca.swapFor), { word: opened.word })}</p>
             <button type="button" className="soften__x" aria-label={T(mooca.close)} onClick={() => setOpen(null)}>
@@ -135,7 +136,7 @@ export default function Soften({
               {fill(T(mooca.putBack), { word: opened.word })}
             </button>
           )}
-        </div>
+        </Reveal>
       )}
 
       <div className="soften__starts">

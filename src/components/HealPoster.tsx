@@ -2,9 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { t, type Lang } from '../content'
 import { companions, fill, type Companion, type Theme } from '../mindscape-content'
 import { heal, lessonFor } from '../heal-content'
-import Avatar from './companions/Avatar'
 import Stores from './Stores'
-import { storeUrl } from './store-links'
 import { BookScreen, ChatScreen, GardenHome, Phone, PlayerScreen } from './HealPhones'
 import '../heal.css'
 
@@ -15,7 +13,8 @@ const STAY_MS = [3400, 3800, 3800, 3800]
 
 /**
  * The next step up, as a poster: carry on with the same friend in ooca Garden. It takes the
- * landscape's place on the ending page (a compact banner under the card on phones). One page, no
+ * landscape's place on the ending page; on phones the same poster sits under the card, its phone
+ * cropped so it isn't too tall. One page, no
  * carousel controls: the phone slides from the home screen into each feature and back, and the
  * Chat · Listen · Talk chips light in step (tap one to jump there). Never shown when the next step
  * is a psychologist.
@@ -32,11 +31,10 @@ export default function HealPoster({ lang, who, theme, compact = false }: { lang
   const [fit, setFit] = useState(1)
   const name = T(companions[who].name)
   const lesson = lessonFor(who, theme)
-  const store = storeUrl()
 
   useEffect(() => setStill(window.matchMedia('(prefers-reduced-motion: reduce)').matches), [])
   useEffect(() => {
-    if (compact || still || !touring) return
+    if (still || !touring) return
     const id = window.setTimeout(() => {
       const next = (shown + 1) % SCREENS
       setShown(next)
@@ -44,7 +42,7 @@ export default function HealPoster({ lang, who, theme, compact = false }: { lang
       if (next === 0) setTouring(false)
     }, STAY_MS[shown])
     return () => window.clearTimeout(id)
-  }, [compact, still, touring, shown])
+  }, [still, touring, shown])
 
   useEffect(() => {
     if (compact || !show.current || !phone.current) return
@@ -57,45 +55,14 @@ export default function HealPoster({ lang, who, theme, compact = false }: { lang
     return () => ro.disconnect()
   }, [compact])
 
-  const lessonChip = (
-    <a className="poster__lesson" href={store} target="_blank" rel="noopener noreferrer">
-      <i className="poster__play" aria-hidden="true" />
-      <span>
-        <b>{T(lesson.title)}</b>
-        {fill(T(heal.min), { n: String(lesson.minutes) })} · {T(heal.pickedFor)}
-      </span>
-    </a>
-  )
-
-  if (compact) {
-    return (
-      <aside className={`poster poster--compact poster--${who}`} aria-labelledby="poster-title-c">
-        <div className="poster__row">
-          <Avatar who={who} mood="delighted" size={64} />
-          <div>
-            <span className="poster__new">✦ {T(heal.newIn)}</span>
-            <h3 id="poster-title-c" className="poster__title">
-              {fill(T(heal.carryTitle), { name })}
-            </h3>
-          </div>
-        </div>
-        {lessonChip}
-        <a className="btn btn--primary btn--block" href={store} target="_blank" rel="noopener noreferrer">
-          {T(heal.carryCta)}
-        </a>
-        <span className="poster__note">{T(heal.carryNote)}</span>
-      </aside>
-    )
-  }
-
   return (
-    <aside className={`poster poster--${who}`} aria-labelledby="poster-title">
+    <aside className={`poster poster--${who}${compact ? ' poster--compact' : ''}`} aria-labelledby={compact ? 'poster-title-c' : 'poster-title'}>
       <span className="poster__sun" aria-hidden="true" />
       <span className="poster__cloud" aria-hidden="true" />
 
       <div className="poster__head">
         <span className="poster__new">✦ {T(heal.newIn)}</span>
-        <h2 id="poster-title" className="poster__title">
+        <h2 id={compact ? 'poster-title-c' : 'poster-title'} className="poster__title">
           {fill(T(heal.carryTitle), { name })}
         </h2>
         <ul className="poster__feats">

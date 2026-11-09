@@ -7,6 +7,7 @@ import type { Expression } from '../components/companions/Face'
 import { fill, ms, type Theme } from '../mindscape-content'
 import PebbleSort from './PebbleSort'
 import Rise from './Rise'
+import { Reveal } from '../components/reveal'
 import { hin, facts, JUST_A_FEELING, pebbles, virtues, years, type Bin, type Virtue, type Year } from './hin-content'
 
 const STEPS = 4 // what happened, split the stone, turn it into a step, rise above it; the card is the shared ending's
@@ -188,7 +189,7 @@ export default function HinRoom({ lang, thought, theme, resume, onStage, onExit,
         </header>
         <Rise lang={lang} value={a.lift} onChange={(lift) => setA((prev) => ({ ...prev, lift }))} />
         {high && (
-          <section className="ms-year" aria-live="polite">
+          <Reveal className="ms-year" aria-live="polite">
             <h3 className="word-pick__title">{T(hin.qYearTop)}</h3>
             <div className="chips" role="radiogroup" aria-label={T(hin.qYearTop)}>
               {(Object.keys(years) as Year[]).map((y) => (
@@ -204,7 +205,7 @@ export default function HinRoom({ lang, thought, theme, resume, onStage, onExit,
                 </button>
               ))}
             </div>
-          </section>
+          </Reveal>
         )}
         {a.year && <HinSays key={a.year}>{T(a.year === 'alot' ? hin.yearHeavy : hin.yearLight)}</HinSays>}
       </>
@@ -219,6 +220,8 @@ export default function HinRoom({ lang, thought, theme, resume, onStage, onExit,
         {body}
       </div>
 
+      {/* Rising: the knob is the only action until it moves, so the bar doesn't sit over it on a phone */}
+      {(step !== 3 || a.lift > 0) && (
       <Footer>
         {step < 3 ? (
           <button type="button" className="btn btn--primary btn--grow" disabled={!canNext} onClick={next}>
@@ -230,6 +233,7 @@ export default function HinRoom({ lang, thought, theme, resume, onStage, onExit,
           </button>
         )}
       </Footer>
+      )}
     </div>
   )
 }

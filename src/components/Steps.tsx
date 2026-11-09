@@ -9,6 +9,7 @@ import {
   type Weather,
 } from '../content'
 import WeatherIcon from './WeatherIcon'
+import { Reveal } from './reveal'
 
 export function StepHeader({ title, sub }: { title: string; sub: string }) {
   return (
@@ -58,7 +59,7 @@ export function WeatherStep({
       </div>
 
       {weather && (
-        <section className="word-pick" aria-live="polite" key={weather}>
+        <Reveal className="word-pick" aria-live="polite" key={weather}>
           <h2 className="word-pick__title">{t(ui.qWord, lang)}</h2>
           <p className="word-pick__sub">{t(ui.qWordSub, lang)}</p>
           <div className="chips" role="radiogroup" aria-label={t(ui.qWord, lang)}>
@@ -79,7 +80,7 @@ export function WeatherStep({
               )
             })}
           </div>
-        </section>
+        </Reveal>
       )}
     </>
   )

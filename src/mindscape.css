@@ -29,6 +29,18 @@
 .ms--bua .ms__stage,
 .ms--ending .ms__stage {
   height: min(48svh, 120vw);
+  /* On shorter phones the landscape gives up some room so the question and its first answers
+     show without scrolling; it never drops below a strip that still shows the companion */
+  height: max(190px, min(48svh, 120vw, calc(100svh - 470px)));
+}
+
+/* Content that appears after a tap scrolls into view clear of the sticky Next bar */
+.word-pick,
+.ms-tone,
+.ms-year,
+.kind,
+.soften__swaps {
+  scroll-margin-bottom: 112px;
 }
 .ms__stage {
   transition: height 0.6s var(--ease);
@@ -45,10 +57,13 @@
   min-width: 0;
   font-size: 14px;
   font-weight: 700;
+  line-height: 1.3;
   color: var(--turq-text);
-  white-space: nowrap;
+  /* wraps to a second line on narrow phones instead of cutting off the method's name */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 .ms-journey__label--title {
   font-size: 17px;
@@ -786,7 +801,8 @@ html:lang(th) .kind__phrase {
 .rise__track {
   position: relative;
   width: 56px;
-  height: 210px;
+  /* shorter on short phones, so the knob (where you start) stays on screen */
+  height: clamp(140px, 24svh, 210px);
   border-radius: 999px;
   background: linear-gradient(to top, #f8e4b3, #dbf0ee 60%, #d6f4f1);
   box-shadow: inset 0 0 0 1.5px var(--line);
@@ -1724,7 +1740,8 @@ html:lang(th) .ms-card__thought {
   flex-direction: column;
   aspect-ratio: 4 / 5;
   margin-bottom: 16px;
-  overflow: hidden;
+  /* clip, not hidden: the card keeps its 4:5 shape but grows when the words need more room */
+  overflow: clip;
   border-radius: 26px;
   background: #ffffff;
   box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--turq-500) 30%, transparent), var(--shadow-2);

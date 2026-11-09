@@ -1,4 +1,4 @@
-import { useId, type ReactNode } from 'react'
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import Mooca from './Mooca'
 import Rock from './companions/Rock'
 import Lotus from './companions/Lotus'
@@ -50,7 +50,8 @@ const STAMP_COLOR: Record<Stamp, string> = { mooca: '#00C4B3', hin: '#F9A000', b
 const W = 390
 const H = 560
 
-// Where the note rests in each place, in scene units
+// Where the note rests in each place, in scene units. On a short stage (a small phone) it's
+// nudged to stay inside what the camera shows (see `keepInView`).
 const NOTE_AT: Record<Focus, { x: number; y: number; r: number }> = {
   all: { x: 195, y: 246, r: -4 },
   sky: { x: 252, y: 236, r: 5 },
@@ -85,8 +86,7 @@ function wrap(text: string, max = 17, lines = 4): string[] {
   return out
 }
 
-function Note({ text, at, stamp, drift }: { text: string; at: Focus; stamp: Stamp | null; drift: number }) {
-  const rest = NOTE_AT[at]
+function Note({ text, at, stamp, drift, rest = NOTE_AT[at] }: { text: string; at: Focus; stamp: Stamp | null; drift: number; rest?: { x: number; y: number; r: number; k?: number } }) {
   // Drifting: it floats off to the right across the pond, turning a little, and fades
   const x = rest.x + drift * 120
   const y = rest.y - drift * 10
@@ -95,7 +95,7 @@ function Note({ text, at, stamp, drift }: { text: string; at: Focus; stamp: Stam
   const w = 128
   const h = 26 + lines.length * 15
   return (
-    <g className="landscape__note" style={{ transform: `translate(${x}px, ${y}px) rotate(${r}deg)`, opacity: 1 - drift }}>
+    <g className="landscape__note" style={{ transform: `translate(${x}px, ${y}px) rotate(${r}deg) scale(${rest.k ?? 1})`, opacity: 1 - drift }}>
       <g className="landscape__note-paper">
         <rect x={-w / 2 + 3} y={-h / 2 + 4} width={w} height={h} rx="6" fill="#26313C" opacity=".08" />
         <path
@@ -167,7 +167,7 @@ const CAMERA: Record<Focus, { x: number; y: number; s: number }> = {
   water: { x: 292, y: 405, s: 1.7 },
 }
 
-function camera(focus: Focus, lift = 0) {
+function cameraAt(focus: Focus, lift = 0) {
   // Rising from Hin's ground eases the camera from close on the earth to the whole landscape
   const from = CAMERA[focus]
   const to = CAMERA.all
@@ -177,7 +177,41 @@ function camera(focus: Focus, lift = 0) {
   // Centre the target, then clamp so the scene's edges never come into view
   const tx = Math.min(0, Math.max(W - s * W, W / 2 - s * x))
   const ty = Math.min(0, Math.max(H - s * H, H / 2 - s * y))
+  return { tx, ty, s }
+}
+
+function camera(focus: Focus, lift = 0) {
+  const { tx, ty, s } = cameraAt(focus, lift)
   return `translate(${tx}px, ${ty}px) scale(${s})`
+}
+
+// How far the card overlaps the bottom of the stage, in screen pixels (see .ms__card)
+const CARD_OVERLAP = 28
+
+/**
+ * Keep the note's resting place inside the part of the scene that's actually on screen: the stage
+ * crops the scene to its shape ('slice'), the camera zooms in, and the card covers the bottom edge.
+ */
+function keepInView(at: Focus, view: Focus, lift: number, box: { w: number; h: number }, lines: number) {
+  const rest = NOTE_AT[at]
+  const k = Math.max(box.w / W, box.h / H)
+  const { tx, ty, s } = cameraAt(view, lift)
+  // the visible window in scene units, before the camera
+  const vx0 = W / 2 - box.w / (2 * k)
+  const vx1 = W / 2 + box.w / (2 * k)
+  const vy0 = H / 2 - box.h / (2 * k)
+  const vy1 = H / 2 + box.h / (2 * k) - CARD_OVERLAP / k
+  // ...and in the scene's own units, inside the camera
+  const x0 = (vx0 - tx) / s
+  const x1 = (vx1 - tx) / s
+  const y0 = (vy0 - ty) / s
+  const y1 = (vy1 - ty) / s
+  // on a short stage the zoomed-in note would cover the companion's face, so it shrinks a little
+  const k2 = Math.min(1, Math.max(0.62, box.h / 380))
+  const halfW = 64 * k2 + 6
+  const halfH = ((26 + lines * 15) / 2) * k2 + 6
+  const clamp = (v: number, lo: number, hi: number) => (lo > hi ? (lo + hi) / 2 : Math.min(hi, Math.max(lo, v)))
+  return { ...rest, k: k2, x: clamp(rest.x, x0 + halfW, x1 - halfW), y: clamp(rest.y, y0 + halfH, y1 - halfH) }
 }
 
 export default function Landscape({
@@ -202,8 +236,20 @@ export default function Landscape({
   className = '',
 }: Props) {
   const id = useId().replace(/:/g, '')
+  // The stage's size on screen, so the note can stay inside the part of the scene it shows
+  const ref = useRef<SVGSVGElement>(null)
+  const [box, setBox] = useState<{ w: number; h: number } | null>(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el || fit !== 'slice' || typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver(([e]) => setBox({ w: e.contentRect.width, h: e.contentRect.height }))
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [fit])
+  const noteRest = note && box && box.w > 0 && box.h > 0 ? keepInView(noteAt, focus, lift, box, wrap(note).length) : undefined
   return (
     <svg
+      ref={ref}
       className={`landscape landscape--${focus} ${className}`}
       viewBox={`0 0 ${W} ${H}`}
       preserveAspectRatio={fit === 'slice' ? 'xMidYMid slice' : 'xMidYMid meet'}
@@ -326,7 +372,7 @@ export default function Landscape({
             ))}
           </g>
 
-          {note && noteDrift < 1 && <Note text={note} at={noteAt} stamp={noteStamp} drift={noteDrift} />}
+          {note && noteDrift < 1 && <Note text={note} at={noteAt} stamp={noteStamp} drift={noteDrift} rest={noteRest} />}
         </g>
       </g>
     </svg>
