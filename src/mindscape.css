@@ -2132,6 +2132,16 @@ html:lang(th) .pc__after {
   font-style: italic;
   opacity: 0.75;
 }
+/* Hin doesn't cross it out either: the thought is the stone you step on, so it sits on a pebble */
+.pc__before--stone {
+  align-self: flex-start;
+  max-width: 100%;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ece6dc, #ddd5c8);
+  color: #5b5348;
+  box-shadow: 0 2px 0 #cfc6b7;
+}
 
 /* Hin's place: a warm hill, Hin on it, and your stepping stones leading away */
 .pc__hill--earth {

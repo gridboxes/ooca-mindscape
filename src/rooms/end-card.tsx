@@ -30,7 +30,7 @@ export interface EndCard {
   postcard: {
     /** the thought as it came in: crossed out where it changed (mooca, Hin), just let drift (Bua) */
     before: string
-    beforeStyle: 'crossed' | 'drift'
+    beforeStyle: 'crossed' | 'drift' | 'stone'
     after: string
     detail?: { label: string; value: string }
     line: string
@@ -121,7 +121,7 @@ export function endCard(who: 'mooca' | 'hin' | 'bua', r: Results, lang: Lang, th
       rows,
       postcard: {
         before: thought,
-        beforeStyle: 'crossed',
+        beforeStyle: 'stone',
         after,
         detail: letBe.length ? { label: T(hin.letLabel), value: letBe.join(', ') } : undefined,
         line: `“${T(hin.quote)}” ${T(hin.quoteShort)}`,

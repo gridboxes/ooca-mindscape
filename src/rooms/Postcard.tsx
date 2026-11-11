@@ -87,6 +87,8 @@ const Postcard = forwardRef<HTMLDivElement, Props>(function Postcard({ lang, who
         <span className="pc__with">{fill(lang === 'th' ? ms.withLabel.th : ms.withLabel.en, { name })}</span>
         {hideBefore ? null : p.beforeStyle === 'crossed' ? (
           <s className="pc__before">“{p.before}”</s>
+        ) : p.beforeStyle === 'stone' ? (
+          <span className="pc__before pc__before--stone">“{p.before}”</span>
         ) : (
           <span className="pc__before pc__before--drift">〜 “{p.before}”</span>
         )}
