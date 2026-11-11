@@ -373,3 +373,97 @@
 .exp__cell.is-new {
   box-shadow: inset 0 0 0 2px var(--blue-500);
 }
+
+/* The family lineup in the new mooca style */
+.sbx__lineup h2 {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.sbx__moodbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+.sbx__trio {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.sbx__trio figure {
+  margin: 0;
+  background: #eceef5;
+  border-radius: 20px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.sbx__trio img,
+.sbx__trio svg {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+.sbx__trio figcaption {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 640px) {
+  .sbx__trio {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* The finalists in the landscape */
+.sbx__scenes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.sbx__scenes figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sbx__scene {
+  aspect-ratio: var(--ratio);
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+}
+.sbx__scene .landscape {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.sbx__scenes figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.sbx__scenes figcaption b {
+  color: var(--ink);
+}
+@media (max-width: 760px) {
+  .sbx__scenes {
+    grid-template-columns: 1fr;
+  }
+}
+.sbx__scenes--four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 960px) {
+  .sbx__scenes--four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { t, type Lang } from '../content'
 import { companions, fill, type Companion, type Theme } from '../mindscape-content'
-import { heal, lessonFor } from '../heal-content'
+import { heal } from '../heal-content'
 import Stores from './Stores'
-import { BookScreen, ChatScreen, GardenHome, Phone, PlayerScreen } from './HealPhones'
+import { Phone } from './HealPhones'
+import { GardenChat, GardenHome, GardenListen, GardenTalk } from './GardenScreens'
 import '../heal.css'
 
 // The phone tours the app once on its own: the garden's home, then into Chat, Listen and Talk,
@@ -16,8 +17,7 @@ const STAY_MS = [3400, 3800, 3800, 3800]
  * landscape's place on the ending page; on phones the same poster sits under the card, its phone
  * cropped so it isn't too tall. One page, no
  * carousel controls: the phone slides from the home screen into each feature and back, and the
- * Chat · Listen · Talk chips light in step (tap one to jump there). Never shown when the next step
- * is a psychologist.
+ * Chat · Listen · Talk chips light in step (tap one to jump there). Shown on every path.
  */
 export default function HealPoster({ lang, who, theme, compact = false }: { lang: Lang; who: Companion; theme: Theme; compact?: boolean }) {
   const T = (s: Record<Lang, string>) => t(s, lang)
@@ -30,7 +30,6 @@ export default function HealPoster({ lang, who, theme, compact = false }: { lang
   const phone = useRef<HTMLDivElement>(null)
   const [fit, setFit] = useState(1)
   const name = T(companions[who].name)
-  const lesson = lessonFor(who, theme)
 
   useEffect(() => setStill(window.matchMedia('(prefers-reduced-motion: reduce)').matches), [])
   useEffect(() => {
@@ -44,14 +43,20 @@ export default function HealPoster({ lang, who, theme, compact = false }: { lang
     return () => window.clearTimeout(id)
   }, [still, touring, shown])
 
+  // measured afresh whenever the room or the phone changes size (fonts loading, the window
+  // resizing), so the phone never grows over the store buttons below
   useEffect(() => {
     if (compact || !show.current || !phone.current) return
     const room = show.current
-    const tall = phone.current.offsetHeight
-    const measure = () => setFit(Math.min(1, room.clientHeight / tall))
+    const device = phone.current
+    const measure = () => {
+      const tall = device.offsetHeight
+      if (tall) setFit(Math.min(1, room.clientHeight / tall))
+    }
     measure()
     const ro = new ResizeObserver(measure)
     ro.observe(room)
+    ro.observe(device)
     return () => ro.disconnect()
   }, [compact])
 
@@ -94,7 +99,7 @@ export default function HealPoster({ lang, who, theme, compact = false }: { lang
                   <GardenHome
                     lang={lang}
                     who={who}
-                    lesson={lesson}
+                    theme={theme}
                     onTalk={() => {
                       setTouring(false)
                       setShown(3)
@@ -102,13 +107,13 @@ export default function HealPoster({ lang, who, theme, compact = false }: { lang
                   />
                 </div>
                 <div className="poster__pane">
-                  <ChatScreen lang={lang} />
+                  <GardenChat lang={lang} who={who} theme={theme} />
                 </div>
                 <div className="poster__pane">
-                  <PlayerScreen lang={lang} />
+                  <GardenListen lang={lang} who={who} theme={theme} />
                 </div>
                 <div className="poster__pane">
-                  <BookScreen lang={lang} />
+                  <GardenTalk lang={lang} who={who} theme={theme} />
                 </div>
               </div>
             </div>

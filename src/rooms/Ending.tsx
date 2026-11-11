@@ -29,6 +29,15 @@ interface Props {
   onHelp: () => void
   /** the card's page is open (or closed again), and its next step, so the poster knows whether to show */
   onFinal?: (open: boolean, tier: Tier) => void
+  /** where a refresh left off: the answer to "how long", and whether the card was showing */
+  resume?: EndingProgress
+  /** keeps the page's saved session up to date as the person moves through the ending */
+  onProgress?: (p: EndingProgress) => void
+}
+
+export interface EndingProgress {
+  duration: Duration | null
+  closing: boolean
 }
 
 const fileName = () => `mindscape-${new Date().toISOString().slice(0, 10)}.png`
@@ -36,10 +45,12 @@ const fileName = () => `mindscape-${new Date().toISOString().slice(0, 10)}.png`
 // The small practice and the "next step" panel are switched off for now; the psychologist offer on the care tier always stays
 const SHOW_SUGGESTIONS = false
 
-export default function Ending({ lang, who, theme, card, heavy, tierFor, onBack, onRestart, onHelp, onFinal }: Props) {
+export default function Ending({ lang, who, theme, card, heavy, tierFor, onBack, onRestart, onHelp, onFinal, resume, onProgress }: Props) {
   const subs: Sub[] = heavy ? ['duration', 'closing'] : ['closing']
-  const [sub, setSub] = useState<Sub>(subs[0])
-  const [duration, setDuration] = useState<Duration | null>(null)
+  // a refresh picks up where the person was: on the card if they'd reached it, with their answer kept
+  const [sub, setSub] = useState<Sub>(resume?.closing ? 'closing' : subs[0])
+  const [duration, setDuration] = useState<Duration | null>(resume?.duration ?? null)
+  useEffect(() => onProgress?.({ duration, closing: sub === 'closing' }), [duration, sub, onProgress])
   const [save, setSave] = useState<Save>('idle')
   // leave the original thought off the card, for saving or sharing without showing what you wrote
   const [hideThought, setHideThought] = useState(false)
@@ -142,24 +153,28 @@ export default function Ending({ lang, who, theme, card, heavy, tierFor, onBack,
         {/* The keepsake: the card, and saving it */}
         <div className="ms-final__keep">
           {/* the title sits in the top row, beside the back button (see JourneyBar) */}
-          <Postcard ref={cardRef} lang={lang} who={who} name={name} date={date} postcard={card.postcard} hideBefore={hideThought} />
-
-          <label className="ms-hide">
-            <input type="checkbox" checked={hideThought} onChange={(e) => setHideThought(e.target.checked)} />
-            <span className="ms-hide__switch" aria-hidden="true" />
-            <span>{t(ms.hideThought, lang)}</span>
-          </label>
-          <div className="ms-save">
-            <button type="button" className="btn btn--secondary btn--grow" onClick={saveCard} disabled={save === 'saving'}>
-              {save === 'saving' && <span className="spinner" aria-hidden="true" />}
-              {t(save === 'saving' ? ui.saving : save === 'saved' ? ms.saved : ms.saveImage, lang)}
-              {save === 'saved' && ' ✓'}
-            </button>
-            {canShare && (
-              <button type="button" className="btn btn--secondary btn--grow" onClick={shareCard} disabled={save === 'saving'}>
-                {t(ms.share, lang)}
-              </button>
-            )}
+          {/* the card, with its keeping controls on a tray tucked under it, so they read as one piece */}
+          <div className={`ms-keep ms-keep--${who}`}>
+            <Postcard ref={cardRef} lang={lang} who={who} name={name} date={date} postcard={card.postcard} hideBefore={hideThought} />
+            <div className="ms-keep__tray">
+              <label className="ms-hide">
+                <input type="checkbox" checked={hideThought} onChange={(e) => setHideThought(e.target.checked)} />
+                <span className="ms-hide__switch" aria-hidden="true" />
+                <span>{t(ms.hideThought, lang)}</span>
+              </label>
+              <div className="ms-save">
+                <button type="button" className="btn btn--secondary btn--grow" onClick={saveCard} disabled={save === 'saving'}>
+                  {save === 'saving' && <span className="spinner" aria-hidden="true" />}
+                  {t(save === 'saving' ? ui.saving : save === 'saved' ? ms.saved : ms.saveImage, lang)}
+                  {save === 'saved' && ' ✓'}
+                </button>
+                {canShare && (
+                  <button type="button" className="btn btn--secondary btn--grow" onClick={shareCard} disabled={save === 'saving'}>
+                    {t(ms.share, lang)}
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
           {save === 'error' && (
             <p className="inline-error" role="alert">
@@ -167,12 +182,10 @@ export default function Ending({ lang, who, theme, card, heavy, tierFor, onBack,
             </p>
           )}
           {/* On phones the ooca Garden poster sits here, under the card; on a computer it takes the
-              landscape's place beside it. Never when the next step is a psychologist. */}
-          {tier !== 'care' && (
-            <div className="ms-final__poster">
-              <HealPoster lang={lang} who={who} theme={theme} compact />
-            </div>
-          )}
+              landscape's place beside it, on every path. */}
+          <div className="ms-final__poster">
+            <HealPoster lang={lang} who={who} theme={theme} compact />
+          </div>
         </div>
 
         {/* What to do with it */}

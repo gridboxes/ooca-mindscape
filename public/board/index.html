@@ -133,6 +133,13 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
 .type__aa{font-weight:900;font-size:64px;color:var(--turq-gray-1);line-height:1.05;margin:4px 0 8px}
 .sys__phones{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .sys__phones .phone{width:100%;border-radius:30px}
+.mx-ba .shot img{display:block;width:100%}
+.mx-ba__caps{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.mx-ba__caps .cap{max-width:none}
+.mx-sub{font-size:22px;line-height:1.5;color:var(--ink-soft);max-width:1180px;margin-top:8px}
+.mx-list{font-size:21px;line-height:1.5;color:var(--ink-soft);margin-top:64px}
+.mx-list li{margin-bottom:22px}
+.mx-list b{display:block;color:var(--ink);font-size:22px;margin-bottom:2px}
 </style>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 </head>
@@ -313,7 +320,7 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
       <p style="margin-top:10px">A stormy or foggy sky (mooca) · "a lot" a year from now (Hin) · discomfort across much of the body (Bua) · or a written thought that tripped the crisis check.</p>
       <div class="branch" style="grid-template-columns:1fr;gap:18px">
         <div class="tier tier--keep"><span class="when">Nothing heavy, or heavy but recent</span><h3>Keep this card</h3><p>Save or share it. The ooca Garden poster offers a way to carry on with the same friend, gently.</p></div>
-        <div class="tier tier--care"><span class="when">Heavy for two weeks or more, or crisis words</span><h3>Talk to someone at ooca</h3><p>The only next step shown is an ooca psychologist, with the 1323 line right below. No Garden poster, no upsell.</p></div>
+        <div class="tier tier--care"><span class="when">Heavy for two weeks or more, or crisis words</span><h3>Talk to someone at ooca</h3><p>The next step is an ooca psychologist, with the 1323 line right below; the ooca Garden poster sits beside the card, as on every path.</p></div>
         <p style="font-size:18px;margin-top:4px">Designed but switched off for now: a small practice to do right away, and a "check in again tomorrow" nudge for heavy-but-recent.</p>
       </div>
     </div>
@@ -344,7 +351,8 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
 <!-- 08 VISUAL SYSTEM -->
 <section class="frame frame--tint" id="system">
   <span class="tag"><b>6</b>Visual system</span>
-  <h2>Built on the ooca CI, extended with two new friends.</h2>
+  <h2>Built on the ooca CI and ooca's new mooca, with two friends drawn to match.</h2>
+  <p class="lede">mooca is ooca's own, in its new art style, redrawn in code so it can wear every mood and weather and float in the sky, as it always has here. Hin and Bua keep their own shapes (one pebble, a lotus on its stem) and take on mooca's finish: soft painted light, no outlines, the same small oval eyes and puffed cheeks. All three are quietly alive: mooca floats, Hin breathes, Bua sways on the water.</p>
   <div class="shot" style="margin-top:40px"><img src="screens/x-sheet-crop.png" alt=""></div>
 
   <div class="grid sys" style="margin-top:64px">
@@ -381,9 +389,56 @@ ul.clean li:before{content:"";position:absolute;left:4px;top:13px;width:10px;hei
   <div class="foot"><span>Mindscape · ooca</span></div>
 </section>
 
+<!-- 08 THE MASCOT UPDATE -->
+<section class="frame frame--tint" id="mascot">
+  <span class="tag"><b>7</b>Character update</span>
+  <h2>ooca's new mooca, and two friends drawn to match.</h2>
+  <p class="lede">ooca shared mooca's new art style. Instead of keeping our flat cloud, we rebuilt the new mooca in code, so it can wear every mood and weather the flow needs, and repainted <b>Hin</b> and <b>Bua</b> in its finish while keeping their own shapes. The scene was repainted with them.</p>
+
+  <div class="mx-ba" style="margin-top:48px">
+    <div><div class="shot"><img src="screens/mascot-before-after.png" alt="The earlier flat look beside the new soft one, in the same landscape"></div></div>
+  </div>
+  <div class="mx-ba__caps"><p class="cap"><b>Before</b>Flat fills and one offset shade. Our own mooca, standing in.</p><p class="cap"><b>After</b>ooca's new mooca, floating. Hin and Bua in its finish; the scene soft to match.</p></div>
+
+  <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:56px">
+    <div class="card"><span class="k">mooca · ooca's own</span><h3>Kept as ooca drew it, made to float</h3><p>The puffy cloud head, small white body and turquoise scarf stay as on ooca's sheet. It floats, as our mooca always has here: legs hanging loose, a slow bob with a slight sway, and a faint shadow on the hills far below.</p></div>
+    <div class="card"><span class="k">Hin · repainted</span><h3>Same pebble, new finish</h3><p>One stone with little feet, its sprout and its worry crack, now in soft painted light with mooca's face: small oval eyes, a thin smile, puffed cheeks. At rest it breathes slowly and its sprout nods.</p></div>
+    <div class="card"><span class="k">Bua · repainted</span><h3>Same lotus, new finish</h3><p>A bud on its own stem with a round leaf, petals still opening breath by breath in the lamp practice. At rest it sways on the water, its leaf a beat behind, and a slow ring spreads from its stem.</p></div>
+  </div>
+
+  <h3 style="margin-top:72px">One face, every mood</h3>
+  <p class="mx-sub">The three share one face and one finish. mooca's weather shows in mooca itself: its face, its cloud's colour and the sky around it.</p>
+  <div class="shot" style="margin-top:24px"><img src="screens/mascot-skies.png" alt="mooca in five weathers"></div>
+  <div class="shot" style="margin-top:28px"><img src="screens/mascot-moods.png" alt="mooca, Hin and Bua in their moods"></div>
+
+  <div class="grid mx-tried" style="grid-template-columns:1.25fr 1fr;gap:56px;margin-top:72px;align-items:start">
+    <div>
+      <h3>What we tried, and kept</h3>
+      <p class="mx-sub">Every option was built and compared in the scene itself before choosing.</p>
+      <div class="shot" style="margin-top:24px"><img src="screens/mascot-floating.png" alt="Four floating poses tried for mooca"></div>
+      <p class="cap" style="max-width:none">Four more floating poses were tried for mooca: knees up, a cloud seat, a mochi with no body, and drifting. The chosen one keeps ooca's build.</p>
+    </div>
+    <ul class="clean mx-list">
+      <li><b>Head on a body for Hin and Bua?</b> Tried, set aside: they lost the shapes that say "stone" and "lotus".</li>
+      <li><b>A scarf for each friend?</b> Kept for mooca only. On Hin it read as a belt; on Bua it crowded the bud.</li>
+      <li><b>Five backgrounds.</b> The chosen one gives Bua's pond its own soft ground, so it no longer sits on Hin's sand.</li>
+      <li><b>Quiet motion, all still with reduced motion.</b> A slow bob, a breath, a sway: alive, never busy.</li>
+    </ul>
+  </div>
+
+  <div class="row" style="gap:64px;margin-top:72px;align-items:center">
+    <div class="phone"><img src="screens/mascot-moment.png" alt="The moment before the card"></div>
+    <div style="max-width:760px">
+      <h3>The moment before the card</h3>
+      <p class="mx-sub" style="margin-top:12px">The friend you chose cheers inside a warm halo, the others smile along, and one line names what happened, in the room's voice. Then the note lifts out of the scene as it softly blurs away, and lands on its own words on the card as the card rises around it. A tap skips ahead.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Mindscape · ooca</span></div>
+</section>
+
 <!-- 09 SAFETY / A11Y / NEXT -->
 <section class="frame" id="next">
-  <span class="tag"><b>7</b>Safety, access &amp; what's next</span>
+  <span class="tag"><b>8</b>Safety, access &amp; what's next</span>
   <h2>Approachable on the surface, careful underneath.</h2>
   <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:40px">
     <div class="card"><span class="k">Safety</span><h3>Help is never more than one tap away</h3>

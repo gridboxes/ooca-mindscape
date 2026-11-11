@@ -41,7 +41,7 @@ const COMPANIONS: Companion[] = [
     lens: 'Psychology',
     method: 'Rewriting the forecast',
     accent: { name: 'Turquoise 500', hex: '#00C4B3', tint: '#E0F8F6' },
-    motion: 'Floats and bobs. Weather moves around it.',
+    motion: 'Floats with a slow bob and a slight sway, legs and scarf trailing. Weather moves around it.',
     voice: 'A warm friend.',
     sayEn: 'Rain is allowed here. Let’s see what your sky looks like.',
     sayTh: 'ที่นี่ฝนตกได้นะ ลองมาดูท้องฟ้าในใจคุณกัน',
@@ -55,7 +55,7 @@ const COMPANIONS: Companion[] = [
     lens: 'Philosophy',
     method: 'A Stoic sitting',
     accent: { name: 'Marigo 500', hex: '#F9A000', tint: '#FDF3DC' },
-    motion: 'Barely moves. Warms like a sunlit stone: cool blue-grey with a small crack when worried, a flowering sprout when happy.',
+    motion: 'Breathes slowly; its sprout nods. Warms like a sunlit stone: cool blue-grey with a small crack when worried, a flowering sprout when happy.',
     voice: 'Calm, few words, dry humour.',
     sayEn: 'Heavy thought. Let’s turn it over and see which side is yours.',
     sayTh: 'ความคิดนี้หนักนะ ลองพลิกดูกันว่าด้านไหนเป็นของเรา',
@@ -69,7 +69,7 @@ const COMPANIONS: Companion[] = [
     lens: 'Buddhism',
     method: 'Notice, let go, be kind',
     accent: { name: 'Flamingo 500', hex: '#EF7773', tint: '#FDECEB' },
-    motion: 'Bud to bloom: worry closes the bud, happiness opens it fully. A true lotus, its leaf held above the water.',
+    motion: 'Bud to bloom: worry closes the bud, happiness opens it fully. Sways on the water, its leaf held above it.',
     voice: 'Gentle, slow, a little poetic.',
     sayEn: 'Mud is where lotuses begin. Let’s sit with it for one breath.',
     sayTh: 'โคลนคือจุดเริ่มต้นของดอกบัว ลองอยู่กับมันสักหนึ่งลมหายใจ',
@@ -112,9 +112,9 @@ export default function IdentitySheet() {
             <p className="idsheet__kicker">Three companions. One landscape. Your thought.</p>
             <h1>One family, three ways of seeing</h1>
             <p className="idsheet__lede">
-              mooca, Hin and Bua share one drawing system and one ooca frame. Each owns a place in the landscape, one accent
-              colour from the ooca palette, and a personality. Choosing a companion moves the camera, never the user, so the
-              whole experience stays one place.
+              mooca is ooca’s own, in its new art style. Hin and Bua are drawn to match it: one finish, one face, one ooca
+              frame. Each owns a place in the landscape, one accent colour from the ooca palette, and a personality. Choosing a
+              companion moves the camera, never the user, so the whole experience stays one place.
             </p>
             <div className="idsheet__controls" role="group" aria-label="Camera">
               {CAMERA_OPTIONS.map((o) => (
@@ -187,6 +187,19 @@ export default function IdentitySheet() {
           </div>
         </section>
 
+        <section aria-labelledby="skies" className="skies">
+          <h2 id="skies" className="idsheet__h2">mooca’s skies</h2>
+          <p className="skies__note">In mooca’s room the thought’s weather shows in mooca itself: its face, the colour of its cloud, and the sky around it.</p>
+          <ul className="skies__row">
+            {(['sunny', 'partly', 'foggy', 'rainy', 'stormy'] as const).map((w) => (
+              <li key={w}>
+                <Mooca weather={w} size={150} />
+                <span>{w === 'partly' ? 'partly cloudy' : w}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         <section aria-labelledby="shared" className="shared">
           <h2 id="shared" className="idsheet__h2">The shared ooca layer</h2>
           <div className="shared__grid">
@@ -223,17 +236,19 @@ export default function IdentitySheet() {
             <div className="shared__card">
               <h3>Drawing rules</h3>
               <ol className="rules">
-                <li>Flat fills. Depth comes from one shade copy offset −5, +7. No outlines on bodies.</li>
-                <li>Faces in navy #2E4E8F: 4px round strokes, r5 dot eyes, soft pink cheeks.</li>
-                <li>Stubby rounded limbs with a 3px shade stroke.</li>
-                <li>One small accessory carries the mood: mooca’s weather, Hin’s warmth, how far Bua has bloomed.</li>
-                <li>Each companion owns one ooca accent. Buttons are always Blue 500.</li>
+                <li>Soft painted light: lit from the top left, falling into shade. No outlines, no flat fills.</li>
+                <li>Faces in navy #2F3F8C: small oval eyes, a thin smile, cheeks puffed like little clouds.</li>
+                <li>Small rounded limbs in the same paint as the body.</li>
+                <li>One thing carries the mood: mooca’s weather, Hin’s warmth and sprout, how far Bua has bloomed.</li>
+                <li>Always quietly alive: mooca floats, Hin breathes, Bua sways on the water. Still when motion is reduced.</li>
+                <li>Each companion owns one ooca accent: mooca’s turquoise scarf, Marigo, Flamingo. Buttons are always Blue 500.</li>
               </ol>
               <h3 className="rules__dont">Never</h3>
               <ul className="rules">
                 <li>Buddha or monk imagery, or sacred symbols as decoration.</li>
                 <li>Colours outside the ooca palette.</li>
-                <li>Dark outlines or gradients on characters.</li>
+                <li>Dark outlines or hard, flat shading on characters.</li>
+                <li>Changing mooca’s build: its cloud, small body and scarf stay as ooca drew them.</li>
               </ul>
             </div>
           </div>

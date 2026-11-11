@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
+import { flushSync } from 'react-dom'
 import { buildReport, t, ui, type Duration, type Lang, type Tier, type Weather } from './content'
 import {
   COMPANION_ORDER,
@@ -22,7 +23,7 @@ import MoocaRoom, { type MoocaResult } from './rooms/MoocaRoom'
 import { UNSURE } from './rooms/mooca-content'
 import HinRoom, { type HinResult, type HinStage } from './rooms/HinRoom'
 import BuaRoom, { type BuaResult, type BuaStage } from './rooms/BuaRoom'
-import Ending from './rooms/Ending'
+import Ending, { type EndingProgress } from './rooms/Ending'
 import { endCard } from './rooms/end-card'
 import HealPoster from './components/HealPoster'
 import './mindscape.css'
@@ -30,6 +31,10 @@ import './mindscape.css'
 type Phase = 'landing' | 'thought' | 'voices' | 'mooca' | 'hin' | 'bua' | 'ending'
 
 const LANG_KEY = 'ooca-mindscape:lang'
+
+// The moment before the card: the chosen friend cheers, one line names what happened, then the
+// note flies into the card's place (a tap skips ahead)
+const MOMENT_MS = 2400
 
 function initialLang(): Lang {
   try {
@@ -56,6 +61,8 @@ interface Saved {
   moocaResult: MoocaResult | null
   hinResult: HinResult | null
   buaResult: BuaResult | null
+  /** how far into the ending: the answer to "how long", and whether the card was showing */
+  ending?: EndingProgress
 }
 
 function loadSaved(): Saved | null {
@@ -106,11 +113,18 @@ export default function Mindscape() {
   // Bua's room: how open Bua is, how it looks, how muddy the pond is, and what it found
   const [buaStage, setBuaStage] = useState<BuaStage>({ bloom: 0.1, mood: 'listening', murk: 0.9, drift: 0, rings: 0, view: 'water' })
   const [buaResult, setBuaResult] = useState<BuaResult | null>(saved?.buaResult ?? null)
+  // how far into the ending, so a refresh on the card comes back to the card
+  const [ending, setEnding] = useState<EndingProgress | undefined>(saved?.phase === 'ending' ? saved.ending : undefined)
+  const onProgress = useCallback((p: EndingProgress) => setEnding(p), [])
+  // leaving the ending (back into a room, or starting over) means the next ending starts fresh
+  useEffect(() => {
+    if (phase !== 'ending') setEnding(undefined)
+  }, [phase])
+  // coming back to a card after a refresh skips the moment before it: you've already had it
+  const backOnCard = useRef(saved?.phase === 'ending' && !!saved.ending?.closing)
   const cardRef = useRef<HTMLElement>(null)
   // The card's own page: first a moment in the whole landscape, then the page takes over
   const [final, setFinal] = useState<'off' | 'moment' | 'page'>('off')
-  // the ending's next step: on the care tier the poster gives way to the landscape
-  const [finalTier, setFinalTier] = useState<Tier>('keep')
   const journey = useJourney()
 
   useEffect(() => {
@@ -124,12 +138,12 @@ export default function Mindscape() {
 
   useEffect(() => {
     try {
-      const snap: Saved = { phase, thought, writing, draft, lean, chosen, flagged, moocaResult, hinResult, buaResult }
+      const snap: Saved = { phase, thought, writing, draft, lean, chosen, flagged, moocaResult, hinResult, buaResult, ending }
       sessionStorage.setItem(SAVE_KEY, JSON.stringify(snap))
     } catch {
       // ignore
     }
-  }, [phase, thought, writing, draft, lean, chosen, flagged, moocaResult, hinResult, buaResult])
+  }, [phase, thought, writing, draft, lean, chosen, flagged, moocaResult, hinResult, buaResult, ending])
 
   // Each step lands focus on its heading so screen readers follow along
   useEffect(() => {
@@ -151,7 +165,8 @@ export default function Mindscape() {
   function moodOf(c: Companion): Expression {
     if (phase === 'landing') return 'calm'
     if (phase === 'thought') return thought ? 'tender' : 'listening'
-    if (phase === 'ending') return c === chosen ? 'delighted' : 'calm'
+    // at the end the chosen friend is delighted, and in the moment before the card the others are glad for it
+    if (phase === 'ending') return c === chosen ? 'delighted' : final === 'moment' ? 'happy' : 'calm'
     if (phase === 'mooca') return c === 'mooca' ? 'listening' : 'calm'
     if (phase === 'hin') return c === 'hin' ? hinStage.mood : 'calm'
     // Bua's kindness brightens Hin when the second ring reaches it, and mooca with the third
@@ -183,6 +198,7 @@ export default function Mindscape() {
 
   // Into the chosen room, fresh
   function enter(c: Companion) {
+    setEnding(undefined)
     setChosen(c)
     if (c === 'mooca') setMoocaResult(null)
     else if (c === 'hin') setHinResult(null)
@@ -190,27 +206,161 @@ export default function Mindscape() {
     setPhase(c)
   }
 
-  const onFinal = useCallback((open: boolean, tier: Tier) => {
-    setFinalTier(tier)
+  const onFinal = useCallback((open: boolean) => {
     if (!open) return setFinal('off')
-    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches || backOnCard.current
     setFinal((f) => (f === 'off' ? (still ? 'page' : 'moment') : f))
   }, [])
 
   // Once the card's page is showing, its title takes focus (it was hidden during the moment)
   useEffect(() => {
     if (final !== 'page') return
+    // the card is back on screen; from here on, endings play their moment again
+    backOnCard.current = false
     const h = document.querySelector<HTMLElement>('.ms__card h1')
     h?.setAttribute('tabindex', '-1')
     h?.focus({ preventScroll: true })
   }, [final])
 
+  // From the moment to the card's page, in two beats so nothing ever cuts:
+  //  1. Lift: a paper copy of the note rises out of the scene, straightens and grows toward the
+  //     middle of the screen, while the landscape softly blurs, sinks back and fades behind it.
+  //  2. Land: with the scene gone, the page swaps underneath (unseen), and the card rises in around
+  //     the note as it settles onto its own words on the card (the softened line for mooca, the
+  //     thought you brought for Hin and Bua). The thought you carried becomes the thing you keep.
+  const [lifting, setLifting] = useState(false)
+  const leaving = useRef(false)
+  const toPage = useCallback(() => {
+    if (leaving.current) return
+    leaving.current = true
+    const ease = 'cubic-bezier(.22,1,.36,1)'
+    const paper = document.querySelector('.landscape__note-paper')
+    const from = paper?.getBoundingClientRect()
+    const words = [...(paper?.querySelectorAll('tspan') ?? [])].map((l) => l.textContent).join(' ')
+    const stage = document.querySelector<HTMLElement>('.ms__stage')
+    const settle = () => {
+      flushSync(() => {
+        setLifting(false)
+        setFinal('page')
+      })
+      window.scrollTo({ top: 0, behavior: 'instant' })
+      // the stage now holds the poster (or nothing, on phones): let it show again
+      stage?.getAnimations().forEach((a) => a.cancel())
+    }
+    if (!from || !from.width || !stage) {
+      settle()
+      leaving.current = false
+      return
+    }
+
+    // the note's paper, as it looks in the scene
+    const line = paper?.querySelector('tspan')?.getBoundingClientRect()
+    const startSize = line ? Math.max(9, line.height / 1.25) : 12
+    const ghost = document.createElement('div')
+    ghost.className = 'ms-note-fly'
+    ghost.setAttribute('aria-hidden', 'true')
+    ghost.textContent = words
+    document.body.append(ghost)
+    // only the width is set: the paper's height follows its words as they grow
+    const box = (x: number, y: number, w: number) => ({ left: `${x}px`, top: `${y}px`, width: `${w}px` })
+    const paperLook = (size: number, lift: number) => ({
+      backgroundColor: '#fffdf7',
+      boxShadow: `0 ${8 + lift * 16}px ${20 + lift * 30}px rgba(38, 49, 60, ${0.14 + lift * 0.08})`,
+      fontSize: `${size}px`,
+      color: '#3f6866',
+      padding: `${Math.round(size * 0.6)}px ${Math.round(size * 0.9)}px`,
+    })
+
+    // 1. Lift: to the middle of the screen, a third bigger, straightened
+    const k = 1.35
+    const w = from.width * k
+    const h = from.height * k
+    const mx = window.innerWidth / 2 - w / 2
+    const my = Math.min(window.innerHeight * 0.42, from.top + from.height / 2) - h / 2
+    setLifting(true)
+    stage.animate(
+      [
+        { opacity: 1, transform: 'scale(1)', filter: 'blur(0px)' },
+        { opacity: 0, transform: 'scale(0.94)', filter: 'blur(8px)' },
+      ],
+      { duration: 700, easing: 'ease-in', fill: 'forwards' },
+    )
+    ghost.animate(
+      [
+        { ...box(from.left, from.top, from.width), ...paperLook(startSize, 0), transform: 'rotate(-4deg)' },
+        { ...box(mx, my, w), ...paperLook(startSize * k, 1), transform: 'rotate(0deg)' },
+      ],
+      { duration: 700, easing: ease, fill: 'forwards' },
+    ).onfinish = () => {
+      // 2. Land: the page swaps under the empty screen, then the card rises in around the note
+      settle()
+      const card = document.querySelector<HTMLElement>('.ms-final .pc')
+      if (!card) return ghost.remove()
+      const plain = (x: string | null | undefined) => (x ?? '').replace(/[“”"〜~\s]/g, '').toLowerCase()
+      const spot =
+        [...card.querySelectorAll<HTMLElement>('.pc__after, .pc__before')].find((el) => plain(el.textContent) === plain(words)) ??
+        card.querySelector<HTMLElement>('.pc__after') ??
+        card
+      // measure where the words will rest once the card has settled (skip its own rise)
+      document.querySelector('.ms-final')?.getAnimations().forEach((a) => a.finish())
+      const to = spot.getBoundingClientRect()
+      const look = getComputedStyle(spot)
+      // the card's own line (with its quote marks) and type, so the words wrap the same way when they land
+      ghost.textContent = spot.textContent ?? words
+      ghost.style.textAlign = look.textAlign
+      ghost.style.fontWeight = look.fontWeight
+      ghost.style.lineHeight = String(parseFloat(look.lineHeight) / parseFloat(look.fontSize) || 1.25)
+      ghost.style.letterSpacing = look.letterSpacing
+      ghost.style.fontFamily = look.fontFamily
+      ghost.style.setProperty('text-wrap', look.getPropertyValue('text-wrap') || 'wrap')
+      ghost.style.justifyItems = look.textAlign === 'center' ? 'center' : 'start'
+      ghost.style.alignItems = 'start'
+      ghost.getAnimations().forEach((a) => a.cancel())
+      const landed = {
+        ...box(to.left, to.top, to.width),
+        backgroundColor: 'rgba(255, 253, 247, 0)',
+        boxShadow: '0 0 0 rgba(38, 49, 60, 0)',
+        fontSize: look.fontSize,
+        color: look.color,
+        padding: '0px',
+        transform: 'rotate(0deg)',
+      }
+      ghost.animate(
+        [
+          { ...box(mx, my, w), ...paperLook(startSize * k, 1), transform: 'rotate(0deg)', opacity: 1, easing: ease },
+          { ...landed, opacity: 1, offset: 0.8 },
+          { ...landed, opacity: 0 },
+        ],
+        { duration: 900, fill: 'forwards' },
+      ).onfinish = () => ghost.remove()
+      // the card's own line stays hidden until the note touches down, so the words never show twice
+      spot.animate([{ opacity: 0 }, { opacity: 0, offset: 0.78 }, { opacity: 1 }], { duration: 900, fill: 'backwards' })
+      // the card and the rest of the page rise in around the landing note
+      card.animate(
+        [
+          { opacity: 0, transform: 'translateY(24px) scale(0.98)' },
+          { opacity: 1, transform: 'none' },
+        ],
+        { duration: 700, delay: 120, easing: ease, fill: 'backwards' },
+      )
+      document.querySelectorAll<HTMLElement>('.ms-final > :not(.ms-final__keep), .ms-final__keep > :not(.pc), .ms__stage .poster, .ms__card .journey').forEach((el, i) =>
+        el.animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }], {
+          duration: 600,
+          delay: 380 + i * 60,
+          easing: ease,
+          fill: 'backwards',
+        }),
+      )
+    }
+  }, [])
+
   useEffect(() => {
+    if (final === 'off') leaving.current = false
     if (final !== 'moment') return
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    const id = window.setTimeout(() => setFinal('page'), 1600)
+    const id = window.setTimeout(toPage, MOMENT_MS)
     return () => window.clearTimeout(id)
-  }, [final])
+  }, [final, toPage])
 
   function restart() {
     setPhase('landing')
@@ -224,6 +374,7 @@ export default function Mindscape() {
     setMoocaResult(null)
     setHinResult(null)
     setBuaResult(null)
+    setEnding(undefined)
   }
 
   // Heavy: the room saw a heavy signal, or the written thought tripped the crisis check
@@ -469,15 +620,17 @@ export default function Mindscape() {
         onRestart={restart}
         onHelp={() => setHelpOpen(true)}
         onFinal={onFinal}
+        resume={ending}
+        onProgress={onProgress}
       />
     )
   }
 
-  // On the ending page the ooca Garden poster takes the landscape's place, unless the next step is a psychologist
-  const poster = phase === 'ending' && final === 'page' && finalTier !== 'care'
+  // On the ending page the ooca Garden poster always takes the landscape's place
+  const poster = phase === 'ending' && final === 'page'
 
   return (
-    <div className={`app ms ms--${phase}${phase === 'ending' && final !== 'off' ? ` ms--final-${final}` : ''}${poster ? ' ms--poster' : ''}`} data-place={focus} data-friend={part >= 2 ? (chosen ?? undefined) : undefined}>
+    <div className={`app ms ms--${phase}${phase === 'ending' && final !== 'off' ? ` ms--final-${final}` : ''}${poster ? ' ms--poster' : ''}${lifting ? ' ms--lifting' : ''}`} data-place={focus} data-friend={part >= 2 ? (chosen ?? undefined) : undefined}>
       <div className="sky-bg" aria-hidden="true" />
       <header className="topbar">
         <button type="button" className="brand" onClick={restart} aria-label="ooca Mindscape, start over">
@@ -501,8 +654,14 @@ export default function Mindscape() {
       </header>
 
       <main className="ms__main">
-        <div className="ms__stage">
+        <div className="ms__stage" onClick={final === 'moment' ? toPage : undefined}>
           {poster && chosen && <HealPoster lang={lang} who={chosen} theme={theme} />}
+          {final === 'moment' && chosen && (
+            <p className="ms-moment-line" role="status">
+              {t(ms.momentLine[chosen], lang)}
+              <small>{t(ms.momentKeep, lang)}</small>
+            </p>
+          )}
           <Landscape
             focus={focus}
             fit="slice"

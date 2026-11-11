@@ -191,3 +191,106 @@ export const heal = {
   featTalk: { en: 'Talk', th: 'คุย' },
   pickedFor: { en: 'picked for your thought', th: 'เลือกมาให้ตรงกับความคิดของคุณ' },
 }
+
+// ---------------------------------------------------------------- the poster's phone, after Mindscape
+
+// What the person says first in the chat: their own thought, in their own words a few hours later
+export const chatOpener: Record<Theme, T> = {
+  worth: { en: 'Still feel like I’m not good enough', th: 'ยังรู้สึกว่าตัวเองดีไม่พอ' },
+  fear: { en: 'Worried it’ll all go wrong tomorrow', th: 'กลัวพรุ่งนี้จะพังไปหมด' },
+  overthink: { en: 'My head won’t stop tonight', th: 'คืนนี้หัวหยุดคิดไม่ได้เลย' },
+  tired: { en: 'So tired of everything lately', th: 'ช่วงนี้เหนื่อยกับทุกอย่าง' },
+  compare: { en: 'I keep comparing myself at work', th: 'ชอบเอาตัวเองไปเทียบกับคนที่ทำงาน' },
+  alone: { en: 'Feels like nobody really gets me', th: 'รู้สึกว่าไม่มีใครเข้าใจเลย' },
+  regret: { en: 'Still replaying that mistake', th: 'ยังวนคิดเรื่องที่พลาดไป' },
+  meaning: { en: 'Not sure what it’s all for', th: 'ไม่แน่ใจว่าทำไปเพื่ออะไร' },
+  general: { en: 'Today was a lot', th: 'วันนี้หนักหน่อย' },
+}
+
+/** Each friend's way of talking it through: a hello, then their own practice right in the chat */
+export const chatScript: Record<Companion, { hello: T; ask: T; after: T; reply: T }> = {
+  mooca: {
+    hello: { en: 'Welcome back. What’s the sky like in there now?', th: 'กลับมาแล้ว ตอนนี้ท้องฟ้าในใจเป็นไงบ้าง?' },
+    ask: { en: 'Thanks for saying it. Which weather is closest?', th: 'ขอบคุณที่บอกนะ สภาพอากาศไหนใกล้ที่สุด?' },
+    after: { en: 'Rain is allowed here. Soften one heavy word together?', th: 'ที่นี่ฝนตกได้นะ ลองทำคำที่หนักให้นุ่มลงสักคำไหม?' },
+    reply: { en: 'Okay, let’s try 🙂', th: 'โอเค ลองดู 🙂' },
+  },
+  hin: {
+    hello: { en: 'Back again. What’s on your mind today?', th: 'กลับมาแล้ว วันนี้มีอะไรอยู่ในใจ?' },
+    ask: { en: 'Let’s split the stone. Which part is yours to move?', th: 'ลองแยกหินดูกัน ส่วนไหนที่เราขยับได้?' },
+    after: { en: 'Good. Start there. One small step today?', th: 'ดีเลย เริ่มจากตรงนั้น วันนี้ก้าวเล็กๆ สักก้าวไหม?' },
+    reply: { en: 'One small step. I can do that.', th: 'ก้าวเล็กๆ ก้าวเดียว ทำได้' },
+  },
+  bua: {
+    hello: { en: 'Hello again. Shall we sit for a moment first?', th: 'สวัสดีอีกครั้ง นั่งพักด้วยกันสักครู่ก่อนไหม?' },
+    ask: { en: 'Let’s breathe with it, not against it.', th: 'หายใจไปกับมัน ไม่ต้องสู้กับมัน' },
+    after: { en: 'It’s allowed to be here. And so are you.', th: 'ให้มันอยู่ตรงนี้ได้ และคุณก็อยู่ตรงนี้ได้' },
+    reply: { en: 'That helped a little 🌸', th: 'ช่วยได้นิดนึง 🌸' },
+  },
+}
+
+export const garden = {
+  continueWith: { en: 'Continue with {name}', th: 'คุยต่อกับ{name}' },
+  tonight: { en: 'For you tonight', th: 'สำหรับคุณคืนนี้' },
+  courses: { en: 'Courses for real problems', th: 'คอร์สสำหรับปัญหาจริง' },
+  talkNow: { en: 'Talk to a psychologist', th: 'คุยกับนักจิตวิทยา' },
+  availableNow: { en: '3 available now', th: 'ว่างตอนนี้ 3 คน' },
+  here: { en: 'here for you', th: 'อยู่ตรงนี้นะ' },
+  message: { en: 'Message {name}…', th: 'พิมพ์ถึง{name}…' },
+  mine: { en: 'My next step', th: 'ก้าวต่อไปของฉัน' },
+  notMine: { en: 'What others think', th: 'ที่คนอื่นคิด' },
+  breathe: { en: '3 slow breaths', th: 'หายใจช้าๆ 3 ครั้ง' },
+  start: { en: 'Start', th: 'เริ่ม' },
+  pickedFor: { en: 'Picked for your thought', th: 'เลือกมาให้ความคิดของคุณ' },
+  voicedBy: { en: 'With Napa, ooca psychologist', th: 'กับคุณนภา นักจิตวิทยา ooca' },
+  upNext: { en: 'Up next', th: 'ถัดไป' },
+  suggested: { en: '{name} thought talking to someone might help', th: '{name}คิดว่าการได้คุยกับใครสักคนน่าจะช่วยได้' },
+  psychologist: { en: 'Psychologist', th: 'นักจิตวิทยา' },
+  now: { en: 'Now', th: 'ตอนนี้' },
+  book: { en: 'Book a video call', th: 'นัดคุยผ่านวิดีโอ' },
+  private: { en: 'Your cards are shared only if you choose', th: 'การ์ดของคุณแชร์เฉพาะเมื่อคุณเลือก' },
+  members: { en: 'Members’ price', th: 'ราคาสมาชิก' },
+  today: { en: 'Today', th: 'วันนี้' },
+}
+
+export const psychologists: { name: T; focus: T; slots: string[]; tint: string; hair: string; skin: string }[] = [
+  { name: { en: 'Napa', th: 'คุณนภา' }, focus: { en: 'Stress · Work', th: 'ความเครียด · งาน' }, slots: ['now', '19:30'], tint: '#d7f3ef', hair: '#3b2f2f', skin: '#f2cfb3' },
+  { name: { en: 'Ton', th: 'คุณต้น' }, focus: { en: 'Anxiety · Sleep', th: 'ความกังวล · การนอน' }, slots: ['20:00', '21:00'], tint: '#fbeccb', hair: '#2b2622', skin: '#e3b591' },
+  { name: { en: 'Mind', th: 'คุณมายด์' }, focus: { en: 'Self-worth · Love', th: 'คุณค่าในตัวเอง · ความรัก' }, slots: ['20:30'], tint: '#fde3e2', hair: '#4a3328', skin: '#f5d6bf' },
+]
+
+/** The lesson after this one, so the player has somewhere to go */
+export const upNextFor = (who: Companion, theme: Theme): Lesson => {
+  const now = lessonFor(who, theme)
+  const base = LESSONS[who].base
+  return now.title.en === base.title.en ? Object.values(LESSONS[who].by)[0] ?? base : base
+}
+
+// Each course and lesson has its own cover art: abstract shapes on a soft wash, none of them the
+// friends, so the library reads as ooca's own and each idea gets a picture of its own
+export type CoverArt = 'swirl' | 'moon' | 'battery' | 'apart' | 'pages' | 'nest' | 'bubble' | 'half' | 'circle' | 'scale' | 'sunset' | 'path' | 'ripple' | 'petals' | 'scan'
+export interface Cover {
+  art: CoverArt
+  from: string
+  to: string
+  ink: string
+}
+const COVERS: Record<string, Cover> = {
+  Overthinking: { art: 'swirl', from: '#cdeffa', to: '#e9e2fb', ink: '#5b6fd6' },
+  'Can’t sleep': { art: 'moon', from: '#2c3a6b', to: '#4b5aa0', ink: '#ffe6a3' },
+  'Work burnout': { art: 'battery', from: '#ffe2b8', to: '#ffc9a8', ink: '#e0672e' },
+  'After a breakup': { art: 'apart', from: '#fde0e3', to: '#f3d9f4', ink: '#d9577a' },
+  'Exam stress': { art: 'pages', from: '#d9f5e4', to: '#cdeef2', ink: '#1f9a7a' },
+  'New parent': { art: 'nest', from: '#fff1c9', to: '#fde3d3', ink: '#e59a1c' },
+  'A thought isn’t a fact': { art: 'bubble', from: '#d6f4f1', to: '#dbe8fb', ink: '#00968a' },
+  'When your mind won’t stop': { art: 'swirl', from: '#e2e6fb', to: '#d5f1f6', ink: '#5b6fd6' },
+  'Running on empty': { art: 'half', from: '#ffe5c2', to: '#fbd3c4', ink: '#e0672e' },
+  'What’s in your control': { art: 'circle', from: '#fdeec8', to: '#f8dcb4', ink: '#c77d00' },
+  'Measuring yourself fairly': { art: 'scale', from: '#fbecc9', to: '#e9f3d6', ink: '#b57a00' },
+  'The evening review': { art: 'sunset', from: '#ffd9b8', to: '#e7cdf2', ink: '#d0602f' },
+  'Life questions: what matters': { art: 'path', from: '#e0eefc', to: '#fbe7d0', ink: '#4a74c9' },
+  'Five breaths to let go': { art: 'ripple', from: '#fde3e2', to: '#dff2fb', ink: '#e0636a' },
+  'Kindness, starting with you': { art: 'petals', from: '#fde0e5', to: '#fff0d9', ink: '#e05a77' },
+  'Body scan for a busy mind': { art: 'scan', from: '#e6f6ea', to: '#fde6e4', ink: '#3c9b6a' },
+}
+export const coverFor = (title: T): Cover => COVERS[title.en] ?? COVERS['A thought isn’t a fact']

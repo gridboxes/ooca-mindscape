@@ -6,6 +6,7 @@ import type { Expression, NewMood } from './companions/Face'
 import type { Weather } from '../content'
 
 export type Focus = 'all' | 'sky' | 'earth' | 'water'
+export type SoftGround = 'hill' | 'meadow' | 'stones' | 'lake' | 'sea'
 
 interface Props {
   focus?: Focus
@@ -19,6 +20,15 @@ interface Props {
   rockMood?: Expression
   /** draw a different Hin in Hin's place (used to compare candidates) */
   renderRock?: (mood: Expression, size: number) => ReactNode
+  /** draw a different mooca or Bua in their places (the sandbox compares the earlier characters) */
+  renderMooca?: (size: number) => ReactNode
+  /** a faint shadow on the hills far below mooca, breathing with its bob, so it reads as up in the air */
+  moocaShadow?: boolean
+  renderLotus?: (mood: Expression, size: number) => ReactNode
+  /** 'soft' (the default) paints the scene in the new mooca's finish; 'flat' is the earlier look, kept for comparison */
+  look?: 'flat' | 'soft'
+  /** the ground in the soft look: hill and pond, a meadow pond (the default), a pond ringed with stones, an open lake, or open water all around Hin's hill */
+  ground?: SoftGround
   lotusMood?: Expression
   /** how open Bua is, 0 bud to 1 bloom; defaults to the mood's */
   lotusBloom?: number
@@ -222,6 +232,11 @@ export default function Landscape({
   moocaGlow = false,
   rockMood = 'calm',
   renderRock,
+  renderMooca,
+  moocaShadow = true,
+  renderLotus,
+  look = 'soft',
+  ground = 'meadow',
   lotusMood = 'calm',
   lotusBloom,
   pondMurk = 0,
@@ -262,6 +277,11 @@ export default function Landscape({
           <stop offset=".55" stopColor="#F2FBFA" />
           <stop offset="1" stopColor="#FFFFFF" />
         </linearGradient>
+        <radialGradient id={`${id}-halo`}>
+          <stop offset="0" stopColor="#FFF6D6" stopOpacity=".95" />
+          <stop offset=".6" stopColor="#FFF1C2" stopOpacity=".45" />
+          <stop offset="1" stopColor="#FFF1C2" stopOpacity="0" />
+        </radialGradient>
         <radialGradient id={`${id}-lining`}>
           <stop offset="0" stopColor="#FFF8DC" stopOpacity="1" />
           <stop offset=".55" stopColor="#FFE9A8" stopOpacity=".75" />
@@ -280,6 +300,10 @@ export default function Landscape({
 
       <g clipPath={`url(#${id}-frame)`}>
         <g className={`landscape__camera${lift > 0 ? ' is-lifting' : ''}`} style={{ transform: camera(focus, lift) }}>
+{look === 'soft' ? (
+            <SoftScenery id={id} pondMurk={pondMurk} variant={ground} />
+          ) : (
+            <>
           {/* sky */}
           <rect width={W} height={H} fill={`url(#${id}-sky)`} />
           <g className="landscape__clouds" fill="#FFFFFF">
@@ -309,6 +333,8 @@ export default function Landscape({
             <path d="M200 470 q14 -6 28 0" />
             <path d="M350 486 q12 -5 24 0" />
           </g>
+            </>
+          )}
 
           {/* kindness passed on: a soft wave of warmth from the lotus, each reaching further, then fading */}
           <g className="landscape__kind" aria-hidden="true">
@@ -329,12 +355,44 @@ export default function Landscape({
           </g>
 
           {/* grass tufts tie earth and water together */}
-          <g stroke="#8AD866" strokeWidth="3" strokeLinecap="round" fill="none">
-            <path d="M214 404 l-4 -12 M218 404 l1 -14 M222 404 l5 -11" />
+          <g stroke={look === 'soft' ? '#93CF78' : '#8AD866'} strokeWidth="3" strokeLinecap="round" fill="none">
             <path d="M18 362 l-3 -10 M22 362 l1 -12 M26 362 l4 -9" />
-            <path d="M372 404 l-3 -10 M376 404 l1 -12 M380 404 l4 -9" />
+            {/* the tufts on the right stand on land, so they go where the soft ground is water */}
+            {!(look === 'soft' && (ground === 'sea' || ground === 'lake')) && (
+              <>
+                <path d="M214 404 l-4 -12 M218 404 l1 -14 M222 404 l5 -11" />
+                <path d="M372 404 l-3 -10 M376 404 l1 -12 M380 404 l4 -9" />
+              </>
+            )}
           </g>
 
+          {/* the halo that blooms behind a friend in the moment before the card (shown by the page's CSS) */}
+          {(
+            [
+              ['mooca', 195, 128, 84],
+              ['hin', 94, 392, 78],
+              ['bua', 296, 388, 72],
+            ] as const
+          ).map(([who, x, y, r]) => (
+            <g key={who} className={`landscape__halo landscape__halo--${who}`} transform={`translate(${x} ${y})`} aria-hidden="true">
+              <circle r={r} fill={`url(#${id}-halo)`} />
+              {[
+                [-r * 0.95, -r * 0.55, 9],
+                [r * 0.92, -r * 0.7, 7],
+                [r * 1.02, r * 0.25, 6],
+                [-r * 0.8, r * 0.45, 5],
+                [r * 0.1, -r * 1.05, 6],
+              ].map(([sx, sy, k], i) => (
+                <path
+                  key={i}
+                  className="landscape__spark"
+                  style={{ animationDelay: `${0.55 + i * 0.12}s` }}
+                  d={`M${sx} ${sy - k} Q${sx} ${sy} ${sx + k} ${sy} Q${sx} ${sy} ${sx} ${sy + k} Q${sx} ${sy} ${sx - k} ${sy} Q${sx} ${sy} ${sx} ${sy - k} Z`}
+                  fill="#FFFFFF"
+                />
+              ))}
+            </g>
+          ))}
           {/* companions */}
           {/* the silver lining: light from behind mooca's cloud, and a few glints at its edge */}
           {moocaGlow && (
@@ -342,8 +400,16 @@ export default function Landscape({
               <ellipse cx="195" cy="116" rx="132" ry="96" fill={`url(#${id}-lining)`} />
             </g>
           )}
+          {moocaShadow && <ellipse className="float-shadow" cx="194" cy="300" rx="34" ry="4.5" fill="#5E8F88" opacity=".12" />}
           <g className={`landscape__mooca${moocaGlow ? ' is-glowing' : ''}`} transform="translate(95 34)">
-            <Mooca weather={moocaWeather} mood={moocaMood} size={200} effects={moocaEffects} lining={moocaGlow} title="mooca" />
+            {/* the cheer wrapper lets a friend celebrate at the end without moving its place */}
+            <g className="landscape__cheer">
+              {renderMooca ? (
+                renderMooca(200)
+              ) : (
+                <Mooca weather={moocaWeather} mood={moocaMood} size={200} effects={moocaEffects} lining={moocaGlow} title="mooca" />
+              )}
+            </g>
           </g>
           {moocaGlow && (
             <g className="landscape__glints" fill="#FFFFFF" aria-hidden="true">
@@ -357,10 +423,14 @@ export default function Landscape({
             </g>
           )}
           <g className="landscape__rock" transform="translate(-6 286)">
-            {renderRock ? renderRock(rockMood, 200) : <Rock mood={rockMood} size={200} title="Hin the rock" />}
+            <g className="landscape__cheer">
+              {renderRock ? renderRock(rockMood, 200) : <Rock mood={rockMood} size={200} title="Hin the rock" />}
+            </g>
           </g>
           <g className="landscape__lotus" transform="translate(204 302)">
-            <Lotus mood={lotusMood} bloom={lotusBloom} size={180} ripples={false} title="Bua the lotus" />
+            <g className="landscape__cheer">
+              {renderLotus ? renderLotus(lotusMood, 180) : <Lotus mood={lotusMood} bloom={lotusBloom} size={180} ripples={false} title="Bua the lotus" />}
+            </g>
           </g>
 
           {/* and a little heart stays with each friend it reached: Bua, then Hin, then mooca */}
@@ -376,5 +446,247 @@ export default function Landscape({
         </g>
       </g>
     </svg>
+  )
+}
+
+/**
+ * The same sky, hills, earth and pond, painted in the new mooca's finish: soft gradients, a warm
+ * glow, puffy clouds with lavender undersides, and light on the water. Shapes and places stay
+ * where the flat scene has them, so the camera, the note and every room effect still line up.
+ */
+function SoftScenery({ id, pondMurk, variant }: { id: string; pondMurk: number; variant: SoftGround }) {
+  const flowers = (spots: [number, number, string][]) => (
+    <g>
+      {spots.map(([x, y, c]) => (
+        <g key={`${x}-${y}`} transform={`translate(${x} ${y})`}>
+          <g fill={c}>
+            <circle cx="0" cy="-3" r="2.6" />
+            <circle cx="3" cy="0" r="2.6" />
+            <circle cx="0" cy="3" r="2.6" />
+            <circle cx="-3" cy="0" r="2.6" />
+          </g>
+          <circle r="1.8" fill="#FBD86A" />
+        </g>
+      ))}
+    </g>
+  )
+  const g = (n: string) => `${id}-soft-${n}`
+  const puff = (x: number, y: number, k: number) => (
+    <g transform={`translate(${x} ${y}) scale(${k})`}>
+      <ellipse cx="2" cy="16" rx="44" ry="9" fill="#C9D3EC" opacity=".55" filter={`url(#${g('blur')})`} />
+      <g fill={`url(#${g('puff')})`}>
+        <circle cx="-22" cy="4" r="14" />
+        <circle cx="-2" cy="-6" r="20" />
+        <circle cx="22" cy="2" r="15" />
+        <rect x="-36" y="0" width="72" height="18" rx="9" />
+      </g>
+    </g>
+  )
+  return (
+    <g>
+      <defs>
+        <filter id={g('blur')} x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="6" />
+        </filter>
+        <linearGradient id={g('sky')} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#B9E7E1" />
+          <stop offset=".42" stopColor="#E2F5F1" />
+          <stop offset=".62" stopColor="#FBF8EF" />
+        </linearGradient>
+        <radialGradient id={g('glow')}>
+          <stop offset="0" stopColor="#FFF4D2" stopOpacity=".95" />
+          <stop offset="1" stopColor="#FFF4D2" stopOpacity="0" />
+        </radialGradient>
+        <radialGradient id={g('puff')} cx=".4" cy=".25" r=".9">
+          <stop offset="0" stopColor="#FFFFFF" />
+          <stop offset=".7" stopColor="#FAFBFE" />
+          <stop offset="1" stopColor="#E3E8F4" />
+        </radialGradient>
+        <linearGradient id={g('far')} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#C6EAE3" />
+          <stop offset=".5" stopColor="#E4F5F1" />
+        </linearGradient>
+        <linearGradient id={g('near')} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#B4E1D6" />
+          <stop offset=".45" stopColor="#D9F0EA" />
+        </linearGradient>
+        <linearGradient id={g('earth')} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#FBEBC4" />
+          <stop offset=".55" stopColor="#F5DCA2" />
+          <stop offset="1" stopColor="#EBC889" />
+        </linearGradient>
+        <linearGradient id={g('mint')} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#C2E6DD" />
+          <stop offset=".3" stopColor="#DCF1EC" />
+        </linearGradient>
+        <linearGradient id={g('meadow')} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#D8F0C8" />
+          <stop offset="1" stopColor="#B6DDA1" />
+        </linearGradient>
+        <linearGradient id={g('lake')} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#E3EFFC" />
+          <stop offset=".5" stopColor="#CBE0F8" />
+          <stop offset="1" stopColor="#A9C8EE" />
+        </linearGradient>
+        <radialGradient id={g('pond')} cx=".45" cy=".4" r=".7">
+          <stop offset="0" stopColor="#F1F7FE" />
+          <stop offset=".65" stopColor="#D8E8FA" />
+          <stop offset="1" stopColor="#B9D3F2" />
+        </radialGradient>
+      </defs>
+
+      {/* sky: mint to warm cream, with the morning light top right */}
+      <rect width={W} height={H} fill={`url(#${g('sky')})`} />
+      <ellipse cx="320" cy="70" rx="140" ry="110" fill={`url(#${g('glow')})`} />
+      <g className="landscape__clouds">
+        {puff(60, 64, 0.9)}
+        {puff(344, 146, 0.75)}
+        {puff(36, 214, 0.5)}
+      </g>
+
+      {/* hills, far and near, fading into the haze */}
+      <path d="M0 280 C70 250 140 262 200 278 C260 294 330 270 390 250 L390 560 L0 560 Z" fill={`url(#${g('far')})`} />
+      {variant === 'lake' ? (
+        <>
+      {/* water: an open lake from Hin's beach to the scene's edge, with foam where it meets the sand */}
+      <path d="M390 318 C340 326 286 344 252 380 C228 406 222 470 238 560 L390 560 Z" fill={`url(#${g('lake')})`} />
+      <path d="M390 330 C344 338 300 352 270 376" stroke="#FFFFFF" strokeWidth="5" strokeLinecap="round" fill="none" opacity=".55" filter={`url(#${g('blur')})`} />
+      <ellipse cx="318" cy="420" rx="56" ry="8" fill="#FFFFFF" opacity=".55" filter={`url(#${g('blur')})`} />
+      <ellipse className="landscape__mud" cx="304" cy="452" rx="104" ry="70" fill="#C9AE82" style={{ opacity: pondMurk * 0.6 }} />
+      <g fill="none" stroke="#9EC3EF" strokeWidth="2.5" strokeLinecap="round" opacity=".6">
+        <path d="M262 500 q14 -6 28 0" />
+        <path d="M340 520 q12 -5 24 0" />
+        <path d="M330 372 q10 -4 20 0" />
+      </g>
+      <path d="M200 362 C232 384 244 430 236 560" stroke="#FFFFFF" strokeWidth="12" strokeLinecap="round" fill="none" opacity=".75" filter={`url(#${g('blur')})`} />
+      {/* earth: the warm hill, lit along its top edge */}
+      <path d="M0 330 C60 310 140 322 200 362 C232 384 244 430 236 560 L0 560 Z" fill={`url(#${g('earth')})`} />
+      <path d="M0 336 C60 316 138 328 194 366" stroke="#FFF6DE" strokeWidth="6" strokeLinecap="round" fill="none" opacity=".8" filter={`url(#${g('blur')})`} />
+      <ellipse cx="96" cy="500" rx="70" ry="18" fill="#E3BD7C" opacity=".35" filter={`url(#${g('blur')})`} />
+      <g fill="#E6C589" opacity=".8">
+        <ellipse cx="160" cy="508" rx="9" ry="5" />
+        <ellipse cx="176" cy="514" rx="6" ry="3.5" />
+        <ellipse cx="34" cy="530" rx="7" ry="4" />
+      </g>
+          {flowers([[30, 372, '#F7B6BE'], [150, 360, '#FFFFFF']])}
+        </>
+      ) : variant === 'hill' ? (
+        <>
+      <path d="M150 312 C220 290 300 296 390 284 L390 560 L150 560 Z" fill={`url(#${g('near')})`} opacity=".8" />
+      {/* earth: the warm hill, lit along its top edge */}
+      <path d="M0 330 C60 310 140 322 200 362 C232 384 244 430 236 560 L0 560 Z" fill={`url(#${g('earth')})`} />
+      <path d="M0 336 C60 316 138 328 194 366" stroke="#FFF6DE" strokeWidth="6" strokeLinecap="round" fill="none" opacity=".8" filter={`url(#${g('blur')})`} />
+      <ellipse cx="96" cy="500" rx="70" ry="18" fill="#E3BD7C" opacity=".35" filter={`url(#${g('blur')})`} />
+      <g fill="#E6C589" opacity=".8">
+        <ellipse cx="160" cy="508" rx="9" ry="5" />
+        <ellipse cx="176" cy="514" rx="6" ry="3.5" />
+        <ellipse cx="34" cy="530" rx="7" ry="4" />
+      </g>
+          {flowers([[30, 372, '#F7B6BE'], [186, 392, '#FFFFFF'], [362, 410, '#F7B6BE']])}
+
+      {/* water: a soft-lit pond with a glint across it */}
+      <ellipse cx="302" cy="458" rx="134" ry="58" fill="#A9C8EE" opacity=".6" filter={`url(#${g('blur')})`} />
+      <ellipse cx="300" cy="448" rx="126" ry="54" fill={`url(#${g('pond')})`} />
+      <ellipse cx="258" cy="428" rx="48" ry="8" fill="#FFFFFF" opacity=".7" filter={`url(#${g('blur')})`} />
+      <ellipse className="landscape__mud" cx="300" cy="449" rx="124" ry="54" fill="#C9AE82" style={{ opacity: pondMurk * 0.6 }} />
+      <g fill="none" stroke="#9EC3EF" strokeWidth="2.5" strokeLinecap="round" opacity=".6">
+        <path d="M200 470 q14 -6 28 0" />
+        <path d="M350 486 q12 -5 24 0" />
+      </g>
+        </>
+      ) : (
+        <>
+      {variant === 'sea' ? (
+        <>
+          {/* open water all around Hin's hill, out to the horizon */}
+          <path d="M0 318 C90 300 180 306 260 300 C320 296 360 292 390 288 L390 560 L0 560 Z" fill={`url(#${g('lake')})`} />
+          <path d="M200 308 C270 302 330 298 390 294" stroke="#FFFFFF" strokeWidth="5" strokeLinecap="round" fill="none" opacity=".6" filter={`url(#${g('blur')})`} />
+          <ellipse cx="318" cy="420" rx="56" ry="8" fill="#FFFFFF" opacity=".55" filter={`url(#${g('blur')})`} />
+          <ellipse className="landscape__mud" cx="304" cy="452" rx="104" ry="70" fill="#C9AE82" style={{ opacity: pondMurk * 0.6 }} />
+          <g fill="none" stroke="#9EC3EF" strokeWidth="2.5" strokeLinecap="round" opacity=".6">
+            <path d="M262 500 q14 -6 28 0" />
+            <path d="M340 520 q12 -5 24 0" />
+            <path d="M320 360 q10 -4 20 0" />
+          </g>
+          {/* foam where the water meets the sand */}
+          <path d="M184 356 C208 374 206 440 192 560" stroke="#FFFFFF" strokeWidth="12" strokeLinecap="round" fill="none" opacity=".75" filter={`url(#${g('blur')})`} />
+        </>
+      ) : (
+        <>
+          {/* the ground on the right: A's soft mint for the meadow pond, green grass around the stone-ringed one */}
+          <path d="M0 318 C90 300 180 306 260 300 C320 296 360 292 390 288 L390 560 L0 560 Z" fill={`url(#${g(variant === 'meadow' ? 'mint' : 'meadow')})`} />
+        </>
+      )}
+      {/* earth: Hin's sandy hill, ending before the water so the pond sits in the grass */}
+      <path d="M0 330 C60 310 136 322 184 356 C208 374 206 440 192 560 L0 560 Z" fill={`url(#${g('earth')})`} />
+      <path d="M0 336 C60 316 134 328 180 360" stroke="#FFF6DE" strokeWidth="6" strokeLinecap="round" fill="none" opacity=".8" filter={`url(#${g('blur')})`} />
+      <ellipse cx="92" cy="500" rx="66" ry="18" fill="#E3BD7C" opacity=".35" filter={`url(#${g('blur')})`} />
+      <g fill="#E6C589" opacity=".8">
+        <ellipse cx="150" cy="508" rx="9" ry="5" />
+        <ellipse cx="166" cy="516" rx="6" ry="3.5" />
+        <ellipse cx="34" cy="530" rx="7" ry="4" />
+      </g>
+      {variant !== 'sea' && (
+        <>
+      {/* the pond, sunk into the grass: a darker bank, then the water */}
+      {variant === 'stones' ? (
+        // the stone-ringed pond keeps a grassy bank
+        <ellipse cx="304" cy="458" rx="118" ry="58" fill="#9FCF88" opacity=".75" filter={`url(#${g('blur')})`} />
+      ) : (
+        // the meadow pond is coloured like A's: a solid blue rim, so the green never tints the water
+        <>
+          <ellipse cx="306" cy="460" rx="122" ry="58" fill="#A9C8EE" opacity=".6" filter={`url(#${g('blur')})`} />
+          <ellipse cx="305" cy="454" rx="114" ry="55" fill="#B7D2F2" />
+        </>
+      )}
+      <ellipse cx="304" cy="448" rx={variant === 'stones' ? 106 : 112} ry={variant === 'stones' ? 50 : 52} fill={`url(#${g('pond')})`} />
+      <ellipse cx="270" cy="430" rx="40" ry="7" fill="#FFFFFF" opacity=".7" filter={`url(#${g('blur')})`} />
+      <ellipse className="landscape__mud" cx="304" cy="449" rx="104" ry="49" fill="#C9AE82" style={{ opacity: pondMurk * 0.6 }} />
+      <g fill="none" stroke="#9EC3EF" strokeWidth="2.5" strokeLinecap="round" opacity=".6">
+        <path d="M232 472 q14 -6 28 0" />
+        <path d="M340 484 q12 -5 24 0" />
+      </g>
+        </>
+      )}
+          {variant === 'stones' && (
+            <>
+      {/* a ring of soft river stones around the pond, and reeds at its far edge */}
+      <g>
+        {Array.from({ length: 22 }, (_, i) => {
+          const a = (i / 22) * Math.PI * 2
+          const x = 304 + Math.cos(a) * 108
+          const y = 449 + Math.sin(a) * 51
+          const k = 0.75 + ((i * 37) % 10) / 25
+          return (
+            <g key={i} transform={`translate(${x} ${y}) scale(${k})`}>
+              <ellipse cx="1" cy="2" rx="10" ry="6" fill="#BFB6A8" />
+              <ellipse rx="10" ry="6" fill="#E9E4DC" />
+              <ellipse cx="-3" cy="-2" rx="4" ry="1.6" fill="#FFFFFF" opacity=".75" />
+            </g>
+          )
+        })}
+      </g>
+      <g strokeLinecap="round">
+        <g stroke="#8CC870" strokeWidth="3" fill="none">
+          <path d="M372 438 q-2 -26 2 -44" />
+          <path d="M380 440 q2 -22 -1 -38" />
+          <path d="M366 440 q-6 -16 -10 -26" />
+        </g>
+        <g fill="#B98A5E">
+          <rect x="370" y="388" width="7" height="16" rx="3.5" />
+          <rect x="376" y="396" width="6" height="13" rx="3" />
+        </g>
+      </g>
+      {/* lily pads */}
+      <g fill="#8FD06F">
+        <ellipse cx="244" cy="462" rx="12" ry="5.5" />
+        <ellipse cx="352" cy="438" rx="10" ry="4.5" />
+      </g>
+            </>
+          )}
+          {variant === 'sea' ? flowers([[30, 372, '#F7B6BE'], [150, 360, '#FFFFFF']]) : flowers([[30, 372, '#F7B6BE'], [214, 396, '#FFFFFF'], [232, 420, '#F7B6BE'], [370, 500, '#FFFFFF']])}
+        </>
+      )}
+    </g>
   )
 }

@@ -316,3 +316,37 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* mooca's five skies, each with its own face, cloud colour and weather */
+.skies__note {
+  margin: -6px 0 18px;
+  color: var(--ink-soft);
+}
+.skies__row {
+  list-style: none;
+  margin: 0;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #def4f1, #f5fbfa);
+}
+.skies__row li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-transform: capitalize;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+.skies__row svg {
+  max-width: 100%;
+  height: auto;
+}
+@media (max-width: 720px) {
+  .skies__row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

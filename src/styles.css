@@ -1369,6 +1369,168 @@ html:lang(th) .panel__title {
   }
 }
 
+/* ---------- the friends in the new art style: mooca floats, Hin and Bua live quietly ---------- */
+
+/* mooca floats: a slow bob with a slight sway, its shadow far below breathing with it */
+.float-bob {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: float-bob 4.5s ease-in-out infinite;
+}
+/* legs and scarf tail hang loose, so they trail a beat behind the body */
+.float-dangle,
+.float-tail {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: float-dangle 4.5s ease-in-out infinite;
+  animation-delay: -0.5s;
+}
+.float-dangle--late {
+  animation-delay: -0.8s;
+}
+.float-tail {
+  animation-name: float-tail;
+  animation-delay: -0.9s;
+}
+@keyframes float-dangle {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+@keyframes float-tail {
+  0%,
+  100% {
+    transform: rotate(4deg);
+  }
+  50% {
+    transform: rotate(-4deg);
+  }
+}
+.float-shadow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: float-shadow 4.5s ease-in-out infinite;
+}
+@keyframes float-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1.2deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1.2deg);
+  }
+}
+@keyframes float-shadow {
+  50% {
+    transform: scale(0.85);
+    opacity: 0.08;
+  }
+}
+/* Idle life for the friends on the ground: all slow, all small */
+.idle-blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: idle-blink 6.5s infinite;
+}
+@keyframes idle-blink {
+  0%,
+  95%,
+  100% {
+    transform: scaleY(1);
+  }
+  97% {
+    transform: scaleY(0.1);
+  }
+}
+/* Hin breathes: a slow, slight swell from the ground up */
+.idle-breathe {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: idle-breathe 5.5s ease-in-out infinite;
+}
+@keyframes idle-breathe {
+  50% {
+    transform: scale(0.994, 1.016);
+  }
+}
+/* ...and its sprout nods in the breeze */
+.idle-sprout {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: idle-sprout 3.8s ease-in-out infinite;
+}
+@keyframes idle-sprout {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+}
+/* Bua sways on the water from the foot of its stem; its leaf lags a little */
+.idle-bua {
+  transform-box: view-box;
+  transform-origin: 118px 214px;
+  animation: idle-bua 6s ease-in-out infinite;
+}
+@keyframes idle-bua {
+  0%,
+  100% {
+    transform: rotate(-1.4deg);
+  }
+  50% {
+    transform: rotate(1.4deg);
+  }
+}
+.idle-leaf {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: idle-bua 6s ease-in-out infinite;
+  animation-delay: -1.2s;
+}
+.idle-ripple {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: idle-ripple 4.5s ease-out infinite;
+}
+@keyframes idle-ripple {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .idle-blink,
+  .idle-breathe,
+  .idle-sprout,
+  .idle-bua,
+  .idle-leaf,
+  .idle-ripple {
+    animation: none;
+  }
+  .idle-ripple {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-bob,
+  .float-shadow,
+  .float-dangle,
+  .float-tail {
+    animation: none;
+  }
+}
+
 /* ---------- mooca motion ---------- */
 
 .mooca {
@@ -1391,25 +1553,25 @@ html:lang(th) .panel__title {
   transform-origin: center;
   animation: sun-in 0.6s var(--ease) both;
 }
-.mooca-rain line {
+.mooca-rain > * {
   animation: rain 1.1s linear infinite;
 }
-.mooca-rain line:nth-child(2) {
+.mooca-rain > :nth-child(2) {
   animation-delay: 0.3s;
 }
-.mooca-rain line:nth-child(3) {
+.mooca-rain > :nth-child(3) {
   animation-delay: 0.6s;
 }
-.mooca-rain line:nth-child(4) {
+.mooca-rain > :nth-child(4) {
   animation-delay: 0.85s;
 }
 .mooca-bolt {
   animation: bolt 3s ease-in-out infinite;
 }
-.mooca-fog line {
+.mooca-fog > * {
   animation: fog 5s ease-in-out infinite alternate;
 }
-.mooca-fog line:nth-child(2) {
+.mooca-fog > :nth-child(2) {
   animation-delay: -2s;
 }
 .mooca-rainbow {

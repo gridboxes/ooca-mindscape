@@ -11,6 +11,9 @@ import { BUA_VARIANTS } from './sandbox/BuaVariants'
 import { BUA_LOTUS } from './sandbox/BuaLotus'
 import Finalists from './sandbox/Finalists'
 import Expressions from './sandbox/Expressions'
+import Lineup, { LineupV2, LineupV3 } from './sandbox/Lineup'
+import InLandscape, { Grounds } from './sandbox/InLandscape'
+import { BUA_SOFT, HIN_SOFT, MOOCA_FLOAT } from './sandbox/SoftFamily'
 import './sandbox.css'
 
 const MOODS: Mood[] = ['calm', 'happy', 'listening', 'concerned']
@@ -62,6 +65,9 @@ type Variant =
   | (typeof HIN_MOODS_V)[number]
   | (typeof BUA_VARIANTS)[number]
   | (typeof BUA_LOTUS)[number]
+  | (typeof HIN_SOFT)[number]
+  | (typeof BUA_SOFT)[number]
+  | (typeof MOOCA_FLOAT)[number]
 
 function Group({
   title,
@@ -123,6 +129,7 @@ function Group({
 export default function Sandbox() {
   const [hin, setHin] = useState<string | null>(null)
   const [bua, setBua] = useState<string | null>(null)
+  const [mooca, setMooca] = useState<string | null>(null)
 
   return (
     <div className="sbx">
@@ -133,6 +140,41 @@ export default function Sandbox() {
       </header>
       <main className="sbx__main">
         <p className="sbx__lede">Several takes on each companion, shown in all four moods. Tap one of each to pick it.</p>
+        <Grounds />
+        <InLandscape />
+        <Lineup hin={hin} bua={bua} />
+        <LineupV2 />
+        <LineupV3 />
+        <Group
+          title="mooca · Floating options"
+          thai="มูก้า"
+          intro="Four more ways for the new mooca to float, without legs dangling below it. Each bobs slowly over its shadow."
+          accent="#00A99D"
+          tint="#ECEEF5"
+          variants={MOOCA_FLOAT}
+          pick={mooca}
+          onPick={setMooca}
+        />
+        <Group
+          title="Hin · New style"
+          thai="หิน"
+          intro="Hin redrawn to the new mooca's rules, with a Marigo scarf."
+          accent="#F9A000"
+          tint="#FDF3DC"
+          variants={HIN_SOFT}
+          pick={hin}
+          onPick={setHin}
+        />
+        <Group
+          title="Bua · New style"
+          thai="บัว"
+          intro="Bua redrawn to the new mooca's rules. Its petals still open with the mood, bud to bloom."
+          accent="#EF7773"
+          tint="#FDECEB"
+          variants={BUA_SOFT}
+          pick={bua}
+          onPick={setBua}
+        />
         <Expressions />
         <section className="sbx__research" aria-labelledby="research">
           <h2 id="research">What the research says</h2>
@@ -237,7 +279,7 @@ export default function Sandbox() {
       </main>
       <footer className="sbx__picks" aria-live="polite">
         <span>
-          Your picks: <b>Hin {hin ?? '–'}</b> · <b>Bua {bua ?? '–'}</b>
+          Your picks: <b>mooca {mooca ?? '–'}</b> · <b>Hin {hin ?? '–'}</b> · <b>Bua {bua ?? '–'}</b>
         </span>
         <span className="sbx__hint">Tell Claude your picks, or mix them, e.g. "Hin C, but with B's colour".</span>
       </footer>

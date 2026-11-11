@@ -14,7 +14,7 @@ Many people feel "off" but never take a first step toward care. Booking a psycho
 
 ## The experience
 
-One illustrated landscape holds everything: mooca in the sky, Hin on the earth, Bua in a pond. The user's thought becomes a paper note that travels through the scene. Choosing a companion moves the camera, never the user, so it stays one place.
+One illustrated landscape holds everything: mooca in the sky, Hin on a sandy hill, Bua in a pond on soft mint ground, all painted in the finish of ooca's new mooca art. The user's thought becomes a paper note that travels through the scene. Choosing a companion moves the camera, never the user, so it stays one place.
 
 | Step | What happens |
 |---|---|
@@ -43,7 +43,7 @@ Every room works on the thought itself, through its own lens: mooca changes the 
 ### How the next step is chosen
 
 - **Ask how long:** only when a signal is heavy: a rainy, foggy or stormy sky (mooca), "a lot" in a year (Hin), an uncomfortable feeling all over or in much of the body (Bua), or a written thought that tripped the crisis check.
-- **Talk to someone at ooca:** heavy and lasting two weeks or more, or a written thought that tripped the crisis check. This is the only next step shown: an ooca psychologist, with the 1323 line below. No Garden poster.
+- **Talk to someone at ooca:** heavy and lasting two weeks or more, or a written thought that tripped the crisis check. The next step shown is an ooca psychologist, with the 1323 line below; the ooca Garden poster still sits beside the card.
 - **Keep this card:** everything else. The ooca Garden poster offers a way to carry on with the same friend.
 
 Designed but switched off for now (`SHOW_SUGGESTIONS` in `src/rooms/Ending.tsx`): a small practice to do right away (mooca's small step, Hin's virtue, Bua's step on the path), and a "check in again tomorrow" nudge for heavy-but-recent.
@@ -54,18 +54,20 @@ Designed but switched off for now (`SHOW_SUGGESTIONS` in `src/rooms/Ending.tsx`)
 - **One landscape, one travelling note.** Continuity comes from place and object, not from copy.
 - **One rhythm, borrowed from Inner Weather.** Every screen is one question, a few choices and a Next button, and a single four-part progress bar (thought, voices, room, card) runs the whole way without starting over. There is no separate room intro screen; picking a voice pans the camera, and Next goes straight in.
 - **A method under every room.** Each room has the same shape (name it, look closer, practise, step back, keep a card) and a real practice where the interaction *is* the exercise: sorting is the dichotomy of control; holding still is what settles the water.
-- **A family, not a pile of mascots.** Rock and Lotus follow mooca's drawing rules (flat fills, one offset shade, navy faces, pink cheeks). Each owns one accent from the ooca palette: Turquoise, Marigo, Flamingo. Buttons are always Blue 500.
+- **Developing ooca's new mooca.** mooca is ooca's own character in its new art style (a puffy cloud head, a small white body, the turquoise scarf), redrawn in code from the character sheet so it can wear every mood and weather the flow needs. It floats, as mooca always has here: legs hanging loose, a slow bob with a slight sway, a faint shadow on the hills far below.
+- **A family, not a pile of mascots.** Hin and Bua keep their own shapes (one pebble with little feet; a lotus bud on its stem with a round leaf) and take on mooca's finish: soft painted light, no outlines, the same small oval eyes, thin smile and puffed cheeks. Each owns one accent from the ooca palette: Turquoise (mooca's scarf), Marigo, Flamingo. Buttons are always Blue 500. Scarves for Hin and Bua and a head-on-a-body Hin and Bua were tried and set aside (see `?sandbox`).
+- **Quietly alive.** On the ground, Hin breathes and its sprout nods; Bua sways on the water, its leaf a beat behind, with a slow ring spreading from its stem. All motion stops when reduced motion is on.
 - **Modern words, no religious imagery.** Bua's room comes from Buddhist practice (mindfulness, impermanence, loving-kindness) but uses no Pali, no scripture and no Buddha or monk imagery: it speaks through a lotus, a lamp, a pond and everyday Thai. It's also the one room where nothing gets fixed: you notice the thought, let it drift, and pass some kindness on.
 - **Light day, keep the card. Heavy for weeks, talk to someone.** The offer of a psychologist is sized to what the room saw, so it reads as care, not a funnel.
-- **From a free taste to the app.** Mindscape is the free two-minute taste on the web; ooca Garden, in the ooca app, is where the friends live, the habit grows and the paid plan sits, and it leads on to an ooca psychologist (the care ladder in the opportunity brief). On the ending page an ooca Garden poster takes the landscape's place beside the card; on phones the same poster sits under the card. It shows the chosen friend, Chat · Listen · Talk chips, and a phone that tours the app once (Garden home, chat, a lesson, talking to a psychologist) and comes to rest on the Garden home, where a lesson is matched to the thought (Hin with "I'm not good enough" offers "What's in your control"). Then the store buttons: one on a phone, both on a computer. It's never offered on the care tier: when someone has been struggling for weeks, the only next step shown is a psychologist and 1323.
-- **The ending keeps the two panels.** The camera pulls back to the whole landscape for a moment, with the note stamped; then the landscape gives way to the ooca Garden poster, and the card and what to do now sit on the right. On the care tier the landscape stays and there's no poster.
+- **From a free taste to the app.** Mindscape is the free two-minute taste on the web; ooca Garden, in the ooca app, is where the friends live, the habit grows and the paid plan sits, and it leads on to an ooca psychologist (the care ladder in the opportunity brief). On the ending page an ooca Garden poster takes the landscape's place beside the card; on phones the same poster sits under the card. It shows the chosen friend, Chat · Listen · Talk chips, and a phone that tours the app once (Garden home, chat, a lesson, talking to a psychologist) and comes to rest on the Garden home, where a lesson is matched to the thought (Hin with "I'm not good enough" offers "What's in your control"). Then the store buttons: one on a phone, both on a computer. It's there on every path; when someone has been struggling for weeks, the psychologist and 1323 come first in the next step.
+- **The ending keeps the two panels.** The camera pulls back to the whole landscape for a moment, with the note stamped; then the landscape gives way to the ooca Garden poster, and the card and what to do now sit on the right.
 - **One card, not two.** Each room used to end on its own card and the ending then showed another. Now a room ends at its last practice, and its findings become the one closing card. A "finish this sentence" step was tried before the card and removed: every room already puts the user's own words and choices on it, so the extra step only delayed the payoff.
 - **No scores.** Like Inner Weather, nothing asks for a number or shows one back. An earlier version rated the thought 0–100% before and after; it read like a test, so it was removed.
 
 ## Safety
 
 - "Need help now?" (1323, 1669, Samaritans) is in the header on every screen.
-- Written thoughts are checked for crisis phrases in Thai and English (`atRisk` in `src/mindscape-content.ts`). A match opens the crisis sheet, keeps a care note with a 1323 button on the three-voices step, and makes the next step an ooca psychologist. It never blocks the user.
+- Written thoughts are checked for crisis phrases in Thai and English (`atRisk` in `src/mindscape-content.ts`). English is matched on word roots, so "suicidal", "killing myself" and "ending my life" count as well as the base phrases; everyday phrases like "work is killing me" don't. A match opens the crisis sheet, keeps a care note with a 1323 button on the three-voices step, and makes the next step an ooca psychologist. It never blocks the user.
 - "What's the point?" shows a gentle 1323 line.
 - The closing screen always carries the 1323 line; it's quieter when nothing was heavy.
 
@@ -84,7 +86,7 @@ Designed but switched off for now (`SHOW_SUGGESTIONS` in `src/rooms/Ending.tsx`)
 - **Mindfulness or Dhamma advisor:** check that Bua's plain-language version stays true to the practice it comes from, especially the kindness wishes.
 - **Thai copy:** written for this assignment; have a native writer polish it.
 - **Legal / PDPA:** nothing leaves the device. mooca's room keeps the last seven skies in `localStorage`. Add consent if the next step later links to booking.
-- **Brand:** Blue 500 with white text is 4.4:1, just under AA for 16px text; worth raising with the brand team.
+- **Brand:** Blue 500 with white text is 4.4:1, just under AA for 16px text; worth raising with the brand team. mooca is redrawn in code from ooca's character sheet, floating rather than standing: confirm the redraw and the pose with the brand team.
 
 ## Run locally
 
@@ -101,9 +103,9 @@ npm run dev
 | `/?heal` | ooca Garden (concept): the ooca app feature Mindscape leads into. Talk to mooca, Hin and Bua any time, audio lessons and courses, an ooca psychologist when needed; shown on phones |
 | `/?promo` | Promo page: Mindscape announced inside ooca's world (what it is, the three friends, what you leave with, try it) |
 | `/?sheet` | Companion identity sheet (design review) |
-| `/?sandbox` | Character exploration (design review) |
+| `/?sandbox` | Character exploration (design review): the new mooca art style, the options tried for Hin, Bua and a floating mooca, the background options, and the earlier flat look for comparison |
 | `/?weather` | The original Inner Weather check-in |
-| `/board/index.html` | The presentation board for the Figma submission (8 pages, 1920 px wide); PNG exports in `public/board/export/` |
+| `/board/index.html` | The presentation board for the Figma submission (9 pages, 1920 px wide, including the character update); PNG exports in `public/board/export/`. With `npm run dev` running, `node scripts/capture-board.mjs` re-takes its screenshots from the app and re-renders the pages |
 
 ## Structure
 
@@ -122,9 +124,12 @@ src/
     Ending.tsx            before you go, make it yours, the card, next step · end-card.tsx (each room's card)
     StepTop.tsx           back + progress row, and focus on each new step
   components/
-    Landscape.tsx         the scene, camera, travelling note (kept in view on short screens), muddy pond
+    Landscape.tsx         the scene (soft by default; the earlier flat look kept for comparison), camera, travelling note (kept in view on short screens), muddy pond
     HealPoster.tsx        the ooca Garden poster on the ending
     reveal.ts             scrolls content that appears after a tap into view
-    Mooca.tsx             mooca with weather moods
-    companions/           Hin (Rock), Bua (Lotus), shared Face and Avatar
+    Mooca.tsx             mooca in ooca's new art style: weather faces and effects, floating
+    companions/           Hin (Rock), Bua (Lotus), the shared drawing kit (soft.tsx), Face and Avatar
+  sandbox/                design drafts; legacy/ keeps the earlier flat characters
+scripts/
+  capture-board.mjs       re-takes the board's screenshots and page images from the running app
 ```

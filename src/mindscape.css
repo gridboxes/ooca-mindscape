@@ -117,6 +117,9 @@ html:lang(th) .ms-journey__label--title {
 /* Notes and moves inside the landscape */
 .landscape__note {
   transition: transform 1.1s var(--ease), opacity 1.1s var(--ease);
+  /* a tap on the note shouldn't highlight its words */
+  -webkit-user-select: none;
+  user-select: none;
 }
 .landscape__note-paper {
   transform-box: fill-box;
@@ -1487,6 +1490,156 @@ html:lang(th) .ms-card__thought {
 .ms--final-moment .ms__stage {
   height: min(78svh, 150vw);
 }
+/* a tap on the scene skips straight to the card */
+.ms--final-moment .ms__stage {
+  cursor: pointer;
+}
+/* One line in the room's voice names what just happened */
+.ms-moment-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 24px;
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  margin: 0 auto;
+  padding: 10px 20px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow-2);
+  text-align: center;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--ink);
+  animation: rise 0.6s var(--ease) 0.5s both;
+}
+.ms-moment-line small {
+  display: block;
+  margin-top: 1px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+/* The chosen friend cheers: mooca does a happy little wiggle in the air, Hin hops, Bua blooms */
+.landscape__cheer {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.ms--final-moment[data-friend='mooca'] .landscape__mooca .landscape__cheer {
+  animation: cheer-mooca 1.3s var(--ease) 0.3s both;
+}
+.ms--final-moment[data-friend='hin'] .landscape__rock .landscape__cheer {
+  animation: cheer-hin 1.1s var(--ease) 0.3s both;
+}
+.ms--final-moment[data-friend='bua'] .landscape__lotus .landscape__cheer {
+  animation: cheer-bua 1.4s var(--ease) 0.3s both;
+}
+@keyframes cheer-mooca {
+  25% {
+    transform: translateY(-22px) rotate(-12deg) scale(1.06);
+  }
+  50% {
+    transform: translateY(-26px) rotate(10deg) scale(1.08);
+  }
+  75% {
+    transform: translateY(-10px) rotate(-4deg) scale(1.03);
+  }
+}
+@keyframes cheer-hin {
+  15% {
+    transform: scale(1.1, 0.86);
+  }
+  40% {
+    transform: translateY(-26px) scale(0.94, 1.08);
+  }
+  62% {
+    transform: scale(1.08, 0.9);
+  }
+  80% {
+    transform: translateY(-8px) scale(0.98, 1.03);
+  }
+}
+@keyframes cheer-bua {
+  35% {
+    transform: scale(1.14) rotate(-5deg);
+  }
+  65% {
+    transform: scale(1.1) rotate(4deg);
+  }
+}
+/* a warm halo blooms behind the chosen friend, and a few sparkles pop around it */
+.landscape__halo {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.landscape__spark {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.ms--final-moment[data-friend='mooca'] .landscape__halo--mooca,
+.ms--final-moment[data-friend='hin'] .landscape__halo--hin,
+.ms--final-moment[data-friend='bua'] .landscape__halo--bua {
+  animation: halo-bloom 1.6s var(--ease) 0.15s both;
+}
+.ms--final-moment[data-friend='mooca'] .landscape__halo--mooca .landscape__spark,
+.ms--final-moment[data-friend='hin'] .landscape__halo--hin .landscape__spark,
+.ms--final-moment[data-friend='bua'] .landscape__halo--bua .landscape__spark {
+  animation: spark-pop 1.1s var(--ease) both;
+}
+@keyframes halo-bloom {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+}
+@keyframes spark-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(-30deg);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.3) rotate(10deg);
+  }
+  100% {
+    opacity: 0.85;
+    transform: scale(1) rotate(0);
+  }
+}
+/* the lift: the real note and the line step aside while the note's paper copy rises */
+.ms--lifting .landscape__note,
+.ms--lifting .ms-moment-line {
+  opacity: 0 !important;
+  transition: opacity 0.2s;
+}
+/* The note's paper copy, flying from the scene into the card's place */
+.ms-note-fly {
+  position: fixed;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #fffdf7;
+  color: #3f6866;
+  font: 700 14px/1.25 var(--font-en);
+  text-align: center;
+  pointer-events: none;
+  transform-origin: center;
+}
+html:lang(th) .ms-note-fly {
+  font-family: var(--font-th);
+}
 /* Then, on phones, the landscape steps aside and the card is the page (the ooca Garden banner
    sits under it); on a computer the two panels stay, with the poster in the landscape's place */
 .ms--final-page .ms__stage {
@@ -2079,4 +2232,55 @@ html:lang(th) .pc__after {
 .ms-hide input:focus-visible + .ms-hide__switch {
   outline: 3px solid var(--blue-500);
   outline-offset: 2px;
+}
+
+/* ---------- The card and its tray ---------- */
+/* The keeping controls sit on a tray tucked under the card: the card's full width, in the friend's
+   tint, the card's bottom edge overlapping its top, so the card and what you do with it are one piece */
+.ms-keep {
+  --keep-tint: #e6f7f5;
+  --keep-line: color-mix(in srgb, var(--turq-500) 22%, transparent);
+  margin-bottom: 16px;
+}
+.ms-keep--hin {
+  --keep-tint: #fdf2db;
+  --keep-line: color-mix(in srgb, var(--marigo-500) 26%, transparent);
+}
+.ms-keep--bua {
+  --keep-tint: #fde8e7;
+  --keep-line: color-mix(in srgb, var(--flamingo-500) 24%, transparent);
+}
+.ms-keep .pc {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 0;
+}
+.ms-keep__tray {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin: -24px 0 0;
+  padding: 36px 16px 16px;
+  border-radius: 0 0 22px 22px;
+  background: var(--keep-tint);
+  box-shadow: inset 0 0 0 1.5px var(--keep-line);
+}
+.ms-keep__tray .ms-hide {
+  flex: 1 1 auto;
+  margin: 0;
+}
+.ms-keep__tray .ms-save {
+  flex: 1 1 260px;
+  margin: 0;
+}
+.ms-keep__tray .btn {
+  min-height: 44px;
+  background: var(--white);
+  /* button labels stay on one line; the row wraps under the toggle instead */
+  white-space: nowrap;
+}
+.ms-keep + .inline-error {
+  margin: -6px 0 16px;
 }

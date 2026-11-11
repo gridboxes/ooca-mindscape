@@ -61,35 +61,42 @@ export function themeOf(text: string): Theme {
 }
 
 // Written thoughts that may mean someone is unsafe. A match opens the crisis sheet gently;
-// it never blocks the user from going on.
-const RISK_WORDS = [
-  'kill myself',
-  'suicide',
-  'end it all',
-  'end my life',
-  'want to die',
-  'hurt myself',
-  'self harm',
-  'self-harm',
-  'not be here',
-  'no reason to live',
-  'want to disappear',
-  'don’t want to wake up',
-  "don't want to wake up",
-  'ฆ่าตัวตาย',
+// it never blocks the user from going on. English is matched on word roots, so "suicidal",
+// "killing myself" and "ending my life" are caught as well as the base forms. Thai has no
+// spaces, so its phrases are matched as they appear inside the text.
+const RISK_EN = [
+  /suicid/,
+  /\bkill(ing|ed)?\s*my\s*self\b/,
+  /\bend(ing)?\s+(it\s+all|my\s+life|things)\b/,
+  /\b(want(ed|ing)?|wanna|going|ready)\s+(to\s+)?die\b/,
+  /\bwish\s+i\s+(was|were)\s+dead\b/,
+  /\bbetter\s+off\s+dead\b/,
+  /\b(hurt(ing)?|harm(ing)?|cut(ting)?)\s*my\s*self\b/,
+  /\bself[\s-]?harm/,
+  /\bno\s+reason\s+to\s+(live|go\s+on|keep\s+going)\b/,
+  /\b(do\s*n[o']?t|not)\s+want\s+to\s+(live|be\s+alive|be\s+here|exist|wake\s+up)\b/,
+  /\bnot\s+be\s+here\b/,
+  /\bwant\s+to\s+disappear\b/,
+  /\bcan'?t\s+go\s+on\b/,
+]
+const RISK_TH = [
+  'ฆ่าตัว',
   'อยากตาย',
   'ไม่อยากอยู่',
   'ไม่อยากมีชีวิต',
   'ทำร้ายตัวเอง',
+  'กรีดข้อมือ',
   'จบชีวิต',
   'อยากหายไป',
   'ไม่อยากตื่น',
   'อยู่ไปทำไม',
+  'ไม่อยากเกิดมา',
 ]
 
 export const atRisk = (text: string) => {
-  const s = text.toLowerCase()
-  return RISK_WORDS.some((w) => s.includes(w))
+  // one form for apostrophes and spaces, so "don’t" and "don't" match alike
+  const s = text.toLowerCase().replace(/[’‘`]/g, "'").replace(/\s+/g, ' ')
+  return RISK_EN.some((r) => r.test(s)) || RISK_TH.some((w) => s.includes(w))
 }
 
 // What each companion says first about the thought: one line, in its own voice
@@ -334,6 +341,13 @@ export const ms = {
     th: 'ก่อนไป ความรู้สึกนี้อยู่กับคุณมานานแค่ไหนแล้ว?',
   },
   closingTitle: { en: 'What you’re taking with you', th: 'สิ่งที่คุณนำติดตัวไป' },
+  // the moment before the card: one line in the room's voice, then the note becomes the card
+  momentLine: {
+    mooca: { en: 'Your sky, redrawn.', th: 'ท้องฟ้าของคุณ วาดใหม่แล้ว' },
+    hin: { en: 'Set down, stone by stone.', th: 'วางลงทีละก้อน' },
+    bua: { en: 'Noticed, and let go.', th: 'เห็นแล้ว และปล่อยไป' },
+  } as Record<Companion, T>,
+  momentKeep: { en: 'Keeping it on a card for you', th: 'เก็บไว้ในการ์ดให้คุณ' },
   // where each room's idea comes from
   sourceMooca: { en: 'Psychology · CBT and ACT', th: 'จิตวิทยา · CBT และ ACT' },
   sourceHin: { en: 'Stoic philosophy · the roots of CBT', th: 'ปรัชญาสโตอิก · รากของ CBT' },
