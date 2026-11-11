@@ -218,7 +218,7 @@ export function WeekScreen({ lang }: P) {
       </div>
       <div className="hs__minicard hs__minicard--hin">
         <span className="hs__kicker">{T(heal.lastWeek)}</span>
-        <b>{lang === 'th' ? 'ก้าวไปด้วยความกล้า' : 'I’ll step on it with courage'}</b>
+        <b>{lang === 'th' ? 'ฉันจะก้าวต่อไปด้วยความกล้า' : 'I’ll take my next step with courage'}</b>
       </div>
     </div>
   )
@@ -246,7 +246,7 @@ export function CardsScreen({ lang }: P) {
       <span className="hs__btn">{T(heal.cardsContinue)}</span>
       <span className="hs__kicker">{T(heal.lastWeek)}</span>
       <div className="hs__minicard hs__minicard--hin">
-        <b>{lang === 'th' ? 'ก้าวไปด้วยความกล้า' : 'I’ll step on it with courage'}</b>
+        <b>{lang === 'th' ? 'ฉันจะก้าวต่อไปด้วยความกล้า' : 'I’ll take my next step with courage'}</b>
       </div>
       <div className="hs__minicard hs__minicard--bua">
         <b>{lang === 'th' ? 'ขอให้ฉันใจดีกับตัวเอง' : 'I hope I’m gentle with myself'}</b>
