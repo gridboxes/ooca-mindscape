@@ -307,57 +307,32 @@ html:lang(th) .gx-label {
   background: var(--blue-500);
   color: #fff;
 }
-.gx-inline {
-  align-self: flex-start;
-  display: flex;
-  gap: 4px;
+/* the friend's idea in words: the message, then its source quiet at the foot of the bubble */
+.gx-msg--teach p {
+  margin: 0;
 }
-.gx-skies span {
+.gx-idea {
   display: grid;
-  place-items: center;
-  width: 25px;
-  height: 25px;
-  border-radius: 9px;
-  background: #fff;
-  box-shadow: inset 0 0 0 1px var(--g-line);
+  gap: 1px;
+  margin-top: 5px;
+  padding-top: 4px;
+  border-top: 1px solid color-mix(in srgb, var(--g-accent) 28%, transparent);
+  font-size: 7.5px;
+  line-height: 1.3;
 }
-.gx-skies span.is-on {
-  box-shadow: inset 0 0 0 1.5px var(--turq-500);
-  background: var(--turq-50);
+.gx-idea q {
+  font-style: italic;
 }
-.gx-pebbles span {
-  padding: 4px 9px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, #f1ede6, #e2dbcf);
-  box-shadow: inset 0 -1.5px 0 rgba(0, 0, 0, 0.06);
+:lang(th) .gx-idea q {
+  font-style: normal;
+}
+.gx-idea b {
   font-weight: 700;
+  color: color-mix(in srgb, var(--g-accent) 60%, var(--g-ink));
+}
+.gx-idea cite {
+  font-style: normal;
   color: var(--g-soft);
-}
-.gx-pebbles .is-mine {
-  background: linear-gradient(180deg, #fff3d6, #fbdfa2);
-  color: #7a4d00;
-  box-shadow: inset 0 0 0 1.2px #f5b941;
-}
-.gx-breathe {
-  align-items: center;
-  gap: 6px;
-  padding: 5px 6px 5px 5px;
-  border-radius: 999px;
-  background: #fff;
-  box-shadow: inset 0 0 0 1px #f6cfcd;
-}
-.gx-breathe__ring {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff 30%, #f9c3c0 32%, #f9c3c0 60%, #fde4e3 62%);
-}
-.gx-breathe__go {
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: var(--flamingo-500);
-  color: #fff;
-  font-weight: 700;
 }
 .gx-typing {
   align-self: flex-start;

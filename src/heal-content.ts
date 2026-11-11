@@ -207,25 +207,47 @@ export const chatOpener: Record<Theme, T> = {
   general: { en: 'Today was a lot', th: 'วันนี้หนักหน่อย' },
 }
 
-/** Each friend's way of talking it through: a hello, then their own practice right in the chat */
-export const chatScript: Record<Companion, { hello: T; ask: T; after: T; reply: T }> = {
+/**
+ * Each friend talking it through in plain messages, no widgets: a hello, then a message that
+ * teaches their own idea (the source at its foot, as in the rooms), a next nudge, and your reply.
+ * mooca: a thinking trap (CBT). Hin: Epictetus on control. Bua: the second arrow (Sallatha Sutta).
+ */
+export const chatScript: Record<
+  Companion,
+  { hello: T; teach: T; idea: { quote?: T; name?: T; by: T }; after: T; reply: T }
+> = {
   mooca: {
-    hello: { en: 'Welcome back. What’s the sky like in there now?', th: 'กลับมาแล้ว ตอนนี้ท้องฟ้าในใจเป็นไงบ้าง?' },
-    ask: { en: 'Thanks for saying it. Which weather is closest?', th: 'ขอบคุณที่บอกนะ สภาพอากาศไหนใกล้ที่สุด?' },
-    after: { en: 'Rain is allowed here. Soften one heavy word together?', th: 'ที่นี่ฝนตกได้นะ ลองทำคำที่หนักให้นุ่มลงสักคำไหม?' },
-    reply: { en: 'Okay, let’s try 🙂', th: 'โอเค ลองดู 🙂' },
+    hello: { en: 'Welcome back. What’s the weather like in there?', th: 'กลับมาแล้ว ตอนนี้อากาศในใจเป็นยังไงบ้าง?' },
+    teach: {
+      en: 'Is that a fact, or a forecast? Thoughts like that often hide a thinking trap, like an all-or-nothing word.',
+      th: 'นั่นคือข้อเท็จจริง หรือแค่พยากรณ์? ความคิดแบบนี้มักซ่อนกับดักความคิด เช่นคำแบบขาวหรือดำ',
+    },
+    idea: { name: { en: 'Thinking traps', th: 'กับดักความคิด' }, by: { en: 'Cognitive behavioural therapy', th: 'การบำบัดความคิดและพฤติกรรม (CBT)' } },
+    after: { en: 'Say it again without the trap word. Is it still true?', th: 'ลองพูดใหม่โดยไม่ใช้คำนั้น ยังจริงอยู่ไหม?' },
+    reply: { en: 'Softer. And still true.', th: 'นุ่มลง และยังจริงอยู่' },
   },
   hin: {
-    hello: { en: 'Back again. What’s on your mind today?', th: 'กลับมาแล้ว วันนี้มีอะไรอยู่ในใจ?' },
-    ask: { en: 'Let’s split the stone. Which part is yours to move?', th: 'ลองแยกหินดูกัน ส่วนไหนที่เราขยับได้?' },
-    after: { en: 'Good. Start there. One small step today?', th: 'ดีเลย เริ่มจากตรงนั้น วันนี้ก้าวเล็กๆ สักก้าวไหม?' },
-    reply: { en: 'One small step. I can do that.', th: 'ก้าวเล็กๆ ก้าวเดียว ทำได้' },
+    hello: { en: 'Back again. What’s heavy today?', th: 'กลับมาอีกแล้ว วันนี้อะไรหนัก?' },
+    teach: {
+      en: 'Two piles: what’s yours to move, and what isn’t. Which is this, mostly?',
+      th: 'แบ่งเป็นสองกอง: ส่วนที่เราขยับได้ กับส่วนที่ไม่ใช่ เรื่องนี้ส่วนใหญ่อยู่กองไหน?',
+    },
+    idea: {
+      quote: { en: 'Some things are within our power, while others are not.', th: 'บางสิ่งอยู่ในอำนาจของเรา บางสิ่งไม่ได้อยู่' },
+      by: { en: 'Epictetus, Enchiridion 1', th: 'เอพิคทิตัส, เอนคิริเดียน 1' },
+    },
+    after: { en: 'Then push only on your part. The rest isn’t your job tonight.', th: 'งั้นออกแรงแค่ส่วนของเรา ที่เหลือไม่ใช่หน้าที่เราคืนนี้' },
+    reply: { en: 'My part. I can do that.', th: 'ส่วนของฉัน ทำได้' },
   },
   bua: {
-    hello: { en: 'Hello again. Shall we sit for a moment first?', th: 'สวัสดีอีกครั้ง นั่งพักด้วยกันสักครู่ก่อนไหม?' },
-    ask: { en: 'Let’s breathe with it, not against it.', th: 'หายใจไปกับมัน ไม่ต้องสู้กับมัน' },
-    after: { en: 'It’s allowed to be here. And so are you.', th: 'ให้มันอยู่ตรงนี้ได้ และคุณก็อยู่ตรงนี้ได้' },
-    reply: { en: 'That helped a little 🌸', th: 'ช่วยได้นิดนึง 🌸' },
+    hello: { en: 'Hello again. Let’s sit a moment before we talk.', th: 'สวัสดีอีกครั้ง นั่งพักด้วยกันสักครู่ก่อนนะ' },
+    teach: {
+      en: 'There’s the feeling, and there’s what we tell ourselves about it. That second one, we can set down.',
+      th: 'มีความรู้สึก และมีเรื่องที่เราเล่าซ้ำให้ตัวเองฟัง อย่างหลังนี้ เราวางลงได้',
+    },
+    idea: { name: { en: 'The second arrow', th: 'ลูกศรดอกที่สอง' }, by: { en: 'The Buddha, Sallatha Sutta', th: 'พระพุทธเจ้า, สัลลัตถสูตร' } },
+    after: { en: 'And like everything, this feeling will change. It already is.', th: 'และเหมือนทุกสิ่ง ความรู้สึกนี้จะเปลี่ยนไป ตอนนี้มันก็กำลังเปลี่ยน' },
+    reply: { en: 'Just the first arrow, then 🌸', th: 'งั้นเหลือแค่ลูกศรดอกแรก 🌸' },
   },
 }
 
@@ -237,10 +259,6 @@ export const garden = {
   availableNow: { en: '3 available now', th: 'ว่างตอนนี้ 3 คน' },
   here: { en: 'here for you', th: 'อยู่ตรงนี้นะ' },
   message: { en: 'Message {name}…', th: 'พิมพ์ถึง{name}…' },
-  mine: { en: 'My next step', th: 'ก้าวต่อไปของฉัน' },
-  notMine: { en: 'What others think', th: 'ที่คนอื่นคิด' },
-  breathe: { en: '3 slow breaths', th: 'หายใจช้าๆ 3 ครั้ง' },
-  start: { en: 'Start', th: 'เริ่ม' },
   pickedFor: { en: 'Picked for your thought', th: 'เลือกมาให้ความคิดของคุณ' },
   voicedBy: { en: 'With Napa, ooca psychologist', th: 'กับคุณนภา นักจิตวิทยา ooca' },
   upNext: { en: 'Up next', th: 'ถัดไป' },

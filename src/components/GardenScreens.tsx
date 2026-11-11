@@ -3,7 +3,6 @@ import type { Lang } from '../content'
 import { companions, fill, type Companion, type Theme } from '../mindscape-content'
 import { chatOpener, chatScript, courses, coverFor, garden, heal, lessonFor, psychologists, upNextFor, type Cover as CoverSpec, type Lesson } from '../heal-content'
 import Avatar from './companions/Avatar'
-import WeatherIcon from './WeatherIcon'
 import '../garden.css'
 
 // ooca Garden as the poster's phone shows it after Mindscape: home, a chat with the friend the
@@ -241,29 +240,14 @@ export function GardenChat({ lang, who, theme }: P) {
         <span className="gx-day">{T(garden.today)}</span>
         <p className="gx-msg gx-msg--them">{T(s.hello)}</p>
         <p className="gx-msg gx-msg--me">{T(chatOpener[theme])}</p>
-        <p className="gx-msg gx-msg--them">{T(s.ask)}</p>
-        {who === 'mooca' && (
-          <div className="gx-inline gx-skies">
-            {(['sunny', 'partly', 'foggy', 'rainy', 'stormy'] as const).map((w) => (
-              <span key={w} className={w === 'rainy' ? 'is-on' : ''}>
-                <WeatherIcon weather={w} size={17} />
-              </span>
-            ))}
-          </div>
-        )}
-        {who === 'hin' && (
-          <div className="gx-inline gx-pebbles">
-            <span className="is-mine">{T(garden.mine)}</span>
-            <span>{T(garden.notMine)}</span>
-          </div>
-        )}
-        {who === 'bua' && (
-          <div className="gx-inline gx-breathe">
-            <span className="gx-breathe__ring" />
-            <b>{T(garden.breathe)}</b>
-            <span className="gx-breathe__go">{T(garden.start)}</span>
-          </div>
-        )}
+        {/* the friend's own idea, taught in words; its source sits at the foot of the bubble */}
+        <div className="gx-msg gx-msg--them gx-msg--teach">
+          <p>{T(s.teach)}</p>
+          <span className="gx-idea">
+            {s.idea.quote ? <q>{T(s.idea.quote)}</q> : <b>{s.idea.name && T(s.idea.name)}</b>}
+            <cite>{T(s.idea.by)}</cite>
+          </span>
+        </div>
         <p className="gx-msg gx-msg--them">{T(s.after)}</p>
         <p className="gx-msg gx-msg--me">{T(s.reply)}</p>
         <span className="gx-typing">
