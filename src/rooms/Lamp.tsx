@@ -122,7 +122,7 @@ export default function Lamp({ lang, total = 5, count, onBreath }: Props) {
             <circle cx="100" cy="92" r={34 * flame + 10} fill="#FBE36A" opacity=".4" />
           </g>
           <g className="lamp__flame" style={{ ['--s' as string]: flame }}>
-            <path d="M100 52 C112 70 116 84 110 96 C106 104 94 104 90 96 C84 84 88 70 100 52 Z" fill="#F9A000" />
+            <path d="M100 52 C112 70 116 84 110 96 C106 104 94 104 90 96 C84 84 88 70 100 52 Z" fill="#E9A400" />
             <path d="M100 68 C106 78 108 86 104 93 C102 97 98 97 96 93 C92 86 94 78 100 68 Z" fill="#FBE36A" />
           </g>
           <path d="M100 100 v6" stroke="#5B4A3A" strokeWidth="2.5" strokeLinecap="round" />

@@ -32,7 +32,7 @@
 }
 .sbx__group h2 {
   font-size: 26px;
-  font-weight: 800;
+  font-weight: 700;
   margin-bottom: 16px;
 }
 .sbx__group h2 span {
@@ -78,7 +78,7 @@
   border-radius: 50%;
   background: var(--white);
   border: 2px solid var(--line);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 14px;
   z-index: 1;
 }
@@ -103,7 +103,7 @@
   right: 14px;
   z-index: 1;
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--white);
@@ -113,7 +113,7 @@
 }
 .sbx__research h2 {
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 700;
   margin-bottom: 12px;
 }
 .sbx__research ul {
@@ -145,7 +145,7 @@
   color: var(--blue-500);
 }
 .sbx__name {
-  font-weight: 800;
+  font-weight: 700;
   font-size: 18px;
   margin-top: 4px;
 }
@@ -289,7 +289,7 @@
   margin-top: 4px;
 }
 .fin__name b {
-  font-weight: 800;
+  font-weight: 700;
   margin-right: 4px;
 }
 .fin__trait {
@@ -342,7 +342,7 @@
 .exp__head em {
   font-style: normal;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--white);
@@ -356,7 +356,7 @@
   line-height: 1.3;
 }
 .exp__name {
-  font-weight: 800;
+  font-weight: 700;
   font-size: 15px;
 }
 .exp__cell {
@@ -377,7 +377,7 @@
 /* The family lineup in the new mooca style */
 .sbx__lineup h2 {
   font-size: 26px;
-  font-weight: 800;
+  font-weight: 700;
   margin-bottom: 8px;
 }
 .sbx__moodbar {

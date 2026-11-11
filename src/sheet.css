@@ -57,7 +57,7 @@
 .idsheet__hero h1 {
   font-size: clamp(30px, 5vw, 44px);
   line-height: 1.1;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--ink);
   text-wrap: balance;
@@ -103,7 +103,7 @@
 
 .idsheet__h2 {
   font-size: 24px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.01em;
   margin-bottom: 20px;
   color: var(--ink);
@@ -138,7 +138,7 @@
 }
 .companion__name h3 {
   font-size: 26px;
-  font-weight: 800;
+  font-weight: 700;
 }
 .companion__name span {
   font-family: var(--font-th);
@@ -242,7 +242,7 @@
 }
 .shared__card h3 {
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 700;
 }
 .tokens {
   list-style: none;
@@ -266,7 +266,7 @@
 }
 .type-en {
   font-size: 40px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.1;
   color: var(--turq-text);

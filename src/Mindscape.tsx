@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
+import PhoneIcon from './components/PhoneIcon'
 import { flushSync } from 'react-dom'
 import { buildReport, t, ui, type Duration, type Lang, type Tier, type Weather } from './content'
 import {
@@ -522,7 +523,7 @@ export default function Mindscape() {
               <b>{t(ms.riskTitle, lang)}</b> {t(ms.riskBody, lang)}
             </p>
             <a className="btn btn--secondary" href="tel:1323">
-              ☎ 1323
+              <PhoneIcon /> 1323
             </a>
           </div>
         )}
@@ -647,7 +648,7 @@ export default function Mindscape() {
             ))}
           </div>
           <button type="button" className="help-btn" onClick={() => setHelpOpen(true)} aria-label={t(ui.helpNow, lang)}>
-            <span aria-hidden="true">☎</span>
+            <PhoneIcon />
             <span className="help-btn__text">{t(ui.helpNow, lang)}</span>
           </button>
         </div>

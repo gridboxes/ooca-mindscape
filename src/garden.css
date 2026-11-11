@@ -19,7 +19,7 @@
   color: var(--g-ink);
 }
 .gx b {
-  font-weight: 800;
+  font-weight: 700;
 }
 /* nothing on a screen gives up its height; the tab bar takes what's left */
 .gx > * {
@@ -41,7 +41,7 @@
 .gx-label {
   margin: 2px 0 -2px;
   font-size: 8px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--g-soft);
@@ -354,7 +354,7 @@ html:lang(th) .gx-label {
   border-radius: 999px;
   background: var(--flamingo-500);
   color: #fff;
-  font-weight: 800;
+  font-weight: 700;
 }
 .gx-typing {
   align-self: flex-start;
@@ -474,7 +474,7 @@ html:lang(th) .gx-label {
   border-radius: 50%;
   border-top-color: transparent;
   font-size: 7px;
-  font-weight: 800;
+  font-weight: 700;
 }
 .gx-skip--fwd {
   transform: scaleX(-1);
@@ -584,7 +584,7 @@ html:lang(th) .gx-label {
   border-radius: 999px;
   background: #f1f5f8;
   font-size: 7.5px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--g-soft);
 }
 .gx-slots .is-now {
@@ -600,7 +600,7 @@ html:lang(th) .gx-label {
   background: var(--blue-500);
   color: #fff;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 700;
   box-shadow: 0 8px 14px -10px rgba(31, 119, 223, 0.8);
 }
 .gx-private {

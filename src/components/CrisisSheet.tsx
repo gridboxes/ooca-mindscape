@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import PhoneIcon from './PhoneIcon'
 import { t, ui, type Lang } from '../content'
 
 export default function CrisisSheet({ lang, open, onClose }: { lang: Lang; open: boolean; onClose: () => void }) {
@@ -37,7 +38,7 @@ export default function CrisisSheet({ lang, open, onClose }: { lang: Lang; open:
               <a href={`tel:${l.num.replace(/-/g, '')}`} className="hotline">
                 <span className="hotline__num">{l.num}</span>
                 <span className="hotline__label">{t(l.label, lang)}</span>
-                <span className="hotline__call" aria-hidden="true">☎</span>
+                <span className="hotline__call" aria-hidden="true"><PhoneIcon /></span>
               </a>
             </li>
           ))}

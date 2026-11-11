@@ -67,7 +67,7 @@
 }
 .ms-journey__label--title {
   font-size: 17px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--turq-gray-1);
 }
 html:lang(th) .ms-journey__label--title {
@@ -151,7 +151,7 @@ html:lang(th) .landscape__note-text {
 .ms-title--lg {
   font-size: clamp(26px, 7vw, 36px);
   line-height: 1.15;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--turq-gray-1);
   text-wrap: balance;
@@ -728,7 +728,7 @@ html:lang(th) .soften__thought {
 }
 .kind__phrase {
   font-size: 22px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.35;
   color: var(--turq-gray-1);
   animation: slide-in 0.4s var(--ease) both;
@@ -1299,7 +1299,7 @@ html:lang(th) .pebble {
 }
 .ms-metta__phrase {
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--turq-gray-1);
   text-wrap: balance;
 }
@@ -1357,7 +1357,7 @@ html:lang(th) .ms-metta__phrase {
 }
 .ms-card__thought {
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.3;
   color: var(--turq-gray-1);
 }
@@ -1509,7 +1509,7 @@ html:lang(th) .ms-card__thought {
   box-shadow: var(--shadow-2);
   text-align: center;
   font-size: 17px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--ink);
   animation: rise 0.6s var(--ease) 0.5s both;
 }
@@ -1992,7 +1992,7 @@ html:lang(th) .ms-note-fly {
   padding: 4px 9px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.85);
-  font-weight: 800;
+  font-weight: 700;
   color: var(--turq-text);
 }
 .pc__sky i {
@@ -2017,7 +2017,7 @@ html:lang(th) .ms-note-fly {
 }
 .pc__stamp b {
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 700;
 }
 .pc__stamp small {
   font-size: 9px;
@@ -2036,7 +2036,7 @@ html:lang(th) .ms-note-fly {
 }
 .pc__with {
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--turq-text);
@@ -2049,7 +2049,7 @@ html:lang(th) .ms-note-fly {
 .pc__after {
   font-size: 26px;
   line-height: 1.22;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--turq-gray-1);
   text-wrap: balance;
@@ -2156,7 +2156,7 @@ html:lang(th) .pc__after {
   background: #f5e6c2;
   box-shadow: inset -2px -3px 0 #e1c787;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 700;
   color: #4d3a14;
   white-space: nowrap;
   transform: translateX(calc(var(--i) * -14px)) scale(calc(1 - var(--i) * 0.08));

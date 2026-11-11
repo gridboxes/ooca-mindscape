@@ -20,7 +20,8 @@
   --blue-50: #e4effb;
   --blue-700: #1764d7;
 
-  --marigo-500: #f9a000;
+  /* the CI's Accent orange (it replaced Marigo #f9a000); the variable keeps its old name */
+  --marigo-500: #e9a400;
   --marigo-100: #f8e4b3;
   --flamingo-500: #ef7773;
   --flamingo-100: #fad6d5;
@@ -171,7 +172,7 @@ h1:focus {
 }
 .logo-word {
   font-family: 'Nunito', var(--font-en);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 22px;
   letter-spacing: -0.02em;
   color: var(--turq-500);
@@ -399,7 +400,7 @@ h1:focus {
 .intro__title {
   font-size: clamp(28px, 7vw, 40px);
   line-height: 1.15;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--turq-gray-1);
   letter-spacing: -0.01em;
   max-width: 16ch;
@@ -559,7 +560,7 @@ html:lang(th) .intro__title {
 .step-title {
   font-size: 24px;
   line-height: 1.25;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--turq-gray-1);
   text-wrap: balance;
 }
@@ -932,7 +933,7 @@ html:lang(th) .step-title {
   text-align: center;
   font-size: 32px;
   line-height: 1.15;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--turq-gray-1);
 }
 html:lang(th) .report-card__title {
@@ -1069,7 +1070,7 @@ html:lang(th) .report-card__title {
 .panel__title {
   margin-top: 4px;
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--turq-gray-1);
 }
 html:lang(th) .panel__title {
@@ -1295,7 +1296,7 @@ html:lang(th) .panel__title {
 }
 .sheet__title {
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--turq-gray-1);
 }
 .sheet__body {
@@ -1326,7 +1327,7 @@ html:lang(th) .panel__title {
 }
 .hotline__num {
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 700;
   color: #c4504c;
 }
 .hotline__label {
@@ -1837,4 +1838,11 @@ html:lang(th) .panel__title {
   .lotus-unfold {
     transition-duration: 0.01ms !important;
   }
+}
+
+/* the CI's line icons sit on the text baseline and take its colour */
+.icon-phone {
+  display: inline-block;
+  flex: none;
+  vertical-align: -0.15em;
 }

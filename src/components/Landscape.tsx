@@ -54,7 +54,7 @@ interface Props {
 }
 
 type Stamp = 'mooca' | 'hin' | 'bua'
-const STAMP_COLOR: Record<Stamp, string> = { mooca: '#00C4B3', hin: '#F9A000', bua: '#EF7773' }
+const STAMP_COLOR: Record<Stamp, string> = { mooca: '#00C4B3', hin: '#E9A400', bua: '#EF7773' }
 
 // One portrait scene: sky above (mooca), earth bottom-left (Rock), pond bottom-right (Lotus).
 const W = 390

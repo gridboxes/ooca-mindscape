@@ -63,7 +63,7 @@ export default function WeatherIcon({ weather, size = 40 }: { weather: Weather; 
       {weather === 'stormy' && (
         <>
           {cloud('#C3C4E2', '#7F81B8', 0, -6)}
-          <path d="M26 30 l-6 9 h5 l-3 7 l9 -10 h-5 l3 -6 z" fill="#F9A000" />
+          <path d="M26 30 l-6 9 h5 l-3 7 l9 -10 h-5 l3 -6 z" fill="#E9A400" />
         </>
       )}
     </svg>

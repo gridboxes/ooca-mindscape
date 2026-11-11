@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import PhoneIcon from './PhoneIcon'
 import { toPng } from 'html-to-image'
 import {
   actions,
@@ -178,7 +179,7 @@ export default function Report({
 
       {w === 'stormy' && (
         <button type="button" className="safety-note" onClick={onHelp}>
-          <span className="safety-note__icon" aria-hidden="true">☎</span>
+          <span className="safety-note__icon" aria-hidden="true"><PhoneIcon /></span>
           {t(ui.stormyNote, lang)}
         </button>
       )}

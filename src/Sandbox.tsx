@@ -159,7 +159,7 @@ export default function Sandbox() {
           title="Hin · New style"
           thai="หิน"
           intro="Hin redrawn to the new mooca's rules, with a Marigo scarf."
-          accent="#F9A000"
+          accent="#E9A400"
           tint="#FDF3DC"
           variants={HIN_SOFT}
           pick={hin}
@@ -197,7 +197,7 @@ export default function Sandbox() {
           title="Hin V · How the mood changes"
           thai="หิน"
           intro="The same four mood ideas on Hin V, the smooth pebble with soft corners. The big previews loop through the moods."
-          accent="#F9A000"
+          accent="#E9A400"
           tint="#FDF3DC"
           variants={HIN_MOODS_V}
           pick={hin}
@@ -207,7 +207,7 @@ export default function Sandbox() {
           title="Hin · How the mood changes"
           thai="หิน"
           intro="Hin (the pebble) with a mood that changes the character itself, the way Bua goes from bud to bloom. The big previews loop through the moods."
-          accent="#F9A000"
+          accent="#E9A400"
           tint="#FDF3DC"
           variants={HIN_MOODS}
           pick={hin}
@@ -218,7 +218,7 @@ export default function Sandbox() {
           title="Hin · Stacked stones options"
           thai="หิน"
           intro="More takes on G. Balance is the Stoic idea: the stack holds as long as each stone sits steady, and the head wobbles when Hin is worried."
-          accent="#F9A000"
+          accent="#E9A400"
           tint="#FDF3DC"
           variants={HIN_STACKS}
           pick={hin}
@@ -228,7 +228,7 @@ export default function Sandbox() {
           title="Hin · Fresh ideas"
           thai="หิน"
           intro="A clean start. Each idea comes from a piece of philosophy’s own story (the Stoa, the bust, Athena’s owl, Diogenes’ lamp, Marcus’ notebook, mended cracks) instead of from earlier sketches."
-          accent="#F9A000"
+          accent="#E9A400"
           tint="#FDF3DC"
           variants={HIN_IDEAS}
           pick={hin}
@@ -238,7 +238,7 @@ export default function Sandbox() {
           title="Hin · Weathered pebble, more corners"
           thai="หิน"
           intro="Hin I (weathered pebble) with corners added at three strengths. Same stone, lit top, shaded side and cracks."
-          accent="#F9A000"
+          accent="#E9A400"
           tint="#FDF3DC"
           variants={HIN_CORNERS}
           pick={hin}
@@ -248,7 +248,7 @@ export default function Sandbox() {
           title="Hin · River stone options"
           thai="หิน"
           intro="More takes on A, the river stone. Each changes one idea: the face, the setting, a signature mark, the brows, or the proportions."
-          accent="#F9A000"
+          accent="#E9A400"
           tint="#FDF3DC"
           variants={HIN_RIVER}
           pick={hin}
@@ -258,13 +258,13 @@ export default function Sandbox() {
           title="Hin · the Stoic rock"
           thai="หิน"
           intro="Rethink: “Be like the headland the waves keep breaking against. It stands firm, and the water calms around it.” (Marcus Aurelius, Meditations 4.49). Heavy, grounded, nearly still, with a small emotional range."
-          accent="#F9A000"
+          accent="#E9A400"
           tint="#FDF3DC"
           variants={HIN_STOIC}
           pick={hin}
           onPick={setHin}
         />
-        <Group title="Hin · earlier takes" thai="หิน" accent="#F9A000" tint="#FDF3DC" variants={HIN_VARIANTS} pick={hin} onPick={setHin} />
+        <Group title="Hin · earlier takes" thai="หิน" accent="#E9A400" tint="#FDF3DC" variants={HIN_VARIANTS} pick={hin} onPick={setHin} />
         <Group
           title="Bua · True lotus options"
           thai="บัว"

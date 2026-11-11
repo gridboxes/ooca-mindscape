@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import PhoneIcon from './components/PhoneIcon'
 import {
   bodies,
   buildReport,
@@ -126,7 +127,7 @@ export default function App() {
             ))}
           </div>
           <button type="button" className="help-btn" onClick={() => setHelpOpen(true)}>
-            <span aria-hidden="true">☎</span>
+            <PhoneIcon />
             <span className="help-btn__text">{t(ui.helpNow, lang)}</span>
           </button>
         </div>

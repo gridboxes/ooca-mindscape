@@ -251,8 +251,8 @@ export const STONE: Record<Expression, Tone> = {
   tender: { hi: '#FAF4F0', base: '#ECE0D8', shade: '#CBB9AD' },
   delighted: { hi: '#FCF6EA', base: '#F0E3CB', shade: '#D0BC98' },
 }
-export const MARIGO = '#F6A81C'
-export const MARIGO_DARK = '#D98A06'
+export const MARIGO = '#E9A400'
+export const MARIGO_DARK = '#E39200'
 export const HIN_CHEEK = '#EDD3C6'
 
 // The old Hin's sprout kept as its signature: it leans with the mood and flowers when happy

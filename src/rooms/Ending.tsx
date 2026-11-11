@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import PhoneIcon from '../components/PhoneIcon'
 import { toBlob } from 'html-to-image'
 import { durations, t, tiers, ui, type Duration, type Lang, type Tier } from '../content'
 import { ChipStep, Footer } from '../components/Steps'
@@ -269,9 +270,7 @@ export default function Ending({ lang, who, theme, card, heavy, tierFor, onBack,
             </button>
           ) : (
             <button type="button" className="safety-note" onClick={onHelp}>
-              <span className="safety-note__icon" aria-hidden="true">
-                ☎
-              </span>
+              <span className="safety-note__icon" aria-hidden="true"><PhoneIcon /></span>
               {t(who === 'mooca' ? ui.stormyNote : safetyLine, lang)}
             </button>
           )}

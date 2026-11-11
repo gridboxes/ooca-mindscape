@@ -39,7 +39,7 @@
 .promo__title {
   font-size: clamp(32px, 8vw, 52px);
   line-height: 1.12;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--turq-gray-1);
   text-wrap: balance;
@@ -77,7 +77,7 @@ html:lang(th) .promo__title {
 .promo__h2 {
   font-size: clamp(24px, 6vw, 32px);
   line-height: 1.25;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--turq-gray-1);
   text-wrap: balance;
 }

@@ -54,7 +54,7 @@ const COMPANIONS: Companion[] = [
     place: 'Earth',
     lens: 'Philosophy',
     method: 'A Stoic sitting',
-    accent: { name: 'Marigo 500', hex: '#F9A000', tint: '#FDF3DC' },
+    accent: { name: 'Orange 500', hex: '#E9A400', tint: '#FCF4E0' },
     motion: 'Breathes slowly; its sprout nods. Warms like a sunlit stone: cool blue-grey with a small crack when worried, a flowering sprout when happy.',
     voice: 'Calm, few words, dry humour.',
     sayEn: 'Heavy thought. Let’s turn it over and see which side is yours.',
@@ -87,7 +87,7 @@ const CAMERA_OPTIONS: { key: Focus; label: string }[] = [
 const TOKENS = [
   { name: 'Turquoise 500', hex: '#00C4B3', use: 'Brand, mooca' },
   { name: 'Blue 500', hex: '#1F77DF', use: 'Every action button' },
-  { name: 'Marigo 500', hex: '#F9A000', use: 'Hin, earth' },
+  { name: 'Orange 500', hex: '#E9A400', use: 'Hin, earth' },
   { name: 'Flamingo 500', hex: '#EF7773', use: 'Bua, water' },
   { name: 'Guava 500', hex: '#8AD866', use: 'Leaves, life' },
   { name: 'Face ink', hex: '#2E4E8F', use: 'All faces' },
@@ -241,7 +241,7 @@ export default function IdentitySheet() {
                 <li>Small rounded limbs in the same paint as the body.</li>
                 <li>One thing carries the mood: mooca’s weather, Hin’s warmth and sprout, how far Bua has bloomed.</li>
                 <li>Always quietly alive: mooca floats, Hin breathes, Bua sways on the water. Still when motion is reduced.</li>
-                <li>Each companion owns one ooca accent: mooca’s turquoise scarf, Marigo, Flamingo. Buttons are always Blue 500.</li>
+                <li>Each companion owns one ooca accent: mooca’s turquoise, Orange, Flamingo. Buttons are always Blue 500.</li>
               </ol>
               <h3 className="rules__dont">Never</h3>
               <ul className="rules">
