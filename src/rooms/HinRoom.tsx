@@ -48,27 +48,26 @@ interface Props {
   onDone: (r: HinResult) => void
 }
 
-/** The Stoic idea behind this step: named, quoted and credited */
-function Idea({ lang, step }: { lang: Lang; step: number }) {
-  const i = ideas[step]
-  return (
-    <aside className="ms-idea">
-      <span className="ms-idea__name">
-        {hin.ideaLabel[lang]} · <b>{i.name[lang]}</b>
-      </span>
-      <q>{i.quote[lang]}</q>
-      <cite>{i.by[lang]}</cite>
-    </aside>
-  )
-}
-
-function HinSays({ mood = 'listening', children }: { mood?: Expression; children: ReactNode }) {
+/**
+ * Hin speaks once per moment. After you act, the reply carries the Stoic idea behind it as a
+ * quiet quote at the foot of the same bubble, so Hin teaches without adding another panel.
+ */
+function HinSays({ mood = 'listening', idea, lang, children }: { mood?: Expression; idea?: number; lang?: Lang; children: ReactNode }) {
+  const i = idea !== undefined && lang ? ideas[idea] : null
   return (
     <div className="ms-says ms-says--hin">
       <span className="ms-says__who" aria-hidden="true">
         <Rock mood={mood} size={44} />
       </span>
-      <p>{children}</p>
+      <div className="ms-says__bubble">
+        <p>{children}</p>
+        {i && lang && (
+          <blockquote className="ms-says__idea">
+            <q>{i.quote[lang]}</q>
+            <cite>{i.by[lang]}</cite>
+          </blockquote>
+        )}
+      </div>
     </div>
   )
 }
@@ -145,7 +144,7 @@ export default function HinRoom({ lang, thought, theme, resume, onStage, onExit,
           )}
         </div>
         {a.fact !== null && (
-          <HinSays key={a.fact}>
+          <HinSays key={a.fact} idea={0} lang={lang}>
             {a.fact === JUST_A_FEELING ? T(hin.feelingReply) : fill(T(hin.factReply), { thought })}
           </HinSays>
         )}
@@ -179,6 +178,11 @@ export default function HinRoom({ lang, thought, theme, resume, onStage, onExit,
             </div>
           </div>
         )}
+        {sorted && ask < 0 && (
+          <HinSays mood="happy" idea={1} lang={lang}>
+            {T(hin.sortedReply)}
+          </HinSays>
+        )}
       </>
     )
   } else if (step === 2) {
@@ -186,11 +190,10 @@ export default function HinRoom({ lang, thought, theme, resume, onStage, onExit,
       <>
         <header className="step-head">
           <h1 className="step-title">{T(hin.qStep)}</h1>
-          {mine.length > 0 && <p className="step-sub">{T(hin.qStepSub)}</p>}
+          {mine.length > 0 && <p className="step-sub">{fill(T(hin.forMine), { list: mine.join(' · ') })}</p>}
         </header>
         {mine.length ? (
           <>
-            <p className="ms-steps-for">{fill(T(hin.forMine), { list: mine.join(' · ') })}</p>
             <div className="ms-options" role="radiogroup" aria-label={T(hin.qStep)}>
               {(Object.keys(virtues) as Virtue[]).map((v) => (
                 <button
@@ -207,13 +210,13 @@ export default function HinRoom({ lang, thought, theme, resume, onStage, onExit,
               ))}
             </div>
             {a.virtue && (
-              <HinSays mood="happy" key={a.virtue}>
+              <HinSays mood="happy" key={a.virtue} idea={2} lang={lang}>
                 {T(hin.wayReply)}
               </HinSays>
             )}
           </>
         ) : (
-          <HinSays>{T(hin.nothingMine)}</HinSays>
+          <HinSays idea={2} lang={lang}>{T(hin.nothingMine)}</HinSays>
         )}
       </>
     )
@@ -244,9 +247,12 @@ export default function HinRoom({ lang, thought, theme, resume, onStage, onExit,
             </div>
           </Reveal>
         )}
-        {a.year && <HinSays key={a.year}>{T(a.year === 'alot' ? hin.yearHeavy : hin.yearLight)}</HinSays>}
-        {/* Hin's last word on a lighter day: Seneca's nightly review. When it's heavy, Hin stays with the care */}
-        {a.year && a.year !== 'alot' && <HinSays mood="calm">{T(hin.review)}</HinSays>}
+        {/* when it will still matter a lot, Hin stays with the care: no quote about imagination */}
+        {a.year && (
+          <HinSays key={a.year} idea={a.year === 'alot' ? undefined : 3} lang={lang}>
+            {T(a.year === 'alot' ? hin.yearHeavy : hin.yearLight)}
+          </HinSays>
+        )}
       </>
     )
   }
@@ -257,8 +263,6 @@ export default function HinRoom({ lang, thought, theme, resume, onStage, onExit,
 
       <div className="flow__body" key={step}>
         {body}
-        {/* the idea comes after the doing: here is why that worked */}
-        <Idea lang={lang} step={step} />
       </div>
 
       {/* Rising: the knob is the only action until it moves, so the bar doesn't sit over it on a phone */}

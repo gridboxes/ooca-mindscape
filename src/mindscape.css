@@ -787,13 +787,6 @@ html:lang(th) .kind__phrase {
     transform: translateY(-14px) scale(0.6);
   }
 }
-.ms-steps-for {
-  margin: -6px 0 12px;
-  font-size: 14px;
-  font-weight: 700;
-  color: #6b4c0f;
-}
-
 .rise {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -872,6 +865,38 @@ html:lang(th) .kind__phrase {
 .ms-says--hin p {
   background: #fdf3dc;
 }
+/* Hin's bubble can carry the Stoic idea behind the reply: one bubble, the quote quiet at its foot */
+.ms-says__bubble {
+  border-radius: 18px 18px 18px 6px;
+  background: #fdf3dc;
+}
+.ms-says__bubble p {
+  background: none;
+}
+.ms-says__idea {
+  display: grid;
+  gap: 2px;
+  margin: 0 14px;
+  padding: 8px 0 11px;
+  border-top: 1px solid rgba(138, 106, 36, 0.18);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.ms-says__idea q {
+  font-style: italic;
+  color: var(--turq-gray-1);
+}
+html:lang(th) .ms-says__idea q {
+  font-style: normal;
+}
+.ms-says__idea cite {
+  font-size: 12px;
+  font-style: normal;
+  color: #8a6a24;
+}
+.ms-says__idea cite::before {
+  content: '— ';
+}
 .ms-says--bua p {
   background: #fdeceb;
 }
@@ -937,7 +962,14 @@ html:lang(th) .kind__phrase {
   border-radius: var(--radius);
   background: #f8e4b3;
 }
+/* once everything has a place the tray steps back to a slim line; it's still a drop target */
+.pebbles__tray:has(.pebbles__done) {
+  min-height: 0;
+  padding: 8px 14px;
+  background: #fbf3dd;
+}
 .pebbles__done {
+  font-size: 14px;
   align-self: center;
   font-weight: 700;
   color: #6b4c0f;
@@ -2310,41 +2342,3 @@ html:lang(th) .pc__after {
   padding-left: 54px;
 }
 
-/* Hin's Stoic idea for the step: a quiet card, named and credited, under the heading */
-.ms-idea {
-  display: grid;
-  gap: 4px;
-  margin-top: 6px;
-  padding: 10px 14px 11px;
-  border-left: 3px solid var(--marigo-500);
-  border-radius: 4px 12px 12px 4px;
-  background: #fbf5e6;
-  color: var(--ink-soft);
-  font-size: 13px;
-  line-height: 1.4;
-}
-.ms-idea__name {
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #8a6a24;
-}
-.ms-idea__name b {
-  font-weight: 700;
-}
-html:lang(th) .ms-idea__name {
-  letter-spacing: 0;
-  text-transform: none;
-}
-.ms-idea q {
-  font-size: 15px;
-  font-style: italic;
-  color: var(--ink);
-}
-.ms-idea cite {
-  font-size: 12px;
-  font-style: normal;
-}
-html:lang(th) .ms-idea q {
-  font-style: normal;
-}

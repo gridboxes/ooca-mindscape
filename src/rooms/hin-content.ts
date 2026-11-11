@@ -140,7 +140,7 @@ export const pebbleSides: Record<Theme, Bin[]> = {
 export const virtues: Record<Virtue, { label: T; step: T }> = {
   wisdom: {
     label: { en: 'Wisdom', th: 'ปัญญา' },
-    step: { en: 'Before you react, write down what happened, then what you made of it. Act on the first.', th: 'ก่อนจะตอบสนอง เขียนสิ่งที่เกิดขึ้นจริง แล้วเขียนสิ่งที่เราคิดไปเอง ลงมือจากอย่างแรก' },
+    step: { en: 'Act on what happened, not on the story.', th: 'ลงมือจากสิ่งที่เกิดขึ้นจริง ไม่ใช่จากเรื่องที่คิดไปเอง' },
   },
   courage: {
     label: { en: 'Courage', th: 'ความกล้า' },
@@ -148,34 +148,30 @@ export const virtues: Record<Virtue, { label: T; step: T }> = {
   },
   justice: {
     label: { en: 'Fairness', th: 'ความเป็นธรรม' },
-    step: { en: 'What the Stoics called justice: be as fair to yourself as you’d be to someone else, and do your part for them too.', th: 'สิ่งที่สโตอิกเรียกว่าความยุติธรรม: ยุติธรรมกับตัวเองเท่ากับที่ยุติธรรมกับคนอื่น และทำส่วนของเราให้เขาด้วย' },
+    step: { en: 'Be as fair to yourself as you’d be to a friend.', th: 'ยุติธรรมกับตัวเอง เหมือนที่ยุติธรรมกับเพื่อน' },
   },
   temperance: {
     label: { en: 'Self-control', th: 'ความยับยั้งชั่งใจ' },
-    step: { en: 'Pause before the next reply, scroll or spiral. Take the measured step, not the loud one.', th: 'หยุดก่อนจะตอบ ไถ หรือคิดวน เลือกก้าวที่พอดี ไม่ใช่ก้าวที่ดังที่สุด' },
+    step: { en: 'Pause before you reply, scroll or spiral.', th: 'หยุดก่อนจะตอบ ไถ หรือคิดวน' },
   },
 }
 
-// One Stoic idea per step of the room, named and credited, so Hin teaches rather than only soothes.
+// One Stoic idea per step of the room, quoted and credited in Hin's reply, so Hin teaches rather than only soothes.
 // Quotes are the common English renderings; check against a translation before quoting elsewhere.
-export const ideas: { name: T; quote: T; by: T }[] = [
+export const ideas: { quote: T; by: T }[] = [
   {
-    name: { en: 'What happened, and what you made of it', th: 'สิ่งที่เกิดขึ้น กับสิ่งที่เราตัดสิน' },
     quote: { en: 'People are disturbed not by things, but by the views they take of them.', th: 'สิ่งที่ทำให้คนทุกข์ใจ ไม่ใช่ตัวเหตุการณ์ แต่คือมุมมองที่เขามีต่อมัน' },
     by: { en: 'Epictetus, Enchiridion 5', th: 'เอพิคทิตัส, เอนคิริเดียน 5' },
   },
   {
-    name: { en: 'The dichotomy of control', th: 'สิ่งที่อยู่ในอำนาจเรา และสิ่งที่ไม่ใช่' },
     quote: { en: 'Some things are within our power, while others are not.', th: 'บางสิ่งอยู่ในอำนาจของเรา บางสิ่งไม่ได้อยู่' },
     by: { en: 'Epictetus, Enchiridion 1', th: 'เอพิคทิตัส, เอนคิริเดียน 1' },
   },
   {
-    name: { en: 'The obstacle is the way', th: 'อุปสรรคคือทางเดิน' },
     quote: { en: 'What stands in the way becomes the way.', th: 'สิ่งที่ขวางทาง กลายเป็นทางเดิน' },
     by: { en: 'Marcus Aurelius, Meditations 5.20', th: 'มาร์คัส ออเรลิอัส, Meditations 5.20' },
   },
   {
-    name: { en: 'The view from above', th: 'มองจากที่สูง' },
     quote: { en: 'We suffer more often in imagination than in reality.', th: 'เราทุกข์เพราะจินตนาการ บ่อยกว่าเพราะความจริง' },
     by: { en: 'Seneca, Letters 13', th: 'เซเนกา, จดหมายฉบับที่ 13' },
   },
@@ -231,17 +227,14 @@ export const hin = {
     en: '“{pebble}” is more yours than you think. Even a little counts.',
     th: '“{pebble}” เป็นของเรามากกว่าที่คิดนะ แค่นิดเดียวก็นับ',
   },
+  sortedReply: { en: 'Good. Now you know where to push.', th: 'ดี ทีนี้รู้แล้วว่าควรออกแรงตรงไหน' },
   keepMine: { en: 'Keep it as mine', th: 'ยังขยับได้อยู่' },
   keepLet: { en: 'Keep letting it be', th: 'ปล่อยไว้เหมือนเดิม' },
   moveTo: { en: 'Move “{pebble}” to {side}', th: 'ย้าย “{pebble}” ไปที่ {side}' },
 
   qStep: { en: 'Turn it into a step', th: 'เปลี่ยนมันเป็นก้าวเดิน' },
-  qStepSub: {
-    en: 'What’s yours to move becomes stepping stones. How will you step on them?',
-    th: 'ส่วนที่ขยับได้ จะกลายเป็นหินให้ก้าวข้าม จะก้าวไปอย่างไร?',
-  },
-  forMine: { en: 'Stepping stones: {list}', th: 'หินที่จะก้าว: {list}' },
-  wayReply: { en: 'Good. Then it isn’t in your way. It is the way.', th: 'ดี งั้นมันไม่ได้ขวางทางแล้ว มันคือทางเดิน' },
+  forMine: { en: 'Your stepping stones: {list}', th: 'หินที่จะก้าว: {list}' },
+  wayReply: { en: 'Good. That’s your next step, then.', th: 'ดี งั้นนั่นคือก้าวต่อไปของเรา' },
   nothingMine: {
     en: 'Nothing here is yours to move. So stop carrying it.',
     th: 'ไม่มีอะไรตรงนี้ที่เราต้องขยับ งั้นก็เลิกแบกมันเถอะ',
@@ -263,8 +256,8 @@ export const hin = {
     th: 'งั้นมันควรได้รับการดูแล และอาจต้องมีใครสักคนช่วยแบก',
   },
   yearLight: {
-    en: 'From up here, it’s one stone on a long road.',
-    th: 'มองจากตรงนี้ มันเป็นแค่หินก้อนหนึ่งบนทางที่ยาวไกล',
+    en: 'Then carry it at its real size. No bigger.',
+    th: 'งั้นก็แบกมันเท่าขนาดจริงของมัน ไม่ต้องใหญ่กว่านั้น',
   },
 
   factLabel: { en: 'What happened', th: 'สิ่งที่เกิดขึ้นจริง' },
@@ -277,7 +270,6 @@ export const hin = {
     th: 'บางสิ่งอยู่ในอำนาจของเรา บางสิ่งไม่ได้อยู่',
   },
   quoteBy: { en: 'Epictetus, Enchiridion 1', th: 'เอพิคทิตัส, เอนคิริเดียน 1' },
-  ideaLabel: { en: 'A Stoic idea', th: 'แนวคิดสโตอิก' },
   // Hin's closing practice: Seneca's nightly review, after the step you chose
   review: {
     en: 'Tonight, ask Seneca’s three questions: what went well, where did I slip, what will I do next?',
