@@ -2309,3 +2309,42 @@ html:lang(th) .pc__after {
   gap: 8px;
   padding-left: 54px;
 }
+
+/* Hin's Stoic idea for the step: a quiet card, named and credited, under the heading */
+.ms-idea {
+  display: grid;
+  gap: 4px;
+  margin-top: 6px;
+  padding: 10px 14px 11px;
+  border-left: 3px solid var(--marigo-500);
+  border-radius: 4px 12px 12px 4px;
+  background: #fbf5e6;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.ms-idea__name {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8a6a24;
+}
+.ms-idea__name b {
+  font-weight: 700;
+}
+html:lang(th) .ms-idea__name {
+  letter-spacing: 0;
+  text-transform: none;
+}
+.ms-idea q {
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink);
+}
+.ms-idea cite {
+  font-size: 12px;
+  font-style: normal;
+}
+html:lang(th) .ms-idea q {
+  font-style: normal;
+}

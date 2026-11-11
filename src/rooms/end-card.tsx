@@ -109,10 +109,12 @@ export function endCard(who: 'mooca' | 'hin' | 'bua', r: Results, lang: Lang, th
       rows.push({ label: T(hin.factLabel), value: a.fact === JUST_A_FEELING ? T(hin.justAFeeling) : T(facts[theme][a.fact]) })
     if (mine.length) rows.push({ label: T(hin.mineLabel), value: <Pebbles items={mine} /> })
     if (letBe.length) rows.push({ label: T(hin.letLabel), value: <Pebbles items={letBe} let /> })
-    if (a.virtue) rows.push({ label: T(hin.virtueLabel), value: T(virtues[a.virtue].label) })
+    // a session saved before the four Stoic virtues may hold one that no longer exists
+    const v = a.virtue ? virtues[a.virtue] : undefined
+    if (v) rows.push({ label: T(hin.virtueLabel), value: T(v.label) })
     if (a.year) rows.push({ label: T(hin.yearLabel), value: T(years[a.year].label) })
     // the change Hin's sitting makes is in what you'll do, so that's the big line
-    const virtue = a.virtue ? T(virtues[a.virtue].label) : null
+    const virtue = v ? T(v.label) : null
     const after = virtue
       ? fill(T(hin.stepWith), { virtue: lang === 'en' ? virtue.toLowerCase() : virtue })
       : T(hin.nothingMine)
@@ -133,7 +135,10 @@ export function endCard(who: 'mooca' | 'hin' | 'bua', r: Results, lang: Lang, th
       },
       quote: { text: `“${T(hin.quote)}”`, by: T(hin.quoteBy) },
       source: T(ms.sourceHin),
-      practice: a.virtue ? { title: T(virtues[a.virtue].label), body: T(virtues[a.virtue].step) } : null,
+      // the step you chose, then Seneca's nightly review to close the day on it
+      practice: v
+        ? { title: T(v.label), body: `${T(v.step)} ${T(hin.review)}` }
+        : { title: T(hin.reviewTitle), body: T(hin.review) },
     }
   }
 

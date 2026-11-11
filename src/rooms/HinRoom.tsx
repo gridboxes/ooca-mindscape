@@ -8,7 +8,7 @@ import { fill, ms, type Theme } from '../mindscape-content'
 import PebbleSort from './PebbleSort'
 import Rise from './Rise'
 import { Reveal } from '../components/reveal'
-import { hin, facts, JUST_A_FEELING, pebbles, pebbleSides, virtues, years, type Bin, type Virtue, type Year } from './hin-content'
+import { hin, facts, ideas, JUST_A_FEELING, pebbles, pebbleSides, virtues, years, type Bin, type Virtue, type Year } from './hin-content'
 
 const STEPS = 4 // what happened, split the stone, turn it into a step, rise above it; the card is the shared ending's
 
@@ -48,6 +48,20 @@ interface Props {
   onDone: (r: HinResult) => void
 }
 
+/** The Stoic idea behind this step: named, quoted and credited */
+function Idea({ lang, step }: { lang: Lang; step: number }) {
+  const i = ideas[step]
+  return (
+    <aside className="ms-idea">
+      <span className="ms-idea__name">
+        {hin.ideaLabel[lang]} · <b>{i.name[lang]}</b>
+      </span>
+      <q>{i.quote[lang]}</q>
+      <cite>{i.by[lang]}</cite>
+    </aside>
+  )
+}
+
 function HinSays({ mood = 'listening', children }: { mood?: Expression; children: ReactNode }) {
   return (
     <div className="ms-says ms-says--hin">
@@ -62,7 +76,7 @@ function HinSays({ mood = 'listening', children }: { mood?: Expression; children
 export default function HinRoom({ lang, thought, theme, resume, onStage, onExit, onDone }: Props) {
   const parts = pebbles[theme]
   const [step, setStep] = useState(resume ? 3 : 0)
-  const [a, setA] = useState<HinAnswers>(() => resume ?? { fact: null, places: parts.map(() => null), virtue: null, lift: 0, year: null })
+  const [a, setA] = useState<HinAnswers>(() => (resume ? { ...resume, virtue: resume.virtue && resume.virtue in virtues ? resume.virtue : null } : null) ?? { fact: null, places: parts.map(() => null), virtue: null, lift: 0, year: null })
   const T = (s: Record<Lang, string>) => s[lang]
   // pebbles you chose to keep on the other side after Hin asked: Hin asks once, then lets it be
   const [kept, setKept] = useState<number[]>([])
@@ -231,6 +245,8 @@ export default function HinRoom({ lang, thought, theme, resume, onStage, onExit,
           </Reveal>
         )}
         {a.year && <HinSays key={a.year}>{T(a.year === 'alot' ? hin.yearHeavy : hin.yearLight)}</HinSays>}
+        {/* Hin's last word on a lighter day: Seneca's nightly review. When it's heavy, Hin stays with the care */}
+        {a.year && a.year !== 'alot' && <HinSays mood="calm">{T(hin.review)}</HinSays>}
       </>
     )
   }
@@ -241,6 +257,8 @@ export default function HinRoom({ lang, thought, theme, resume, onStage, onExit,
 
       <div className="flow__body" key={step}>
         {body}
+        {/* the idea comes after the doing: here is why that worked */}
+        <Idea lang={lang} step={step} />
       </div>
 
       {/* Rising: the knob is the only action until it moves, so the bar doesn't sit over it on a phone */}
