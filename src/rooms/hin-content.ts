@@ -122,6 +122,20 @@ export const pebbles: Record<Theme, T[]> = {
   ],
 }
 
+// The side Hin would put each pebble on, in the same order as pebbles[theme]. The sort is still
+// yours: if a pebble lands on the other side, Hin asks about it once and you can keep it there.
+export const pebbleSides: Record<Theme, Bin[]> = {
+  worth: ['mine', 'let', 'mine', 'let'],
+  fear: ['mine', 'let', 'let', 'mine'],
+  overthink: ['mine', 'let', 'let', 'mine'],
+  tired: ['mine', 'let', 'mine', 'let'],
+  compare: ['let', 'mine', 'mine', 'mine'],
+  alone: ['mine', 'let', 'mine', 'let'],
+  regret: ['let', 'mine', 'mine', 'let'],
+  meaning: ['mine', 'let', 'mine', 'let'],
+  general: ['mine', 'let', 'mine', 'let'],
+}
+
 export const virtues: Record<Virtue, { label: T; step: T }> = {
   courage: {
     label: { en: 'Courage', th: 'ความกล้า' },
@@ -182,6 +196,17 @@ export const hin = {
   tray: { en: 'Pebbles to sort', th: 'ก้อนกรวดที่ยังไม่ได้แยก' },
   dropHere: { en: 'Drop here', th: 'วางตรงนี้' },
   allSorted: { en: 'All sorted.', th: 'แยกครบแล้ว' },
+  // Hin asks about a pebble sorted to the other side from where Hin would put it, never calling it wrong
+  askLet: {
+    en: '“{pebble}”: can you really move that one? It may be heavy to carry.',
+    th: '“{pebble}” เราขยับมันได้จริงไหม? แบกไว้อาจหนักเกินไปนะ',
+  },
+  askMine: {
+    en: '“{pebble}” might be more yours than it feels. Even a little of it?',
+    th: '“{pebble}” อาจอยู่ในมือเรามากกว่าที่รู้สึกนะ แม้แค่นิดเดียวก็ได้',
+  },
+  keepMine: { en: 'Keep it as mine', th: 'ยังขยับได้อยู่' },
+  keepLet: { en: 'Keep letting it be', th: 'ปล่อยไว้เหมือนเดิม' },
   moveTo: { en: 'Move “{pebble}” to {side}', th: 'ย้าย “{pebble}” ไปที่ {side}' },
 
   qStep: { en: 'Turn it into a step', th: 'เปลี่ยนมันเป็นก้าวเดิน' },
@@ -219,7 +244,7 @@ export const hin = {
   factLabel: { en: 'What happened', th: 'สิ่งที่เกิดขึ้นจริง' },
   mineLabel: { en: 'Mine to move', th: 'ส่วนที่ขยับได้' },
   letLabel: { en: 'Letting be', th: 'ส่วนที่ปล่อยไว้' },
-  virtueLabel: { en: 'I’ll step on it with', th: 'ฉันจะก้าวไปด้วย' },
+  virtueLabel: { en: 'My next step, with', th: 'ก้าวต่อไปของฉัน ด้วย' },
   yearLabel: { en: 'From a year away, it matters', th: 'อีกหนึ่งปี เรื่องนี้สำคัญ' },
   quote: {
     en: 'Some things are within our power, while others are not.',
@@ -227,5 +252,6 @@ export const hin = {
   },
   quoteBy: { en: 'Epictetus, Enchiridion 1', th: 'เอพิคทิตัส, เอนคิริเดียน 1' },
   quoteShort: { en: '— Epictetus', th: '— เอพิคทิตัส' },
-  stepWith: { en: 'I’ll step on it with {virtue}.', th: 'ฉันจะก้าวข้ามมันไปด้วย{virtue}' },
+  // "step on it" reads as "hurry" in English, so the card names the next step instead
+  stepWith: { en: 'I’ll take my next step with {virtue}.', th: 'ฉันจะก้าวต่อไปด้วย{virtue}' },
 }

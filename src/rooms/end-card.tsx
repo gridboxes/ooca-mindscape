@@ -25,14 +25,14 @@ export interface EndCard {
   practice: { title: string; body?: string; breathe?: Weather } | null
   /**
    * The card as a postcard: the friend's place on top, the change in one big line with the
-   * thought small above it, at most one detail, and a single footer line
+   * thought small above it, a detail or two, and a single footer line
    */
   postcard: {
     /** the thought as it came in: crossed out where it was reframed (mooca), set on a stone to step on (Hin), let drift (Bua) */
     before: string
     beforeStyle: 'crossed' | 'drift' | 'stone'
     after: string
-    detail?: { label: string; value: string }
+    details: { label: string; value: string }[]
     line: string
     /** mooca: the sky before and after the softening */
     from?: Weather
@@ -86,7 +86,7 @@ export function endCard(who: 'mooca' | 'hin' | 'bua', r: Results, lang: Lang, th
         after: reframe,
         from: w,
         to,
-        detail: value ? { label: T(mooca.careLabel), value } : undefined,
+        details: value ? [{ label: T(mooca.careLabel), value }] : [],
         line: T(keepLines.mooca),
       },
       quote: { text: T(keepLines.mooca), by: T(companions.mooca.name) },
@@ -123,7 +123,11 @@ export function endCard(who: 'mooca' | 'hin' | 'bua', r: Results, lang: Lang, th
         before: thought,
         beforeStyle: 'stone',
         after,
-        detail: letBe.length ? { label: T(hin.letLabel), value: letBe.join(', ') } : undefined,
+        // both sides of the sort, so the stones in the picture are named
+        details: [
+          ...(mine.length ? [{ label: T(hin.mineLabel), value: mine.join(', ') }] : []),
+          ...(letBe.length ? [{ label: T(hin.letLabel), value: letBe.join(', ') }] : []),
+        ],
         line: `“${T(hin.quote)}” ${T(hin.quoteShort)}`,
         stones: mine.slice(0, 3),
       },
@@ -153,7 +157,7 @@ export function endCard(who: 'mooca' | 'hin' | 'bua', r: Results, lang: Lang, th
         before: thought,
         beforeStyle: 'drift',
         after: a.wish ? T(wishes[a.wish].me) : T(bua.quote),
-        detail: a.sent ? { label: T(bua.reachLabel), value: CIRCLES.slice(0, a.sent).map((c) => T(circles[c])).join(' → ') } : undefined,
+        details: a.sent ? [{ label: T(bua.reachLabel), value: CIRCLES.slice(0, a.sent).map((c) => T(circles[c])).join(' → ') }] : [],
         line: T(bua.quote),
         rings: a.sent,
       },

@@ -20,7 +20,7 @@ interface Props {
 /**
  * The keepsake at the end, as a 4:5 postcard: the friend's place on top (mooca's sky clearing,
  * Hin's hill with your stepping stones, Bua's pond with the kindness rings), then the change in
- * one big line, at most one detail, and a single footer line. It's also what Save makes an image of.
+ * one big line, a detail or two, and a single footer line. It's also what Save makes an image of.
  */
 const Postcard = forwardRef<HTMLDivElement, Props>(function Postcard({ lang, who, name, date, postcard: p, hideBefore = false }, ref) {
   const sky = who === 'mooca' && p.to ? ` pc--sky-${p.to}` : ''
@@ -93,11 +93,11 @@ const Postcard = forwardRef<HTMLDivElement, Props>(function Postcard({ lang, who
           <span className="pc__before pc__before--drift">〜 “{p.before}”</span>
         )}
         <p className="pc__after">“{p.after}”</p>
-        {p.detail && (
-          <span className="pc__detail">
-            {p.detail.label} · <b>{p.detail.value}</b>
+        {p.details.map((d) => (
+          <span key={d.label} className="pc__detail">
+            {d.label} · <b>{d.value}</b>
           </span>
-        )}
+        ))}
       </div>
 
       <div className="pc__foot">
