@@ -28,7 +28,7 @@ export interface EndCard {
    * thought small above it, at most one detail, and a single footer line
    */
   postcard: {
-    /** the thought as it came in: crossed out where it changed (mooca, Hin), just let drift (Bua) */
+    /** the thought as it came in: crossed out where it was reframed (mooca), set on a stone to step on (Hin), let drift (Bua) */
     before: string
     beforeStyle: 'crossed' | 'drift' | 'stone'
     after: string
